@@ -1,0 +1,107 @@
+---
+title: "Falhas operacionais — Tipos e tratamento"
+order: 1
+description: "Os principais tipos de falha operacional em bancos e como o backoffice as trata"
+---
+
+Falhas operacionais são inevitáveis em qualquer sistema complexo. Em bancos, elas podem ter consequências financeiras, regulatórias e reputacionais sérias. Entender os tipos de falha e como tratá-las é essencial para qualquer profissional de backoffice.
+
+## Categorias de falha operacional
+
+### Falhas de sistema
+
+**Indisponibilidade:** o sistema fica fora do ar. Pode ser total (nenhuma operação) ou parcial (algumas funcionalidades indisponíveis).
+
+**Lentidão extrema:** o sistema está disponível mas processa muito lentamente. Pode causar timeouts em cascata.
+
+**Corrupção de dados:** dados são gravados incorretamente ou ficam inconsistentes entre sistemas.
+
+**Falha de integração:** a comunicação entre dois sistemas falha. Operações ficam "presas" entre os sistemas.
+
+### Falhas de processo
+
+**Erro humano:** um analista lança um valor errado, aprova uma operação incorreta, ou segue o processo errado.
+
+**Processo inadequado:** o processo existe mas não cobre todos os casos. Uma situação incomum não tem procedimento definido.
+
+**Controle falho:** um controle que deveria prevenir um erro não funciona corretamente.
+
+**Segregação de funções violada:** a mesma pessoa executa etapas que deveriam ser feitas por pessoas diferentes (ex: quem aprova também executa).
+
+### Falhas de terceiros
+
+**Fornecedor fora do ar:** um sistema externo (BACEN, bureau de crédito, processadora de cartões) fica indisponível.
+
+**Dados incorretos de terceiros:** um bureau retorna informações erradas sobre um cliente.
+
+**Falha de correspondente bancário:** um banco parceiro não processa uma operação corretamente.
+
+## Impactos das falhas
+
+**Financeiro:** operações não processadas, clientes sem acesso ao dinheiro, multas regulatórias.
+
+**Regulatório:** descumprimento de prazos, reportes incorretos, violação de regras do BACEN.
+
+**Reputacional:** clientes insatisfeitos, notícias negativas, perda de confiança.
+
+**Legal:** processos judiciais de clientes prejudicados, responsabilização de administradores.
+
+## Tratamento de falhas
+
+### Detecção
+
+A detecção rápida é fundamental. Quanto mais tempo uma falha fica sem ser detectada, maior o impacto.
+
+**Monitoramento automatizado:** alertas em tempo real para indisponibilidade, lentidão, erros de processamento.
+
+**Reconciliações:** divergências nas reconciliações indicam falhas que podem não ter sido detectadas pelos sistemas.
+
+**Reclamações de clientes:** muitas vezes, os clientes detectam problemas antes dos sistemas internos.
+
+### Contenção
+
+Quando uma falha é detectada, o primeiro passo é conter o impacto:
+
+- Parar o processamento de novas operações se necessário
+- Isolar o sistema com problema
+- Ativar o plano de contingência (sistema backup, processo manual)
+- Comunicar as áreas afetadas
+
+### Correção
+
+Com o impacto contido, corrigir o problema:
+
+- Identificar a causa raiz
+- Aplicar a correção
+- Testar antes de retornar ao ar
+- Processar as operações que ficaram pendentes
+
+### Comunicação
+
+Comunicar adequadamente durante e após a falha:
+
+- **Clientes:** informar sobre a indisponibilidade e o prazo de resolução
+- **Regulador:** notificar o BACEN se a falha afeta sistemas críticos (Pix, STR)
+- **Gestão:** manter a liderança informada sobre o status
+
+### Análise pós-incidente
+
+Após a resolução, analisar o que aconteceu:
+
+- Qual foi a causa raiz?
+- Por que os controles não preveniram a falha?
+- O que pode ser feito para evitar recorrência?
+- Há outros sistemas com o mesmo risco?
+
+A análise pós-incidente é documentada e as ações corretivas são acompanhadas.
+
+## Plano de continuidade de negócios (BCP)
+
+O BCP define como o banco vai operar em caso de falha grave:
+
+- Quais sistemas são críticos e precisam de redundância?
+- Qual é o processo manual para cada sistema crítico?
+- Quem é responsável por cada decisão em uma crise?
+- Como os clientes serão comunicados?
+
+O BCP precisa ser testado regularmente — um plano que nunca foi testado provavelmente não vai funcionar quando for necessário.

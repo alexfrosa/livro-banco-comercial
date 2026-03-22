@@ -1,0 +1,68 @@
+---
+title: "Operação real — Front office vs middle vs backoffice"
+order: 2
+description: "Como se divide a estrutura operacional de um banco e o papel de cada camada"
+---
+
+Entender a divisão entre front, middle e backoffice é essencial para qualquer pessoa que trabalha com sistemas bancários. Cada camada tem responsabilidades distintas, sistemas próprios e critérios de sucesso diferentes.
+
+## Front office: a face do banco
+
+O front office é tudo que o cliente vê e toca. Seu objetivo é **converter intenções em operações**: o cliente quer fazer um Pix, o front office captura essa intenção e a transforma em uma instrução para os sistemas internos.
+
+**Canais digitais** (app, internet banking) são hoje o principal ponto de contato. Precisam ser rápidos, intuitivos e disponíveis 24/7. Um segundo de lentidão a mais pode significar abandono da operação.
+
+**Agências e caixas** ainda existem, especialmente para operações complexas (abertura de conta PJ, renegociação de dívidas) ou para clientes que preferem atendimento presencial.
+
+**Call center e chat** tratam dúvidas, reclamações e operações que não podem ser feitas nos canais digitais.
+
+O front office **não processa** as operações — ele as inicia. A validação profunda, o processamento e o registro acontecem nas camadas seguintes.
+
+## Middle office: controle e risco em tempo real
+
+O middle office é a camada de controle que fica entre o front e o back. Sua função é garantir que as operações iniciadas no front estejam dentro das regras antes de serem processadas.
+
+**Análise de crédito em tempo real** avalia se o cliente tem limite disponível, se o score de crédito permite a operação, se há restrições cadastrais.
+
+**Prevenção a fraudes** analisa padrões de comportamento: esse Pix é compatível com o histórico do cliente? O dispositivo é conhecido? O horário é suspeito?
+
+**Monitoramento de limites** garante que operações não ultrapassem limites regulatórios ou internos: limite diário de Pix, limite de saque, exposição máxima a um cliente.
+
+O middle office opera em **milissegundos** — precisa dar uma resposta antes que o cliente perceba qualquer demora.
+
+## Backoffice: onde as operações se tornam realidade
+
+O backoffice é onde as operações são efetivamente processadas, registradas e liquidadas. É a camada mais crítica e, paradoxalmente, a menos visível.
+
+**Processamento de pagamentos** recebe as instruções do front, valida com sistemas externos (BACEN, outros bancos), executa os débitos e créditos, e confirma a liquidação.
+
+**Registro contábil** transforma cada operação financeira em lançamentos contábeis no COSIF. Cada centavo movimentado precisa ter um registro contábil correspondente.
+
+**Reconciliação** compara os registros internos com os externos: o que o banco registrou bate com o que o BACEN registrou? O saldo da conta bate com os lançamentos do ledger?
+
+**Gestão de exceções** trata os casos que não seguiram o fluxo normal: pagamento rejeitado, operação duplicada, divergência de valores. Muitas dessas situações exigem intervenção humana.
+
+## A interdependência das camadas
+
+As três camadas são interdependentes e precisam se comunicar em tempo real:
+
+```
+Cliente → [Front Office] → [Middle Office] → [Backoffice] → [Sistemas Externos]
+                              ↑ validação        ↑ processamento
+```
+
+Uma falha em qualquer camada pode ter consequências em cascata. Se o middle office aprova uma operação que o backoffice não consegue processar, o cliente vê o dinheiro "saindo" da conta sem chegar ao destino — um dos cenários mais críticos em sistemas bancários.
+
+## Sistemas e tecnologia
+
+Cada camada tem seus sistemas característicos:
+
+| Camada | Sistemas típicos |
+|---|---|
+| Front office | App mobile, internet banking, ATM software |
+| Middle office | Motor de crédito, sistema antifraude, motor de regras |
+| Backoffice | Core banking, ledger, sistema de pagamentos, COSIF |
+
+O **core banking** é o sistema central que integra todas as camadas. É o registro mestre de clientes, contas e saldos. Tudo se conecta a ele.
+
+Nos próximos capítulos, vamos explorar cada área do backoffice em detalhe, começando pela regulação que define as regras do jogo.

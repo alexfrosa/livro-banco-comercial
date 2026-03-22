@@ -1,0 +1,84 @@
+---
+title: "Conceitos — Conta corrente, estados e saldos"
+order: 1
+description: "Tipos de conta, ciclo de vida, e a diferença entre saldo disponível e saldo contábil"
+---
+
+A conta bancária é o produto mais fundamental de um banco. É o ponto de entrada para todos os outros serviços: pagamentos, crédito, investimentos. Entender como uma conta funciona internamente é essencial para qualquer sistema bancário.
+
+## Tipos de conta
+
+**Conta corrente:** a conta mais comum. Permite depósitos, saques, transferências e pagamentos sem restrições de prazo. O banco pode ou não pagar rendimento sobre o saldo (geralmente não paga, ou paga muito pouco).
+
+**Conta poupança:** depósito com rendimento garantido (TR + 0,5% ao mês, ou 70% da Selic quando a Selic está abaixo de 8,5% ao ano). Tem algumas restrições operacionais (data de aniversário para rendimento, limites de saque em alguns casos).
+
+**Conta salário:** conta especial para recebimento de salário. Não cobra tarifas e tem portabilidade garantida — o trabalhador pode transferir o saldo para outro banco sem custo.
+
+**Conta de pagamento:** conta oferecida por instituições de pagamento (não bancos). Não pode conceder crédito, mas pode receber depósitos e processar pagamentos. É o tipo de conta das fintechs de pagamento.
+
+**Conta PJ:** conta para pessoas jurídicas. Tem características similares à conta corrente PF, mas com produtos e limites específicos para empresas.
+
+## O ciclo de vida de uma conta
+
+Uma conta passa por vários estados ao longo de sua existência:
+
+```
+[Solicitação] → [Em análise] → [Ativa] → [Bloqueada] → [Encerrada]
+                                    ↑______________|
+                                    (desbloqueio)
+```
+
+**Solicitação:** o cliente solicitou a abertura. O KYC ainda está em andamento.
+
+**Em análise:** os dados foram coletados e estão sendo validados. A conta ainda não existe formalmente.
+
+**Ativa:** a conta foi aprovada e está operacional. O cliente pode fazer todas as operações permitidas.
+
+**Bloqueada:** a conta existe mas está com operações restritas. Pode ser bloqueio parcial (só saques bloqueados) ou total (nenhuma operação permitida). Causas: determinação judicial, suspeita de fraude, KYC desatualizado, inadimplência.
+
+**Encerrada:** a conta foi encerrada. O saldo foi zerado (devolvido ao cliente ou transferido). Os registros são mantidos por pelo menos 5 anos para fins de auditoria.
+
+## Saldo disponível vs saldo contábil
+
+Esta é uma das distinções mais importantes — e mais confusas — em sistemas bancários.
+
+**Saldo contábil** é o saldo "bruto" da conta: a soma de todos os créditos menos todos os débitos registrados. É o que aparece no extrato.
+
+**Saldo disponível** é o saldo que o cliente pode efetivamente usar agora. Pode ser diferente do saldo contábil por várias razões:
+
+- **Bloqueios judiciais:** um juiz determinou o bloqueio de R$ 500. O saldo contábil é R$ 1.000, mas o disponível é R$ 500.
+- **Cheques em compensação:** um cheque depositado ainda não foi compensado. O valor aparece no saldo contábil mas não no disponível.
+- **Reservas para tarifas:** o banco pode reservar o valor de tarifas que serão cobradas no próximo ciclo.
+- **Limite de crédito:** em contas com cheque especial, o saldo disponível pode ser maior que o saldo contábil (inclui o limite de crédito).
+
+```
+Saldo contábil:    R$ 1.000,00
+(-) Bloqueio judicial: R$ 300,00
+(-) Cheque em compensação: R$ 200,00
+(+) Limite cheque especial: R$ 500,00
+= Saldo disponível: R$ 1.000,00
+```
+
+## Número de conta e agência
+
+No Brasil, as contas bancárias são identificadas por:
+- **Código do banco** (3 dígitos, ex: 341 para Itaú, 033 para Santander)
+- **Número da agência** (4 dígitos + dígito verificador)
+- **Número da conta** (variável por banco + dígito verificador)
+
+Com o Pix, o número de conta e agência perderam importância para transferências do dia a dia — a chave Pix (CPF, e-mail, telefone ou chave aleatória) é suficiente. Mas o número de conta ainda é necessário para TED, DOC e operações interbancárias específicas.
+
+## Tarifas e pacotes
+
+Os bancos cobram tarifas por serviços prestados nas contas. O BACEN regula quais tarifas podem ser cobradas e como devem ser informadas ao cliente.
+
+**Tarifas comuns:**
+- Manutenção de conta (mensal)
+- Emissão de extrato em papel
+- TED (por operação)
+- Saque em caixa eletrônico de outro banco
+- Segunda via de cartão
+
+Muitos bancos oferecem **pacotes de serviços** que incluem um conjunto de operações por uma tarifa mensal fixa. O cliente escolhe o pacote que melhor se adapta ao seu perfil de uso.
+
+Bancos digitais geralmente oferecem contas sem tarifas de manutenção, compensando com receita de outros produtos (crédito, investimentos, seguros).

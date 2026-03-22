@@ -1,0 +1,52 @@
+---
+/**
+ * ChapterLayout.astro
+ * Extends BaseLayout with ProgressTracker and GlossaryPanel for chapter/section pages.
+ * Requirements: 11.1, 11.2, 12.1, 12.2
+ */
+import BaseLayout from './BaseLayout.astro';
+import ProgressTracker from '../components/ProgressTracker.astro';
+import GlossaryPanel from '../components/GlossaryPanel.astro';
+import type { NavItem } from '../utils/contentLoader';
+import type { GlossaryTerm } from '../utils/glossary';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogUrl?: string;
+  navItems: NavItem[];
+  currentUrl: string;
+  totalSections: number;
+  currentSlug: string;
+  terms: GlossaryTerm[];
+}
+
+const {
+  title,
+  description,
+  ogImage,
+  ogUrl,
+  navItems,
+  currentUrl,
+  totalSections,
+  currentSlug,
+  terms,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  ogUrl={ogUrl}
+  navItems={navItems}
+  currentUrl={currentUrl}
+>
+  <ProgressTracker totalSections={totalSections} currentSlug={currentSlug} />
+
+  <slot />
+
+  <!-- role="complementary" provided by GlossaryPanel (Req 12.2) -->
+  <GlossaryPanel terms={terms} />
+</BaseLayout>

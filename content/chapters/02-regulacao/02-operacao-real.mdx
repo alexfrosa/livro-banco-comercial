@@ -1,0 +1,81 @@
+---
+title: "Operação real — Obrigações regulatórias e liquidação financeira"
+order: 2
+description: "Como os bancos cumprem suas obrigações regulatórias e como funciona a liquidação financeira"
+---
+
+Conhecer os reguladores e os sistemas é uma coisa. Entender como um banco opera dentro dessas regras no dia a dia é outra. Este capítulo mostra como as obrigações regulatórias se traduzem em processos concretos.
+
+## O dia regulatório de um banco
+
+Um banco tem obrigações que precisam ser cumpridas diariamente, semanalmente e mensalmente. Falhar em qualquer uma pode resultar em multas, restrições operacionais ou até cassação da licença.
+
+### Recolhimento de compulsório
+
+Todo dia útil, o banco precisa garantir que o saldo na sua conta de reservas no BACEN está dentro dos limites exigidos. O cálculo é feito sobre a média dos saldos de captação do período anterior.
+
+Se o banco está abaixo do compulsório exigido, precisa captar recursos no mercado interbancário (via CDI) ou vender títulos para cobrir a posição. Se está acima, pode emprestar o excesso para outros bancos.
+
+### Liquidação no STR
+
+Todas as transferências de alto valor (TED acima de R$ 250 mil, operações interbancárias, recolhimento de compulsório) são liquidadas no STR durante o horário de funcionamento (geralmente 6h30 às 18h30 em dias úteis).
+
+O banco precisa garantir que tem saldo suficiente na conta de reservas para honrar todas as liquidações do dia. A tesouraria monitora isso em tempo real — é uma das funções mais críticas do backoffice.
+
+### Participação no SPI (Pix)
+
+Para bancos participantes do Pix, o SPI opera 24/7. Isso significa que o banco precisa ter sistemas disponíveis o tempo todo para processar transações Pix, mesmo às 3h da manhã de um domingo.
+
+A conta de liquidação no SPI precisa ter saldo suficiente para cobrir os Pix de saída. O banco pode fazer aportes nessa conta a qualquer momento, mas precisa planejar para não ficar sem liquidez nos horários de pico.
+
+## Reportes regulatórios
+
+Os bancos precisam enviar uma série de informações ao BACEN e outros órgãos regularmente:
+
+| Reporte | Frequência | Conteúdo |
+|---|---|---|
+| DLO (Demonstrativo de Limites Operacionais) | Diário | Posição de capital e limites |
+| SCR (Sistema de Informações de Crédito) | Mensal | Carteira de crédito por cliente |
+| CCS (Cadastro de Clientes) | Sob demanda | Dados cadastrais de clientes |
+| COSIF | Mensal | Balancete contábil |
+| PSTAW (Pix) | Contínuo | Transações Pix em tempo real |
+
+Cada reporte tem um formato específico, prazos rígidos e validações. Um reporte incorreto ou atrasado pode gerar multas automáticas.
+
+## Como funciona a liquidação financeira na prática
+
+Vamos acompanhar o que acontece quando você faz um Pix de R$ 500 para outra pessoa em outro banco:
+
+**1. Iniciação (seu banco)**
+Você confirma o Pix no app. O sistema do seu banco valida: você tem saldo? A chave Pix existe? O valor está dentro dos limites?
+
+**2. Instrução ao SPI**
+Seu banco envia uma mensagem ao SPI com os dados da transação: valor, chave do destinatário, dados do pagador.
+
+**3. Liquidação no SPI**
+O SPI debita R$ 500 da conta de liquidação do seu banco e credita na conta de liquidação do banco do destinatário. Isso acontece em segundos.
+
+**4. Crédito ao destinatário**
+O banco do destinatário recebe a confirmação do SPI e credita R$ 500 na conta do destinatário.
+
+**5. Registro contábil (ambos os bancos)**
+Cada banco registra a operação no seu ledger: débito na conta do pagador (seu banco) e crédito na conta do destinatário (banco dele).
+
+**6. Confirmação**
+Você recebe a confirmação no app. O destinatário também.
+
+Todo esse processo leva menos de 10 segundos. Por baixo dos panos, envolve múltiplos sistemas, validações e registros — tudo acontecendo em paralelo e de forma coordenada.
+
+## Quando algo dá errado
+
+O sistema é robusto, mas falhas acontecem. Os cenários mais comuns:
+
+**Saldo insuficiente na conta de liquidação:** o banco não tem saldo no SPI para cobrir o Pix. O SPI rejeita a transação. O banco precisa fazer um aporte urgente e reprocessar.
+
+**Timeout:** o banco do destinatário não responde dentro do prazo. O SPI cancela a transação e devolve o dinheiro ao banco pagador.
+
+**Chave Pix inválida:** a chave não existe ou foi desativada. A transação é rejeitada antes de chegar ao SPI.
+
+**Falha sistêmica:** o sistema do banco está fora do ar. As transações ficam em fila e são processadas quando o sistema volta. O BACEN monitora a disponibilidade dos participantes e pode aplicar penalidades por indisponibilidade excessiva.
+
+O backoffice de pagamentos precisa ter processos claros para cada um desses cenários — e os sistemas precisam ser capazes de detectar, registrar e tratar cada tipo de falha automaticamente.

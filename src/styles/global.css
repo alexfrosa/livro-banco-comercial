@@ -1,0 +1,158 @@
+/* ============================================================
+   global.css — Reset, tipografia base e estilos globais
+   Requirements: 10.1, 10.2, 10.5, 10.6, 10.8, 10.9, 10.10, 10.12
+   ============================================================ */
+
+/* Google Fonts — font-display: swap (Req 10.6) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap');
+
+@import './themes.css';
+
+/* ── Reset ──────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+html {
+  font-size: 16px; /* garante base 16px (Req 10.1) */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body); /* mín. 1.6 (Req 10.1) */
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Tipografia — escala modular 1.25x (Req 10.5, 10.6) ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  line-height: 1.25;
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: var(--font-size-h1); /* ~1.953rem */
+}
+
+h2 {
+  font-size: var(--font-size-h2); /* ~1.563rem */
+}
+
+h3 {
+  font-size: var(--font-size-h3); /* ~1.25rem */
+}
+
+/* ── Área de conteúdo principal ─────────────────────────── */
+.content-area {
+  max-width: var(--measure);       /* máx. 65ch ≈ 75 chars (Req 10.2) */
+  padding: var(--spacing-content); /* mín. 24px (Req 10.8) */
+}
+
+/* ── Parágrafos (Req 10.2) ──────────────────────────────── */
+p {
+  margin-bottom: var(--spacing-paragraph); /* mín. 1.2em */
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Blocos de conteúdo distintos (Req 10.9) ────────────── */
+section,
+.content-block {
+  margin-bottom: var(--spacing-block); /* mín. 3rem */
+}
+
+/* ── Callouts e blockquotes (Req 10.10) ─────────────────── */
+blockquote,
+.callout {
+  border-left: var(--callout-border-width) solid var(--callout-border-color);
+  background-color: var(--callout-bg);
+  padding: 1rem 1.25rem;
+  border-radius: 0 4px 4px 0;
+  margin: var(--spacing-block) 0;
+}
+
+blockquote p,
+.callout p {
+  margin-bottom: 0;
+}
+
+/* ── Imagens e legendas (Req 10.12) ─────────────────────── */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--image-radius); /* mín. 8px */
+  box-shadow: var(--image-shadow);    /* opacidade ≤ 0.15 no tema claro */
+}
+
+figure {
+  margin: var(--spacing-block) 0;
+}
+
+figcaption {
+  font-size: 0.875em;   /* máx. 0.875em (Req 10.12) */
+  font-style: italic;
+  color: var(--color-text);
+  opacity: 0.75;
+  margin-top: 0.5rem;
+}
+
+/* ── Links ──────────────────────────────────────────────── */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-hover), opacity var(--transition-hover);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* ── Termos do glossário ─────────────────────────────────── */
+[data-glossary-term] {
+  cursor: pointer;
+  text-decoration: underline dotted var(--color-accent);
+  text-underline-offset: 2px;
+  transition: color var(--transition-hover);
+}
+
+[data-glossary-term]:hover {
+  color: var(--color-accent);
+}
+
+/* ── Acessibilidade: foco visível ───────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Respeitar prefers-reduced-motion (Req 10.11) ────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,85 @@
+---
+title: "Conceitos — Juros e amortização"
+order: 1
+description: "Como os juros são calculados e os principais sistemas de amortização (SAC, Price)"
+---
+
+O crédito é a principal fonte de receita de um banco. Entender como os juros funcionam e como os contratos de crédito são estruturados é fundamental para qualquer sistema bancário.
+
+## O que são juros
+
+Juros são o preço do dinheiro no tempo. Quando um banco empresta dinheiro, está abrindo mão de usar esse dinheiro por um período — e cobra por isso. Quando um cliente toma emprestado, está usando dinheiro que não é seu — e paga por isso.
+
+**Taxa de juros** é expressa como percentual por período (ao mês, ao ano). No Brasil, as taxas são geralmente expressas ao mês (a.m.) ou ao ano (a.a.).
+
+**Juros simples vs. compostos:**
+
+Juros simples: o juro é calculado sempre sobre o capital inicial.
+```
+Montante = Capital × (1 + taxa × tempo)
+R$ 1.000 a 2% a.m. por 3 meses = R$ 1.000 × (1 + 0,02 × 3) = R$ 1.060
+```
+
+Juros compostos: o juro é calculado sobre o saldo devedor (que inclui juros anteriores não pagos). É o padrão em contratos de crédito.
+```
+Montante = Capital × (1 + taxa)^tempo
+R$ 1.000 a 2% a.m. por 3 meses = R$ 1.000 × (1,02)³ = R$ 1.061,21
+```
+
+A diferença parece pequena em 3 meses, mas em prazos longos (financiamento imobiliário de 30 anos) é enorme.
+
+## Sistemas de amortização
+
+Amortização é o processo de pagamento gradual de uma dívida. Os dois sistemas mais usados no Brasil são SAC e Price.
+
+### SAC — Sistema de Amortização Constante
+
+No SAC, a **amortização** (parcela do principal) é constante. Os juros diminuem ao longo do tempo porque o saldo devedor diminui. Resultado: as parcelas começam maiores e vão diminuindo.
+
+**Exemplo:** empréstimo de R$ 12.000, 12 meses, 2% a.m.
+
+| Mês | Saldo devedor | Amortização | Juros | Parcela |
+|---|---|---|---|---|
+| 1 | R$ 12.000 | R$ 1.000 | R$ 240 | R$ 1.240 |
+| 2 | R$ 11.000 | R$ 1.000 | R$ 220 | R$ 1.220 |
+| ... | ... | ... | ... | ... |
+| 12 | R$ 1.000 | R$ 1.000 | R$ 20 | R$ 1.020 |
+
+**Vantagem:** o cliente paga menos juros no total (o saldo devedor cai mais rápido).
+**Desvantagem:** as primeiras parcelas são mais altas, o que pode dificultar o acesso ao crédito.
+
+### Price — Sistema Francês de Amortização
+
+No Price, a **parcela** é constante. Os juros são maiores no início (saldo devedor alto) e menores no final. A amortização aumenta ao longo do tempo.
+
+**Exemplo:** mesmo empréstimo de R$ 12.000, 12 meses, 2% a.m.
+
+| Mês | Saldo devedor | Amortização | Juros | Parcela |
+|---|---|---|---|---|
+| 1 | R$ 12.000 | R$ 793 | R$ 240 | R$ 1.033 |
+| 2 | R$ 11.207 | R$ 809 | R$ 224 | R$ 1.033 |
+| ... | ... | ... | ... | ... |
+| 12 | R$ 1.013 | R$ 1.013 | R$ 20 | R$ 1.033 |
+
+**Vantagem:** parcelas iguais facilitam o planejamento financeiro do cliente.
+**Desvantagem:** o cliente paga mais juros no total (o saldo devedor cai mais devagar).
+
+## Custo Efetivo Total (CET)
+
+O CET é a taxa que representa o custo real do crédito para o cliente, incluindo não apenas os juros, mas também tarifas, seguros e outros encargos.
+
+O BACEN exige que os bancos informem o CET em todos os contratos de crédito. Isso permite que o cliente compare produtos de diferentes bancos de forma justa.
+
+```
+CET = taxa de juros + tarifas + seguros + outros encargos
+```
+
+Um empréstimo com taxa de 2% a.m. mas com tarifa de abertura de crédito e seguro obrigatório pode ter um CET de 3% a.m. ou mais.
+
+## Provisão para devedores duvidosos (PDD)
+
+Nem todo crédito concedido será pago. Os bancos são obrigados a constituir **provisões** para cobrir as perdas esperadas com inadimplência.
+
+A provisão é calculada com base na classificação de risco de cada operação de crédito (AA, A, B, C, D, E, F, G, H), conforme a Resolução CMN 2.682. Quanto pior a classificação, maior a provisão exigida.
+
+A provisão é uma despesa contábil que reduz o resultado do banco, mas é essencial para garantir que o banco tem capital suficiente para absorver perdas.

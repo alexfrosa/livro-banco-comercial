@@ -1,0 +1,57 @@
+/* ============================================================
+   themes.css — CSS custom properties for light/dark themes
+   Requirements: 10.1, 10.2, 10.3, 10.5, 10.6, 10.8, 10.9, 10.13
+   ============================================================ */
+
+:root {
+  /* Paleta primária — máx. 5 cores (Req 10.3) */
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+  --color-accent: #0891b2;
+  --color-surface: #f8f7f4;   /* off-white, luminosidade ~97% (Req 10.13) */
+  --color-text: #1a1a2e;
+
+  /* Tipografia (Req 10.1, 10.6) */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-size-base: 1rem;       /* 16px */
+  --line-height-body: 1.6;
+
+  /* Escala tipográfica modular — razão 1.25x (Req 10.5) */
+  --font-size-h3: 1.25rem;      /* base × 1.25¹ */
+  --font-size-h2: 1.5625rem;    /* base × 1.25² */
+  --font-size-h1: 1.953125rem;  /* base × 1.25³ */
+
+  /* Medida de texto (Req 10.2) */
+  --measure: 65ch;              /* ≈ 75 chars */
+
+  /* Espaçamento (Req 10.8, 10.9) */
+  --spacing-content: 24px;
+  --spacing-block: 3rem;
+  --spacing-paragraph: 1.2em;
+
+  /* Callouts / blockquotes (Req 10.10) */
+  --callout-border-width: 4px;
+  --callout-border-color: var(--color-primary);
+  --callout-bg: rgba(37, 99, 235, 0.06);
+
+  /* Imagens (Req 10.12) */
+  --image-radius: 8px;
+  --image-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* Transições */
+  --transition-hover: 150ms ease;
+}
+
+/* ── Tema escuro (Req 6.1, 6.5) ─────────────────────────── */
+[data-theme="dark"] {
+  --color-surface: #0f172a;
+  --color-text: #e2e8f0;
+  --color-primary: #60a5fa;
+  --color-secondary: #a78bfa;
+  --color-accent: #22d3ee;
+
+  --callout-border-color: var(--color-primary);
+  --callout-bg: rgba(96, 165, 250, 0.08);
+  --image-shadow: 0 4px 16px rgba(0, 0, 0, 0.40);
+}

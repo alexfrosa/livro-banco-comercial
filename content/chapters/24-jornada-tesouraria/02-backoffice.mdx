@@ -1,0 +1,76 @@
+---
+title: "Backoffice — Ajustes de liquidez e controle de posições"
+order: 2
+description: "Como o backoffice de tesouraria controla posições e executa ajustes de liquidez"
+---
+
+O backoffice de tesouraria é responsável pelo controle e registro de todas as operações de gestão de liquidez. Enquanto a mesa de tesouraria toma as decisões, o backoffice garante que as operações sejam executadas corretamente e registradas.
+
+## Controle de posições
+
+O backoffice mantém o registro atualizado de todas as posições do banco:
+
+**Posição em títulos públicos:** quais títulos o banco tem, em que quantidade, com qual vencimento e qual valor de mercado. Atualizado diariamente com os preços de mercado (marcação a mercado).
+
+**Posição em operações compromissadas:** quais repos estão abertos, com qual contraparte, qual o valor e quando vencem.
+
+**Posição em CDI interbancário:** quais empréstimos interbancários estão abertos, com qual banco, qual o valor e quando vencem.
+
+**Posição de compulsório:** qual é o saldo atual na conta de compulsório no BACEN e qual é o exigido.
+
+## Liquidação de operações
+
+Quando a mesa de tesouraria fecha uma operação, o backoffice executa a liquidação:
+
+**Operação compromissada:**
+1. Confirmar os termos com a contraparte
+2. Transferir os títulos (via SELIC ou CETIP)
+3. Receber o dinheiro (via STR)
+4. Registrar a operação no sistema
+5. Gerar os lançamentos contábeis
+
+**CDI interbancário:**
+1. Confirmar os termos com o banco contraparte
+2. Receber ou enviar o dinheiro via STR
+3. Registrar a operação
+4. Gerar os lançamentos contábeis
+
+**Vencimento de operações:**
+No vencimento, o backoffice garante que a operação seja liquidada corretamente: o dinheiro é devolvido (com juros) e os títulos são retornados.
+
+## Marcação a mercado
+
+Os títulos públicos e outros ativos financeiros precisam ser avaliados pelo seu valor de mercado atual, não pelo valor de aquisição. Isso é chamado de **marcação a mercado** (MTM — Mark to Market).
+
+O backoffice atualiza diariamente o valor de mercado de todos os ativos:
+1. Obtém os preços de mercado (via ANBIMA, B3, ou Bloomberg)
+2. Recalcula o valor de cada posição
+3. Registra a variação como ganho ou perda no resultado do banco
+4. Gera os lançamentos contábeis correspondentes
+
+A marcação a mercado é obrigatória para a maioria dos ativos financeiros e é fundamental para uma visão precisa da posição financeira do banco.
+
+## Relatórios de liquidez
+
+O backoffice produz relatórios diários para a gestão e para o regulador:
+
+**Relatório de posição de caixa:** saldo atual nas contas de reservas, projeção para os próximos dias.
+
+**Relatório de compulsório:** posição atual vs. exigida, projeção para o período de cálculo.
+
+**LCR (Liquidity Coverage Ratio):** cálculo do indicador regulatório de liquidez de curto prazo.
+
+**NSFR (Net Stable Funding Ratio):** cálculo do indicador regulatório de liquidez estrutural.
+
+Esses relatórios são enviados ao BACEN periodicamente e são usados internamente para gestão de risco.
+
+## Tratamento de falhas de liquidação
+
+Quando uma operação não é liquidada no prazo (falha de liquidação):
+
+1. O backoffice identifica a falha imediatamente
+2. Contata a contraparte para entender o motivo
+3. Tenta resolver dentro do dia (o STR fecha às 18h30)
+4. Se não resolver: registra a falha e aciona o processo de resolução (pode envolver o BACEN como mediador)
+
+Falhas de liquidação são raras mas sérias — podem indicar problemas de liquidez na contraparte e precisam ser tratadas com urgência.

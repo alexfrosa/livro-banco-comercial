@@ -1,0 +1,78 @@
+---
+title: "Jornada — Detecção, investigação e reporte"
+order: 2
+description: "O fluxo de uma investigação de PLD: da detecção automática ao reporte ao COAF"
+---
+
+Quando um sistema de monitoramento gera um alerta, começa uma jornada de investigação que pode levar dias ou semanas. Este capítulo mostra como esse processo funciona.
+
+## Etapa 1: Geração do alerta
+
+O sistema de monitoramento gera um alerta quando detecta um padrão suspeito. O alerta inclui:
+- O cliente ou conta envolvida
+- As transações que geraram o alerta
+- O tipo de padrão detectado (fracionamento, incompatibilidade de perfil, etc.)
+- O score de risco calculado pelo sistema
+
+Alertas são priorizados por score de risco. Alertas de alto risco são tratados primeiro.
+
+## Etapa 2: Triagem
+
+O analista de PLD faz uma triagem inicial do alerta:
+
+**Falso positivo óbvio:** o alerta foi gerado por uma situação que tem explicação clara e legítima. Por exemplo, um cliente que recebeu uma herança e fez um depósito grande. O analista descarta o alerta e documenta o motivo.
+
+**Requer investigação:** o alerta não tem explicação óbvia. O analista abre uma investigação formal.
+
+A triagem deve ser rápida — o volume de alertas pode ser alto, e os analistas precisam focar nos casos que realmente merecem atenção.
+
+## Etapa 3: Investigação
+
+A investigação aprofunda a análise do caso:
+
+**Análise do histórico do cliente:** qual é o perfil de risco? Há histórico de alertas anteriores? O comportamento atual é consistente com o histórico?
+
+**Análise das transações:** quais são as contrapartes? As transações fazem sentido econômico? Há padrões de fracionamento ou circularidade?
+
+**Consulta a bases externas:** o cliente ou as contrapartes aparecem em listas de sanções, PEPs, ou suspeitos conhecidos?
+
+**Solicitação de informações ao cliente:** em alguns casos, o analista pode solicitar ao cliente que explique as transações. Isso deve ser feito com cuidado para não alertar o cliente sobre a investigação (tipping off é proibido por lei).
+
+**Análise de rede:** quem são os relacionamentos do cliente? Há conexões com outros clientes suspeitos?
+
+## Etapa 4: Decisão
+
+Com base na investigação, o analista decide:
+
+**Encerrar a investigação:** as transações têm explicação legítima. O caso é encerrado e documentado.
+
+**Comunicar ao COAF:** há indícios suficientes de lavagem de dinheiro. O analista prepara a comunicação.
+
+**Escalar para aprovação:** casos complexos ou de alto valor são escalados para aprovação de nível superior antes da comunicação ao COAF.
+
+## Etapa 5: Comunicação ao COAF
+
+A comunicação ao COAF é feita através do sistema SISCOAF. Inclui:
+- Dados do cliente suspeito
+- Descrição das transações suspeitas
+- Análise do analista
+- Documentação de suporte
+
+**Prazos:**
+- Operações em espécie acima de R$ 50.000: comunicação obrigatória em 24 horas
+- Outras operações suspeitas: comunicação em até 24 horas após a decisão de comunicar
+
+**Sigilo:** a comunicação ao COAF é sigilosa. O banco não pode informar ao cliente que foi comunicado (tipping off).
+
+## Etapa 6: Monitoramento pós-comunicação
+
+Após a comunicação, o banco continua monitorando o cliente. Se novas transações suspeitas ocorrerem, novas comunicações são feitas.
+
+O banco também pode decidir encerrar o relacionamento com o cliente (encerramento de conta por risco de PLD), mas isso deve ser feito com cuidado para não alertar o cliente sobre a investigação.
+
+## Responsabilidade dos administradores
+
+Os administradores do banco (diretores, conselheiros) são pessoalmente responsáveis pelo cumprimento das obrigações de PLD. A omissão ou negligência pode resultar em:
+- Multas pesadas (até R$ 20 milhões por infração)
+- Inabilitação para exercer cargos em instituições financeiras
+- Responsabilização criminal (reclusão de 3 a 10 anos)

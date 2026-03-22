@@ -1,0 +1,114 @@
+---
+title: "Backoffice — Tratamento de falhas e reconciliação externa"
+order: 2
+description: "Como o backoffice trata pagamentos com falha e reconcilia com sistemas externos"
+---
+
+O processamento automático de pagamentos funciona bem na maioria dos casos. Mas quando algo dá errado — e eventualmente dá — é o backoffice que precisa resolver. Este capítulo cobre os principais cenários de falha e como tratá-los.
+
+## Monitoramento de pagamentos
+
+O backoffice monitora continuamente o estado dos pagamentos através de dashboards em tempo real:
+
+**Pagamentos em processamento há muito tempo:** um Pix que está em estado "PROCESSANDO" há mais de 30 segundos é anormal. Pode indicar timeout no SPI, falha de comunicação, ou problema no sistema.
+
+**Pagamentos com falha sem estorno:** se um pagamento falhou mas a reserva não foi liberada, o cliente está com saldo bloqueado indevidamente. Precisa de ação imediata.
+
+**Taxa de rejeição:** se a taxa de rejeições aumentar subitamente, pode indicar um problema sistêmico (sistema do BACEN fora do ar, bug no sistema de validação).
+
+**Latência de processamento:** o tempo médio de processamento de Pix deve ser de segundos. Se aumentar, pode indicar sobrecarga ou problema de performance.
+
+## Tratamento de falhas comuns
+
+### Pix rejeitado pelo SPI
+
+O SPI pode rejeitar um Pix por vários motivos:
+- Conta destino encerrada ou bloqueada
+- Chave Pix desativada
+- Limite excedido no banco destino
+- Problema técnico no banco destino
+
+**Ação do backoffice:**
+1. Verificar o código de erro retornado pelo SPI
+2. Liberar a reserva na conta do pagador
+3. Notificar o cliente com a razão da rejeição
+4. Registrar o evento para análise de padrões
+
+### Pix confirmado pelo SPI mas não creditado no destino
+
+O SPI confirmou a liquidação (o dinheiro saiu do banco pagador), mas o banco recebedor não creditou na conta do destinatário.
+
+**Ação do backoffice:**
+1. Verificar os logs do banco recebedor
+2. Se for problema interno: processar o crédito manualmente
+3. Se for problema no banco recebedor: acionar o suporte interbancário
+4. Prazo máximo para crédito: 10 segundos (regulatório)
+
+### Pix duplicado
+
+O cliente ou o sistema enviou o mesmo Pix duas vezes. O ID de idempotência deveria prevenir isso, mas pode falhar.
+
+**Ação do backoffice:**
+1. Identificar o Pix duplicado (mesmo valor, mesmo destinatário, timestamps próximos)
+2. Verificar se ambos foram liquidados no SPI
+3. Se sim: solicitar devolução do segundo Pix via MED (Mecanismo Especial de Devolução)
+4. Notificar o cliente
+
+### Pix com valor errado
+
+O cliente enviou R$ 500 mas queria enviar R$ 50 (erro de digitação).
+
+**Ação do backoffice:**
+1. O banco não pode cancelar um Pix já liquidado unilateralmente
+2. Orientar o cliente a solicitar devolução diretamente ao destinatário
+3. Se o destinatário não devolver: o cliente pode registrar uma reclamação no BACEN
+4. O banco pode acionar o MED em casos de fraude comprovada
+
+## Reconciliação com sistemas externos
+
+A reconciliação de pagamentos é um processo crítico que garante que os registros internos do banco batem com os registros dos sistemas externos (SPI, STR, CIP).
+
+**Processo de reconciliação do Pix:**
+
+1. **Extração:** o banco extrai todos os Pix processados internamente no período
+2. **Consulta ao SPI:** o banco consulta o extrato da sua conta de liquidação no SPI
+3. **Comparação:** cada Pix interno é comparado com o registro no SPI
+4. **Identificação de divergências:**
+   - Pix no interno sem correspondente no SPI: pode indicar falha de comunicação
+   - Pix no SPI sem correspondente interno: pode indicar falha no processamento interno
+   - Valores diferentes: erro de processamento
+5. **Correção:** cada divergência é investigada e corrigida
+
+**Frequência:** a reconciliação de Pix é feita continuamente (em tempo real para alertas) e em lote (diariamente para fechamento).
+
+## Devolução de Pix (MED)
+
+O Mecanismo Especial de Devolução (MED) permite que o banco do pagador solicite a devolução de um Pix em casos específicos:
+
+**Casos elegíveis:**
+- Fraude confirmada (o pagador foi vítima de golpe)
+- Falha operacional (o banco processou incorretamente)
+- Erro do usuário (em alguns casos, com acordo entre os bancos)
+
+**Prazo:** até 90 dias após a transação original.
+
+**Processo:**
+1. O banco do pagador abre uma solicitação de devolução no SPI
+2. O banco do recebedor tem um prazo para responder (geralmente 7 dias)
+3. Se o banco recebedor concordar: o valor é devolvido via Pix
+4. Se não concordar: o caso vai para mediação do BACEN
+
+O backoffice precisa monitorar as solicitações de MED abertas e garantir que os prazos sejam cumpridos.
+
+## Indicadores de qualidade
+
+O backoffice de pagamentos monitora métricas regulatórias e operacionais:
+
+| Métrica | Referência regulatória |
+|---|---|
+| Disponibilidade do Pix | ≥ 99,5% |
+| Tempo de processamento | ≤ 10 segundos (p95) |
+| Taxa de rejeição técnica | < 0,1% |
+| Tempo de resposta ao MED | ≤ 7 dias úteis |
+
+Métricas abaixo do esperado podem resultar em penalidades do BACEN.

@@ -1,0 +1,71 @@
+---
+title: "Conceitos — Ativos vs passivos, duration e risco de liquidez"
+order: 1
+description: "Os fundamentos do Asset-Liability Management: descasamento, duration e risco de liquidez"
+---
+
+O ALM (Asset-Liability Management, ou Gestão de Ativos e Passivos) é a disciplina que garante que o banco está equilibrado: que seus ativos e passivos têm características compatíveis em termos de prazo, taxa e moeda.
+
+## O balanço de um banco
+
+Para entender o ALM, precisamos olhar para o balanço de um banco:
+
+**Ativos (o que o banco tem ou tem a receber):**
+- Operações de crédito (empréstimos, financiamentos)
+- Títulos públicos e privados
+- Disponibilidades (caixa, reservas no BACEN)
+- Imóveis e equipamentos
+
+**Passivos (o que o banco deve):**
+- Depósitos à vista (contas correntes)
+- Depósitos a prazo (CDBs)
+- Captações interbancárias
+- Patrimônio líquido (capital dos acionistas)
+
+O ALM analisa como esses ativos e passivos se relacionam — especialmente em termos de prazo e taxa de juros.
+
+## Descasamento (mismatch)
+
+O **descasamento** ocorre quando os ativos e passivos têm características diferentes. É inevitável — é a essência do negócio bancário. Mas precisa ser gerenciado.
+
+**Descasamento de prazo:** o banco capta recursos de curto prazo (depósitos à vista, CDBs de 30 dias) e empresta a longo prazo (financiamento imobiliário de 30 anos). Se os depositantes sacarem tudo ao mesmo tempo, o banco não tem como pagar — é o risco de liquidez.
+
+**Descasamento de taxa:** o banco capta a taxa variável (CDI) e empresta a taxa fixa. Se o CDI subir, o custo de captação aumenta mas a receita de crédito não — as margens são comprimidas.
+
+**Descasamento de moeda:** o banco tem ativos em dólares e passivos em reais. Se o dólar subir, o valor dos ativos aumenta em reais, mas o banco pode ter dificuldades se precisar converter.
+
+## Duration
+
+**Duration** é uma medida de sensibilidade de um ativo ou passivo a variações na taxa de juros. Quanto maior a duration, mais sensível é o preço ao movimento das taxas.
+
+**Duration de Macaulay:** média ponderada dos prazos dos fluxos de caixa, ponderada pelo valor presente de cada fluxo.
+
+**Duration modificada:** mede a variação percentual no preço para uma variação de 1% na taxa de juros.
+
+```
+Variação no preço ≈ -Duration modificada × Variação na taxa
+```
+
+**Exemplo:** um título com duration modificada de 5 anos perde aproximadamente 5% do seu valor se a taxa de juros subir 1%.
+
+O ALM usa a duration para medir e gerenciar o risco de taxa de juros do balanço. O objetivo é manter a duration dos ativos próxima à duration dos passivos — ou gerenciar conscientemente o descasamento.
+
+## Gap de reprecificação
+
+O **gap de reprecificação** mostra, para cada período futuro, quanto dos ativos e passivos do banco serão reprecificados (terão suas taxas ajustadas).
+
+**Exemplo simplificado:**
+
+| Período | Ativos reprecificando | Passivos reprecificando | Gap |
+|---|---|---|---|
+| 0-30 dias | R$ 100M | R$ 200M | -R$ 100M |
+| 31-90 dias | R$ 150M | R$ 100M | +R$ 50M |
+| 91-180 dias | R$ 200M | R$ 50M | +R$ 150M |
+
+Um gap negativo no curto prazo significa que o banco tem mais passivos que ativos reprecificando — se as taxas subirem, o custo de captação aumenta mais que a receita de crédito.
+
+## Risco de liquidez estrutural
+
+Diferente do risco de liquidez intraday (gerenciado pela tesouraria), o risco de liquidez estrutural é de médio e longo prazo: o banco tem funding suficiente para financiar seus ativos nos próximos meses e anos?
+
+O ALM analisa o **perfil de vencimentos**: quando vencem os ativos e quando vencem os passivos? Se muitos passivos vencem antes dos ativos, o banco precisa renovar o funding — e pode não conseguir em condições adversas de mercado.

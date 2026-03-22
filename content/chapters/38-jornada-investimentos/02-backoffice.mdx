@@ -1,0 +1,71 @@
+---
+title: "Backoffice — Controle de posições"
+order: 2
+description: "Como o backoffice controla as posições de investimento dos clientes"
+---
+
+O backoffice de investimentos é responsável pelo controle preciso de todas as posições: quem tem o quê, quanto vale, quando vence e quanto de IR será retido.
+
+## Controle de posições
+
+O sistema de custódia mantém o registro de todas as posições de investimento:
+
+**Por cliente:** qual é o portfólio de investimentos de cada cliente? Quais títulos tem, com quais taxas e vencimentos?
+
+**Por produto:** qual é o estoque total de CDBs emitidos? Qual é o custo de funding de cada produto?
+
+**Por vencimento:** quais títulos vencem nos próximos 30, 60, 90 dias? O banco tem liquidez para honrar esses vencimentos?
+
+**Por taxa:** qual é a distribuição de taxas da carteira de captação? Qual é o custo médio de funding?
+
+## Reconciliação de posições
+
+Diariamente, o backoffice reconcilia as posições de investimento:
+
+**Reconciliação interna:** o saldo total de CDBs no sistema de custódia bate com o saldo da conta COSIF de depósitos a prazo?
+
+**Reconciliação com a CETIP/B3:** para títulos registrados na CETIP (como LCI e LCA), o saldo no sistema interno bate com o saldo registrado na CETIP?
+
+**Reconciliação de rendimentos:** o rendimento calculado internamente bate com o rendimento calculado pela CETIP?
+
+Divergências precisam ser investigadas e corrigidas antes do fechamento do dia.
+
+## Controle de IR
+
+O backoffice de investimentos é responsável pelo controle e recolhimento do IR sobre rendimentos:
+
+**Cálculo:** no momento do resgate, o sistema calcula o IR com base no prazo e na alíquota correspondente.
+
+**Retenção:** o IR é retido na fonte — o cliente recebe o valor líquido.
+
+**Recolhimento:** o IR retido é recolhido à Receita Federal até o último dia útil do mês seguinte.
+
+**Informe de rendimentos:** anualmente, o banco emite o informe de rendimentos para cada cliente, com todos os rendimentos recebidos e o IR retido no ano.
+
+## Controle de limites do FGC
+
+O FGC garante até R$ 250.000 por CPF por instituição. O backoffice monitora:
+
+- Clientes com posição próxima do limite do FGC (para alertar sobre o risco)
+- Posição total de captação garantida pelo FGC (para controle de risco do banco)
+
+## Vencimentos e renovações
+
+O backoffice monitora os vencimentos futuros e gerencia as renovações:
+
+**Alertas de vencimento:** o sistema alerta o cliente com 30, 15 e 5 dias de antecedência sobre o vencimento do título.
+
+**Processamento de renovações automáticas:** no vencimento, os títulos com renovação automática são renovados nas condições vigentes.
+
+**Processamento de resgates:** os títulos que não foram renovados são resgatados e o valor é creditado na conta do cliente.
+
+**Relatório de vencimentos:** o backoffice produz diariamente um relatório de vencimentos para a tesouraria, que usa essa informação para planejar a liquidez.
+
+## Indicadores de qualidade
+
+| Indicador | Referência |
+|---|---|
+| Precisão do cálculo de rendimentos | 100% (zero tolerância a erros) |
+| Prazo de crédito no resgate | D+0 (mesmo dia) |
+| Prazo de emissão do informe de rendimentos | Até 28/02 do ano seguinte |
+| Taxa de divergências na reconciliação | < 0,01% |

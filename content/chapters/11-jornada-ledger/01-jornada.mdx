@@ -1,0 +1,127 @@
+---
+title: "Jornada — Geração de eventos e lançamentos contábeis"
+order: 1
+description: "Como um evento financeiro se transforma em lançamentos contábeis consistentes"
+---
+
+Toda operação financeira em um banco gera eventos que precisam ser registrados no ledger. Entender esse fluxo — do evento ao lançamento contábil — é fundamental para construir sistemas financeiros corretos.
+
+## O modelo de eventos
+
+Em sistemas bancários modernos, as operações são modeladas como **eventos imutáveis**. Um evento representa algo que aconteceu: "o cliente João fez um depósito de R$ 500 às 14:32:15".
+
+Eventos têm algumas características importantes:
+- **Imutáveis:** uma vez criados, não mudam
+- **Ordenados:** têm um timestamp e uma sequência
+- **Completos:** contêm todos os dados necessários para processar o lançamento
+- **Rastreáveis:** têm um ID único que permite correlacionar com outros sistemas
+
+## Da operação ao lançamento: passo a passo
+
+Vamos acompanhar um Pix de R$ 500 do cliente A (banco X) para o cliente B (banco Y):
+
+### No banco X (pagador)
+
+**Evento gerado:**
+```json
+{
+  "event_id": "evt-pix-001",
+  "type": "PIX_SAIDA",
+  "timestamp": "2024-01-15T14:32:15Z",
+  "conta_origem": "12345",
+  "valor": 500.00,
+  "chave_destino": "cpf-do-cliente-b",
+  "banco_destino": "banco-y",
+  "status": "PENDENTE"
+}
+```
+
+**Lançamentos gerados:**
+```
+Débito:  Conta Corrente Cliente A (passivo)    R$ 500,00
+Crédito: Conta de Liquidação SPI (ativo)       R$ 500,00
+```
+
+O dinheiro saiu da conta do cliente e foi para a conta de liquidação do banco no SPI.
+
+**Após confirmação do SPI:**
+```
+Débito:  Conta de Liquidação SPI (ativo)       R$ 500,00
+Crédito: Reservas no BACEN (ativo)             R$ 500,00
+```
+
+O banco X efetivamente transferiu R$ 500 das suas reservas no BACEN para o banco Y.
+
+### No banco Y (recebedor)
+
+**Evento recebido:**
+```json
+{
+  "event_id": "evt-pix-001-recebido",
+  "type": "PIX_ENTRADA",
+  "timestamp": "2024-01-15T14:32:18Z",
+  "conta_destino": "67890",
+  "valor": 500.00,
+  "banco_origem": "banco-x",
+  "status": "CONFIRMADO"
+}
+```
+
+**Lançamentos gerados:**
+```
+Débito:  Reservas no BACEN (ativo)             R$ 500,00
+Crédito: Conta Corrente Cliente B (passivo)    R$ 500,00
+```
+
+O banco Y recebeu R$ 500 nas suas reservas e creditou na conta do cliente B.
+
+## Garantindo consistência: o padrão Outbox
+
+Um dos maiores desafios é garantir que o evento financeiro e o lançamento contábil sejam sempre criados juntos — nunca um sem o outro.
+
+O **padrão Outbox** resolve isso:
+
+1. Na mesma transação de banco de dados que processa a operação, o sistema grava o evento em uma tabela "outbox"
+2. Um processo separado (o "relay") lê a tabela outbox e publica os eventos no sistema de mensageria
+3. O sistema de ledger consome os eventos e gera os lançamentos
+
+```sql
+BEGIN TRANSACTION;
+  -- Atualiza o saldo da conta
+  UPDATE contas SET saldo = saldo - 500 WHERE id = '12345';
+  
+  -- Grava o evento na outbox (mesma transação)
+  INSERT INTO outbox (event_id, type, payload, status)
+  VALUES ('evt-001', 'PIX_SAIDA', '{"valor": 500, ...}', 'PENDENTE');
+COMMIT;
+-- Se a transação falhar, nenhum dos dois é gravado
+-- Se a transação for bem-sucedida, ambos são gravados atomicamente
+```
+
+## Tratamento de falhas
+
+O que acontece quando algo dá errado no meio do processo?
+
+**Falha antes do lançamento:** a operação foi processada (saldo debitado) mas o lançamento não foi gerado. O padrão Outbox previne isso — se a transação falhar, o saldo não é debitado.
+
+**Falha após o lançamento:** o lançamento foi gerado mas a confirmação não chegou ao sistema chamador. O sistema pode reenviar com o mesmo ID de idempotência — o ledger vai reconhecer e retornar o resultado anterior.
+
+**Lançamento duplicado:** dois sistemas tentam gerar o mesmo lançamento. O ID de idempotência garante que apenas um seja processado.
+
+**Lançamento com valor errado:** o lançamento foi gerado com valor incorreto. A correção é feita com um estorno (lançamento reverso) seguido de um novo lançamento correto. O lançamento original permanece no histórico.
+
+## Sequência e ordenação
+
+Em sistemas distribuídos, garantir a ordem dos lançamentos é um desafio. Dois eventos podem chegar ao ledger fora de ordem.
+
+**Exemplo problemático:**
+1. Evento A: débito de R$ 1.000 (saldo: R$ 2.000 → R$ 1.000)
+2. Evento B: débito de R$ 800 (saldo: R$ 1.000 → R$ 200)
+
+Se chegarem na ordem B, A:
+1. Evento B: débito de R$ 800 (saldo: R$ 2.000 → R$ 1.200) ✓
+2. Evento A: débito de R$ 1.000 (saldo: R$ 1.200 → R$ 200) ✓
+
+O resultado final é o mesmo, mas a ordem intermediária é diferente. Para operações de débito, isso pode ser problemático se o saldo intermediário ficar negativo.
+
+A solução é usar **números de sequência** ou **timestamps monotônicos** para garantir que os lançamentos sejam processados na ordem correta.

@@ -1,0 +1,257 @@
+---
+/**
+ * [...slug].astro
+ * Dynamic route that generates one page per chapter/section at build time.
+ * URL format: /chapter-slug/section-slug
+ * Requirements: 8.2, 8.3, 8.4, 11.4
+ */
+import ChapterLayout from '../layouts/ChapterLayout.astro';
+import ContentError from '../components/ContentError.astro';
+import {
+  parseFrontmatter,
+  generateNavItems,
+  generateSectionUrl,
+  type NavItem,
+  type ChapterMeta,
+  type SectionFrontmatter,
+} from '../utils/contentLoader';
+import type { GlossaryTerm } from '../utils/glossary';
+
+// ── Types ──────────────────────────────────────────────────────────────────
+
+interface SectionEntry {
+  chapterSlug: string;
+  sectionSlug: string;
+  url: string;
+  frontmatter: SectionFrontmatter;
+  /** Render function returned by import.meta.glob */
+  render: () => Promise<{ Content: any }>;
+}
+
+// ── Discover all MDX files at build time ──────────────────────────────────
+
+// import.meta.glob returns a map of path → () => Promise<module>
+// The glob is relative to this file (src/pages/), so we go up two levels.
+const mdxModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+  default: any;
+}>('/content/chapters/**/*.mdx');
+
+// ── Parse chapter index files (index.md) for chapter metadata ─────────────
+
+const indexModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+}>('/content/chapters/**/index.md');
+
+// ── Build chapter metadata map ────────────────────────────────────────────
+
+const chapterMetaMap = new Map<string, ChapterMeta>();
+
+for (const [path, loadFn] of Object.entries(indexModules)) {
+  // path: /content/chapters/02-criacao-de-dinheiro/index.md
+  const parts = path.split('/');
+  // parts: ['', 'content', 'chapters', '<chapter-slug>', 'index.md']
+  const chapterSlug = parts[3];
+  if (!chapterSlug) continue;
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    chapterMetaMap.set(chapterSlug, {
+      title: rawTitle,
+      order: Number(rawOrder),
+      description: typeof fm['description'] === 'string' ? fm['description'] : '',
+      slug: chapterSlug,
+    });
+  } catch {
+    // Skip chapters with unreadable index files
+  }
+}
+
+// ── Build section entries ─────────────────────────────────────────────────
+
+const sections: SectionEntry[] = [];
+
+for (const [path, loadFn] of Object.entries(mdxModules)) {
+  // path: /content/chapters/02-criacao-de-dinheiro/01-fluxo-de-dinheiro.mdx
+  const parts = path.split('/');
+  // parts: ['', 'content', 'chapters', '<chapter-slug>', '<file>.mdx']
+  const chapterSlug = parts[3];
+  const fileName = parts[4];
+  if (!chapterSlug || !fileName) continue;
+
+  // Derive section slug from filename (strip extension)
+  const sectionSlug = fileName.replace(/\.mdx$/, '');
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+
+    // Build a raw frontmatter string to reuse parseFrontmatter validation
+    // (or parse directly from the module's frontmatter object)
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    const frontmatter: SectionFrontmatter = {
+      title: rawTitle,
+      order: Number(rawOrder),
+      description: typeof fm['description'] === 'string' ? fm['description'] : undefined,
+      simulation: typeof fm['simulation'] === 'string' ? fm['simulation'] : undefined,
+      diagram: typeof fm['diagram'] === 'string' ? fm['diagram'] : undefined,
+      ogImage: typeof fm['ogImage'] === 'string' ? fm['ogImage'] : undefined,
+    };
+
+    sections.push({
+      chapterSlug,
+      sectionSlug,
+      url: generateSectionUrl(chapterSlug, sectionSlug),
+      frontmatter,
+      render: async () => {
+        const m = await loadFn();
+        return { Content: m.default };
+      },
+    });
+  } catch {
+    // Skip sections with invalid frontmatter — they'll show ContentError at runtime
+  }
+}
+
+// ── Build navItems for the navigation menu ────────────────────────────────
+
+// Group sections by chapter
+const chapterMap = new Map<
+  string,
+  { slug: string; meta: ChapterMeta; sections: Array<{ slug: string; frontmatter: SectionFrontmatter }> }
+>();
+
+for (const section of sections) {
+  const { chapterSlug } = section;
+
+  // Use chapter metadata from index.md if available, otherwise synthesise one
+  const meta: ChapterMeta = chapterMetaMap.get(chapterSlug) ?? {
+    title: chapterSlug,
+    order: 0,
+    description: '',
+    slug: chapterSlug,
+  };
+
+  if (!chapterMap.has(chapterSlug)) {
+    chapterMap.set(chapterSlug, { slug: chapterSlug, meta, sections: [] });
+  }
+
+  chapterMap.get(chapterSlug)!.sections.push({
+    slug: section.sectionSlug,
+    frontmatter: section.frontmatter,
+  });
+}
+
+const navItems: NavItem[] = generateNavItems(Array.from(chapterMap.values()));
+const totalSections = sections.length;
+
+// ── Glossary terms (loaded from content/glossary/terms.md in Task 20) ─────
+// For now, use an empty array — terms will be populated in Task 20.
+const terms: GlossaryTerm[] = [];
+
+// ── getStaticPaths ────────────────────────────────────────────────────────
+
+export async function getStaticPaths() {
+  // Re-discover MDX files inside getStaticPaths (Astro requirement)
+  const mdxMods = import.meta.glob<{
+    frontmatter: Record<string, unknown>;
+    default: any;
+  }>('/content/chapters/**/*.mdx');
+
+  const paths = [];
+
+  for (const [path, loadFn] of Object.entries(mdxMods)) {
+    const parts = path.split('/');
+    const chapterSlug = parts[3];
+    const fileName = parts[4];
+    if (!chapterSlug || !fileName) continue;
+
+    const sectionSlug = fileName.replace(/\.mdx$/, '');
+
+    paths.push({
+      params: { slug: `${chapterSlug}/${sectionSlug}` },
+      props: { path, chapterSlug, sectionSlug },
+    });
+  }
+
+  // Handle empty content directory gracefully
+  return paths;
+}
+
+// ── Per-page props ────────────────────────────────────────────────────────
+
+const { path: mdxPath, chapterSlug, sectionSlug } = Astro.props as {
+  path: string;
+  chapterSlug: string;
+  sectionSlug: string;
+};
+
+const currentUrl = generateSectionUrl(chapterSlug, sectionSlug);
+
+// Find the section entry for this page
+const sectionEntry = sections.find(
+  (s) => s.chapterSlug === chapterSlug && s.sectionSlug === sectionSlug
+);
+
+// Render MDX content — may be null if file is missing/broken (Req 8.4)
+let Content: any = null;
+let renderError: string | null = null;
+
+if (sectionEntry) {
+  try {
+    const rendered = await sectionEntry.render();
+    Content = rendered.Content;
+  } catch (err) {
+    renderError = `Erro ao renderizar seção: ${sectionSlug}`;
+  }
+} else {
+  renderError = `Seção não encontrada: ${chapterSlug}/${sectionSlug}`;
+}
+
+// Page metadata
+const pageTitle = sectionEntry?.frontmatter.title ?? sectionSlug;
+const pageDescription = sectionEntry?.frontmatter.description ?? '';
+const ogImage = sectionEntry?.frontmatter.ogImage;
+---
+
+<ChapterLayout
+  title={pageTitle}
+  description={pageDescription}
+  ogImage={ogImage}
+  ogUrl={currentUrl}
+  navItems={navItems}
+  currentUrl={currentUrl}
+  totalSections={totalSections}
+  currentSlug={`${chapterSlug}/${sectionSlug}`}
+  terms={terms}
+>
+  {renderError ? (
+    <ContentError
+      message={renderError}
+      suggestion="Verifique se o arquivo existe no repositório de conteúdo."
+    />
+  ) : (
+    <article class="chapter-content">
+      <Content />
+    </article>
+  )}
+</ChapterLayout>
+
+<style>
+  .chapter-content {
+    max-width: var(--measure, 65ch);
+    margin: 0 auto;
+  }
+</style>

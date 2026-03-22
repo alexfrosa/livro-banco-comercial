@@ -1,0 +1,208 @@
+---
+interface Props {
+  type: 'mermaid' | 'flow';
+  content: string;
+  alt: string;
+  animated?: boolean;
+}
+
+const { type, content, alt, animated = true } = Astro.props;
+
+// Generate a unique ID for each diagram instance
+const diagramId = `diagram-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<figure
+  class="diagram-renderer"
+  data-diagram-id={diagramId}
+  data-diagram-type={type}
+  data-animated={animated ? 'true' : 'false'}
+>
+  <!-- Accessible container: role="img" with aria-label -->
+  <div
+    id={diagramId}
+    class="diagram-renderer__container"
+    role="img"
+    aria-label={alt}
+    aria-busy="true"
+  >
+    <!-- Static fallback: shown until Mermaid renders, or if JS/SVG unavailable -->
+    <pre
+      class="diagram-renderer__fallback"
+      aria-hidden="false"
+      data-fallback
+    ><code>{content}</code></pre>
+  </div>
+
+  {alt && (
+    <figcaption class="diagram-renderer__caption">{alt}</figcaption>
+  )}
+</figure>
+
+<script>
+  // Dynamically import Mermaid to avoid SSR issues
+  async function initDiagrams() {
+    const containers = document.querySelectorAll<HTMLElement>('.diagram-renderer__container');
+    if (!containers.length) return;
+
+    // Check for SVG support (basic feature detection)
+    const svgSupported = typeof SVGElement !== 'undefined';
+    if (!svgSupported) return; // leave fallback visible
+
+    const { default: mermaid } = await import('mermaid');
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default',
+      securityLevel: 'loose',
+    });
+
+    // Check prefers-reduced-motion once
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Use Intersection Observer to render + animate on viewport entry
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(async (entry) => {
+          if (!entry.isIntersecting) return;
+
+          const container = entry.target as HTMLElement;
+          const figure = container.closest<HTMLElement>('.diagram-renderer');
+          const fallback = container.querySelector<HTMLElement>('[data-fallback]');
+          const shouldAnimate =
+            figure?.getAttribute('data-animated') === 'true' && !prefersReducedMotion;
+
+          // Get the raw mermaid content from the fallback <pre>
+          const code = fallback?.querySelector('code')?.textContent?.trim();
+          if (!code) return;
+
+          try {
+            const diagramId = container.id;
+            const { svg } = await mermaid.render(`${diagramId}-svg`, code);
+
+            // Replace fallback with rendered SVG
+            container.innerHTML = svg;
+            container.setAttribute('aria-busy', 'false');
+
+            // Restore aria-label on the container (mermaid may clear it)
+            const ariaLabel = container.getAttribute('aria-label');
+            if (!ariaLabel) {
+              const figcaption = figure?.querySelector('.diagram-renderer__caption');
+              if (figcaption?.textContent) {
+                container.setAttribute('aria-label', figcaption.textContent.trim());
+              }
+            }
+
+            // Trigger entrance animation
+            if (shouldAnimate) {
+              figure?.classList.add('diagram-renderer--animate');
+            }
+          } catch {
+            // Render failed — keep fallback visible
+            if (fallback) {
+              fallback.removeAttribute('aria-hidden');
+              fallback.style.display = '';
+            }
+            container.setAttribute('aria-busy', 'false');
+          }
+
+          observer.unobserve(container);
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    containers.forEach((container) => observer.observe(container));
+  }
+
+  // Run after DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDiagrams);
+  } else {
+    initDiagrams();
+  }
+</script>
+
+<style>
+  .diagram-renderer {
+    margin: var(--spacing-block, 3rem) 0;
+    padding: 0;
+    border: none;
+  }
+
+  .diagram-renderer__container {
+    position: relative;
+    overflow-x: auto;
+    background: color-mix(in srgb, var(--color-surface, #f8f7f4) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 10%, transparent);
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 80px;
+  }
+
+  /* Fallback: raw mermaid code in a <pre> */
+  .diagram-renderer__fallback {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-text, #1a1a2e);
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: transparent;
+    border: none;
+  }
+
+  /* Hide fallback once Mermaid has rendered (SVG present) */
+  .diagram-renderer__container:has(svg) [data-fallback] {
+    display: none;
+  }
+
+  /* Caption */
+  .diagram-renderer__caption {
+    margin-top: 0.75rem;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875em;
+    font-style: italic;
+    color: color-mix(in srgb, var(--color-text, #1a1a2e) 65%, transparent);
+    text-align: center;
+  }
+
+  /* Entrance animation */
+  .diagram-renderer--animate .diagram-renderer__container {
+    animation: diagram-fade-in 400ms ease forwards;
+  }
+
+  @keyframes diagram-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Respect prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .diagram-renderer--animate .diagram-renderer__container {
+      animation: none;
+    }
+  }
+
+  /* SVG responsive sizing */
+  .diagram-renderer__container :global(svg) {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Dark theme adjustments */
+  [data-theme='dark'] .diagram-renderer__container {
+    background: color-mix(in srgb, var(--color-surface, #0f172a) 90%, transparent);
+    border-color: color-mix(in srgb, var(--color-text, #e2e8f0) 15%, transparent);
+  }
+</style>

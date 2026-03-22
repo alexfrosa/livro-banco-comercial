@@ -1,0 +1,82 @@
+---
+title: "Backoffice — Monitoramento, bloqueios judiciais e ajustes"
+order: 2
+description: "Como o backoffice monitora contas, executa bloqueios judiciais e faz ajustes operacionais"
+---
+
+O backoffice de contas é responsável por tudo que acontece com as contas além das operações automáticas do dia a dia. Bloqueios judiciais, ajustes de saldo, tratamento de inconsistências — tudo passa pelo backoffice.
+
+## Monitoramento de contas
+
+O backoffice monitora continuamente o estado das contas através de dashboards e alertas automáticos:
+
+**Contas com saldo negativo:** em contas sem cheque especial, saldo negativo indica um problema — uma operação foi processada incorretamente, ou houve uma falha no controle de saldo. Precisa de investigação imediata.
+
+**Contas inativas:** contas sem movimentação por um período prolongado (geralmente 6 meses a 1 ano) são marcadas para revisão. O banco pode cobrar tarifa de inatividade ou iniciar processo de encerramento.
+
+**Contas com bloqueios próximos do vencimento:** bloqueios judiciais têm prazo. O sistema alerta quando um bloqueio está próximo de expirar para que o backoffice tome a ação necessária.
+
+**Contas com pendências de KYC:** clientes que não atualizaram dados dentro do prazo. O backoffice acompanha e pode escalar o bloqueio se necessário.
+
+## Bloqueios judiciais (BACENJUD/SISBAJUD)
+
+O SISBAJUD (Sistema de Busca de Ativos do Poder Judiciário) é o sistema que permite que juízes determinem bloqueios de contas bancárias diretamente, sem necessidade de ofício em papel.
+
+**Como funciona:**
+1. Um juiz emite uma ordem de bloqueio via SISBAJUD
+2. O sistema do BACEN repassa a ordem ao banco
+3. O banco tem um prazo curto (geralmente 24-48 horas) para executar o bloqueio
+4. O banco bloqueia o valor determinado na conta do cliente
+5. O banco responde ao SISBAJUD informando o valor bloqueado (pode ser menor que o solicitado se o saldo for insuficiente)
+
+**Responsabilidades do backoffice:**
+- Monitorar as ordens recebidas via SISBAJUD
+- Executar os bloqueios dentro do prazo
+- Responder ao sistema com o valor efetivamente bloqueado
+- Manter registro de todas as ordens e ações tomadas
+- Processar desbloqueios quando determinados pelo juízo
+
+**Casos complexos:**
+- O cliente tem múltiplas contas: o bloqueio pode ser distribuído entre elas
+- O saldo é insuficiente: o banco bloqueia o que tem e informa o saldo disponível
+- Novos depósitos após o bloqueio: dependendo da ordem judicial, podem ser bloqueados automaticamente até atingir o valor determinado
+
+## Ajustes manuais de saldo
+
+Em situações excepcionais, o backoffice pode precisar fazer ajustes manuais no saldo de uma conta. Isso é uma operação crítica e requer controles rigorosos.
+
+**Situações que exigem ajuste:**
+- Erro de processamento: uma operação foi debitada duas vezes
+- Estorno de tarifa indevida: o banco cobrou uma tarifa incorretamente
+- Crédito de indenização: o banco precisa compensar o cliente por um erro
+- Correção de lançamento contábil: um lançamento foi feito na conta errada
+
+**Controles obrigatórios:**
+- Dupla aprovação: o ajuste precisa ser aprovado por dois analistas
+- Justificativa documentada: o motivo do ajuste deve ser registrado
+- Limite de valor: ajustes acima de um valor limite exigem aprovação de nível superior
+- Trilha de auditoria: todo ajuste fica registrado com data, hora, responsável e justificativa
+
+## Portabilidade de conta
+
+O cliente tem direito à portabilidade: pode transferir sua conta (com histórico de transações e débitos automáticos) para outro banco sem custo.
+
+**Processo de portabilidade:**
+1. Cliente solicita portabilidade no banco destino
+2. Banco destino solicita ao banco origem a transferência
+3. Banco origem tem prazo para executar (geralmente 5 dias úteis)
+4. Débitos automáticos são migrados para a nova conta
+5. Saldo é transferido
+6. Conta no banco origem é encerrada
+
+O backoffice do banco origem precisa processar a portabilidade dentro do prazo e garantir que todos os débitos automáticos sejam corretamente migrados.
+
+## Reconciliação de contas
+
+Periodicamente, o backoffice executa reconciliações para garantir que os saldos das contas estão corretos:
+
+**Reconciliação interna:** o saldo no sistema de contas bate com os lançamentos no ledger? A soma de todos os saldos de contas correntes bate com o saldo da conta COSIF correspondente?
+
+**Reconciliação com o BACEN:** o saldo na conta de reservas do banco no BACEN bate com o que o banco registrou internamente?
+
+Divergências encontradas na reconciliação precisam ser investigadas e corrigidas. Divergências não explicadas são um sinal de alerta sério — podem indicar fraude, erro sistêmico ou problema de integridade de dados.

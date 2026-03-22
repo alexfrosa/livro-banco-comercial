@@ -1,0 +1,40 @@
+---
+title: "Simulação — Abrir conta, alterar status, encerrar"
+order: 1
+description: "Pratique o ciclo completo de vida de uma conta bancária"
+simulation: "AccountLifecycle"
+---
+
+Nesta simulação, você vai gerenciar o ciclo de vida completo de uma conta bancária: da abertura ao encerramento, passando por bloqueios e desbloqueios.
+
+## O que você vai praticar
+
+- Abrir uma conta para um cliente já cadastrado
+- Realizar operações básicas (depósito, saque, transferência)
+- Aplicar um bloqueio judicial e ver o impacto no saldo disponível
+- Desbloquear a conta após resolução judicial
+- Encerrar a conta e verificar os registros finais
+
+## Estados da conta
+
+Observe como o status da conta muda ao longo das operações:
+
+| Status | Operações permitidas |
+|---|---|
+| ATIVA | Todas |
+| BLOQUEADA_PARCIAL | Saques do saldo não bloqueado |
+| BLOQUEADA_TOTAL | Nenhuma |
+| ENCERRADA | Apenas consulta de histórico |
+
+## Cenários para explorar
+
+### Cenário 1: Fluxo normal
+Abra uma conta, faça alguns depósitos e saques, e encerre a conta normalmente.
+
+### Cenário 2: Bloqueio judicial
+Abra uma conta com saldo de R$ 5.000. Aplique um bloqueio judicial de R$ 3.000. Tente fazer um saque de R$ 3.000 — o sistema deve permitir apenas R$ 2.000 (o saldo não bloqueado).
+
+### Cenário 3: Saldo insuficiente para bloqueio
+Aplique um bloqueio judicial de R$ 10.000 em uma conta com saldo de R$ 3.000. O sistema deve bloquear apenas R$ 3.000 e registrar a diferença como "não encontrada".
+
+> **Dica:** observe os lançamentos contábeis gerados em cada operação. Cada mudança de saldo deve ter um lançamento correspondente no ledger.

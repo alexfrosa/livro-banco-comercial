@@ -1,0 +1,66 @@
+---
+title: "Conceitos — Risco de crédito, mercado e operacional"
+order: 1
+description: "Os três pilares da gestão de risco bancário: crédito, mercado e operacional"
+---
+
+A gestão de risco é uma das funções mais críticas de um banco. O Acordo de Basileia III define três categorias principais de risco que os bancos precisam gerenciar e para as quais precisam manter capital:
+
+## Risco de crédito
+
+O risco de crédito é o risco de que um devedor não pague o que deve. É o risco mais antigo e mais importante para a maioria dos bancos.
+
+**Componentes do risco de crédito:**
+
+**PD (Probability of Default):** a probabilidade de que o devedor não pague. Estimada com base no histórico de crédito, score, setor econômico, etc.
+
+**LGD (Loss Given Default):** quanto o banco perde se o devedor não pagar. Depende das garantias: um empréstimo com imóvel como garantia tem LGD menor que um empréstimo sem garantia.
+
+**EAD (Exposure at Default):** qual é o valor exposto no momento do default. Para um empréstimo simples, é o saldo devedor. Para um cartão de crédito, pode ser maior que o saldo atual (o cliente pode usar o limite antes de dar default).
+
+**Perda esperada = PD × LGD × EAD**
+
+**Concentração de risco:** o banco não deve ter exposição excessiva a um único cliente, setor ou região. O BACEN limita a exposição a um único cliente a 25% do patrimônio de referência do banco.
+
+## Risco de mercado
+
+O risco de mercado é o risco de perdas decorrentes de variações nos preços de mercado: taxas de juros, câmbio, ações, commodities.
+
+**VaR (Value at Risk):** a perda máxima esperada em um determinado período, com um determinado nível de confiança. Por exemplo: "o VaR diário a 99% é R$ 10 milhões" significa que há 1% de chance de perder mais de R$ 10 milhões em um dia.
+
+**Stress testing:** simulação de cenários extremos (crise financeira, alta abrupta de juros, desvalorização cambial) para avaliar o impacto no banco.
+
+**Risco de taxa de juros:** já discutido no capítulo de ALM. É o risco de perdas decorrentes de variações nas taxas de juros.
+
+**Risco cambial:** o banco tem ativos ou passivos em moeda estrangeira. Se o câmbio variar, o valor em reais muda. O BACEN limita a exposição cambial dos bancos.
+
+## Risco operacional
+
+O risco operacional é o risco de perdas decorrentes de falhas em processos, pessoas, sistemas ou eventos externos. É o mais difícil de quantificar.
+
+**Exemplos de risco operacional:**
+- Fraude interna (funcionário desviando recursos)
+- Fraude externa (golpes, phishing, clonagem de cartão)
+- Falha de sistema (indisponibilidade do core banking)
+- Erro humano (lançamento incorreto, envio para conta errada)
+- Desastre natural (incêndio no datacenter)
+- Falha de fornecedor (empresa de processamento de cartões fora do ar)
+
+**Gestão do risco operacional:**
+- Mapeamento de processos e identificação de pontos de falha
+- Controles internos (segregação de funções, dupla aprovação, auditoria)
+- Plano de continuidade de negócios (BCP)
+- Seguro operacional
+- Treinamento e cultura de risco
+
+**Capital para risco operacional:** o Basileia III exige que os bancos mantenham capital para cobrir perdas operacionais. O cálculo pode ser feito por métodos simples (percentual da receita) ou avançados (modelos internos baseados em histórico de perdas).
+
+## Risco de liquidez
+
+Já discutido no capítulo de tesouraria e ALM. É o risco de o banco não conseguir honrar seus compromissos no prazo.
+
+## Integração dos riscos
+
+Os riscos não são independentes — eles se interagem. Uma crise econômica (risco de mercado) aumenta a inadimplência (risco de crédito) e pode causar corrida bancária (risco de liquidez). Um sistema fora do ar (risco operacional) pode impedir o processamento de pagamentos e causar problemas de liquidez.
+
+A gestão integrada de riscos (Enterprise Risk Management — ERM) busca entender essas interações e gerenciar o risco total do banco de forma holística.

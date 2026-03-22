@@ -1,0 +1,74 @@
+---
+title: "Conceitos — CDB, LCI e LCA"
+order: 1
+description: "Os principais produtos de investimento bancário e suas características"
+---
+
+Os produtos de investimento bancário são, do ponto de vista do banco, instrumentos de captação. Do ponto de vista do cliente, são formas de fazer o dinheiro render. Entender ambas as perspectivas é essencial para o backoffice de investimentos.
+
+## CDB — Certificado de Depósito Bancário
+
+O CDB é o produto de investimento mais comum dos bancos. O cliente empresta dinheiro ao banco por um prazo definido e recebe juros em troca.
+
+**Características:**
+- Emitido pelo banco (é uma dívida do banco com o cliente)
+- Garantido pelo FGC (Fundo Garantidor de Créditos) até R$ 250.000 por CPF por instituição
+- Tributação: IR regressivo (22,5% até 180 dias, 20% de 181 a 360 dias, 17,5% de 361 a 720 dias, 15% acima de 720 dias)
+- Pode ser pré-fixado, pós-fixado (CDI) ou híbrido (IPCA+)
+
+**Tipos de CDB:**
+- **CDB com liquidez diária:** pode ser resgatado a qualquer momento. Taxa menor.
+- **CDB com prazo definido:** só pode ser resgatado no vencimento (ou com penalidade). Taxa maior.
+- **CDB com carência:** pode ser resgatado após um período mínimo. Taxa intermediária.
+
+## LCI — Letra de Crédito Imobiliário
+
+A LCI é um título de renda fixa emitido por bancos para financiar o setor imobiliário. A principal vantagem para o investidor pessoa física é a **isenção de IR**.
+
+**Características:**
+- Isenção de IR para pessoa física
+- Garantida pelo FGC até R$ 250.000
+- Os recursos captados devem ser direcionados para crédito imobiliário
+- Prazo mínimo de 90 dias (sem liquidez antes disso)
+- Taxa geralmente menor que CDB (compensada pela isenção de IR)
+
+**Comparação CDB vs LCI:**
+Um CDB a 100% do CDI e uma LCI a 85% do CDI têm o mesmo retorno líquido para uma pessoa física na alíquota de 15% de IR (prazo acima de 720 dias). Para prazos menores, a LCI pode ser mais vantajosa mesmo com taxa menor.
+
+## LCA — Letra de Crédito do Agronegócio
+
+Similar à LCI, mas os recursos são direcionados para o agronegócio. Mesmas características de isenção de IR e garantia do FGC.
+
+**Diferença principal:** os bancos que emitem LCA precisam ter carteira de crédito rural. Bancos sem essa carteira não podem emitir LCA.
+
+## Outros produtos de investimento bancário
+
+**LF — Letra Financeira:** título de longo prazo (mínimo 2 anos) emitido por bancos. Não tem garantia do FGC. Voltado para investidores institucionais.
+
+**CRI e CRA:** Certificados de Recebíveis Imobiliários e do Agronegócio. Emitidos por securitizadoras, não por bancos diretamente. Isentos de IR para PF.
+
+**Fundos de investimento:** o banco pode distribuir fundos próprios ou de terceiros. O cliente investe no fundo, que por sua vez investe em ativos financeiros.
+
+## O FGC — Fundo Garantidor de Créditos
+
+O FGC é uma entidade privada que garante os depósitos e investimentos dos clientes em caso de falência do banco.
+
+**Cobertura:** até R$ 250.000 por CPF por instituição, com limite global de R$ 1 milhão por CPF em um período de 4 anos.
+
+**Produtos cobertos:** depósitos à vista, CDB, LCI, LCA, poupança, letras de câmbio.
+
+**Produtos não cobertos:** fundos de investimento, CRI, CRA, LF, ações.
+
+O FGC é fundamental para a confiança no sistema financeiro. Sem ele, os clientes teriam muito mais receio de depositar em bancos menores.
+
+## Tributação de investimentos
+
+| Produto | IR PF | IOF |
+|---|---|---|
+| CDB | Regressivo (15% a 22,5%) | Sim (até 30 dias) |
+| LCI/LCA | Isento | Não |
+| Poupança | Isento | Não |
+| Fundos de renda fixa | Regressivo | Sim (até 30 dias) |
+| Fundos de ações | 15% | Não |
+
+O backoffice de investimentos precisa calcular e reter o IR na fonte no momento do resgate.

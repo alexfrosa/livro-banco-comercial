@@ -1,0 +1,26 @@
+{
+  "name": "interactive-banking-book",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.0",
+    "@astrojs/preact": "^5.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^6.0.0",
+    "mermaid": "^10.6.0",
+    "preact": "^10.19.0"
+  },
+  "devDependencies": {
+    "@testing-library/preact": "^3.2.0",
+    "fast-check": "^3.14.0",
+    "happy-dom": "^12.10.0",
+    "vitest": "^1.0.0"
+  }
+}

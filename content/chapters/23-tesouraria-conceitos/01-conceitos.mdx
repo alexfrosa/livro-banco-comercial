@@ -1,0 +1,71 @@
+---
+title: "Conceitos — Liquidez, caixa e STR/SPI"
+order: 1
+description: "O que é liquidez bancária, como o caixa do banco funciona e o papel dos sistemas STR e SPI"
+---
+
+A tesouraria é o coração financeiro de um banco. Enquanto o backoffice de pagamentos processa as transações dos clientes, a tesouraria garante que o banco tem dinheiro suficiente para honrar todos os seus compromissos — agora e no futuro.
+
+## O que é liquidez bancária
+
+**Liquidez** é a capacidade de um banco de honrar seus compromissos financeiros no momento em que vencem. Um banco pode ser solvente (ter mais ativos que passivos) mas ilíquido (não ter dinheiro disponível agora).
+
+A crise financeira de 2008 mostrou que a falta de liquidez pode derrubar bancos solventes. O Lehman Brothers tinha ativos, mas não conseguia convertê-los em dinheiro rápido o suficiente para pagar suas dívidas de curto prazo.
+
+## O caixa do banco
+
+O "caixa" de um banco não é um cofre físico — é o conjunto de recursos disponíveis imediatamente:
+
+**Reservas no BACEN (conta STR):** o saldo que o banco mantém na sua conta de reservas no BACEN. É o dinheiro mais líquido que existe — pode ser usado imediatamente para qualquer liquidação.
+
+**Conta de liquidação SPI:** saldo específico para liquidação de Pix. Precisa ser mantido separadamente das reservas STR.
+
+**Títulos públicos de alta liquidez:** LFTs (Letras Financeiras do Tesouro) e outros títulos que podem ser vendidos rapidamente no mercado secundário ou usados em operações compromissadas com o BACEN.
+
+**Disponibilidades em outros bancos:** saldos em contas em outros bancos (correspondentes bancários, contas de câmbio).
+
+## Gestão intraday
+
+A tesouraria monitora o caixa ao longo do dia, hora a hora:
+
+**Entradas previstas:**
+- Pix e TEDs recebidos
+- Vencimento de aplicações
+- Pagamentos de clientes (parcelas de crédito, tarifas)
+- Captações novas (CDBs, depósitos)
+
+**Saídas previstas:**
+- Pix e TEDs enviados
+- Vencimento de captações (CDBs, depósitos)
+- Recolhimento de compulsório
+- Pagamentos interbancários
+
+A diferença entre entradas e saídas é a **posição de caixa**. Se positiva, o banco tem excesso de liquidez. Se negativa, precisa captar recursos.
+
+## STR e SPI: os sistemas de liquidação
+
+**STR (Sistema de Transferência de Reservas):**
+- Opera em dias úteis, horário comercial
+- Liquidação bruta em tempo real (LBTR)
+- Usado para TED de alto valor, recolhimento de compulsório, operações interbancárias
+- Cada transação é liquidada individualmente, sem compensação
+
+**SPI (Sistema de Pagamentos Instantâneos):**
+- Opera 24/7
+- Liquidação em segundos
+- Usado exclusivamente para Pix
+- Liquidação bruta em tempo real
+
+A tesouraria precisa garantir saldo suficiente em ambas as contas para cobrir as liquidações do dia.
+
+## Risco de liquidez
+
+O risco de liquidez é o risco de o banco não conseguir honrar seus compromissos no prazo. Existem dois tipos:
+
+**Risco de liquidez de mercado:** o banco não consegue vender ativos rapidamente sem incorrer em perdas significativas.
+
+**Risco de liquidez de funding:** o banco não consegue captar recursos suficientes para financiar suas operações.
+
+O BACEN exige que os bancos mantenham indicadores mínimos de liquidez:
+- **LCR (Liquidity Coverage Ratio):** o banco deve ter ativos líquidos suficientes para cobrir saídas de caixa por 30 dias em um cenário de estresse
+- **NSFR (Net Stable Funding Ratio):** o banco deve ter funding estável suficiente para financiar seus ativos de longo prazo

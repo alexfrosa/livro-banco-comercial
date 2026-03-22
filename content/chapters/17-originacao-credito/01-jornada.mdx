@@ -1,0 +1,64 @@
+---
+title: "Jornada — Solicitação, análise e aprovação"
+order: 1
+description: "As etapas de originação de crédito: da solicitação à formalização do contrato"
+---
+
+A originação de crédito é o processo de avaliar, aprovar e formalizar um novo contrato de crédito. É um dos processos mais complexos do backoffice bancário, envolvendo análise de risco, validações regulatórias e formalização jurídica.
+
+## Etapa 1: Solicitação
+
+O cliente solicita crédito informando:
+- Modalidade desejada (empréstimo pessoal, financiamento, cartão)
+- Valor solicitado
+- Prazo desejado
+- Finalidade (para algumas modalidades)
+
+O sistema verifica se o cliente já tem cadastro ativo e se está elegível para solicitar crédito (conta ativa, KYC atualizado, sem restrições).
+
+## Etapa 2: Análise de crédito
+
+A análise de crédito avalia a capacidade e a disposição do cliente de pagar a dívida:
+
+**Score de crédito:** modelo estatístico que prevê a probabilidade de inadimplência com base no histórico do cliente. Considera: histórico de pagamentos, dívidas em aberto, tempo de relacionamento com o banco, renda, etc.
+
+**Capacidade de pagamento:** a parcela do empréstimo não deve comprometer mais de um percentual da renda do cliente (geralmente 30-35%). O banco verifica a renda declarada e, quando possível, a renda comprovada.
+
+**Consulta ao SCR:** o Sistema de Informações de Crédito do BACEN mostra quanto o cliente deve em todo o sistema financeiro. Isso evita que o cliente tome mais crédito do que consegue pagar.
+
+**Análise de garantias:** para créditos com garantia (financiamento imobiliário, veículo), o bem é avaliado para garantir que cobre o valor do empréstimo.
+
+## Etapa 3: Decisão
+
+Com base na análise, o sistema toma uma decisão:
+
+**Aprovação automática:** o cliente atende todos os critérios. O sistema aprova com as condições calculadas (taxa, prazo, valor máximo).
+
+**Aprovação com condições:** o cliente é aprovado, mas com valor menor, prazo diferente, ou taxa maior que a solicitada.
+
+**Encaminhamento para análise manual:** casos borderline vão para um analista de crédito humano.
+
+**Reprovação:** o cliente não atende os critérios mínimos. O banco deve informar o motivo (de forma genérica, para não revelar os critérios internos).
+
+## Etapa 4: Formalização do contrato
+
+Se aprovado, o contrato é formalizado:
+
+1. **Geração do contrato:** o sistema gera o contrato com todas as condições: valor, taxa, prazo, sistema de amortização, CET, garantias.
+
+2. **Assinatura:** o cliente assina o contrato (digitalmente, via app, ou fisicamente em agência).
+
+3. **Registro de garantias:** para créditos com garantia real (imóvel, veículo), a garantia é registrada em cartório ou no DETRAN.
+
+4. **Liberação do crédito:** após a assinatura e registro das garantias, o valor é creditado na conta do cliente.
+
+5. **Registro no SCR:** o contrato é reportado ao SCR do BACEN.
+
+## Etapa 5: Geração do cronograma de pagamentos
+
+Com o contrato formalizado, o sistema gera o cronograma de pagamentos:
+- Data de vencimento de cada parcela
+- Valor de cada parcela (amortização + juros)
+- Saldo devedor após cada pagamento
+
+O cronograma é disponibilizado ao cliente e serve como base para a cobrança.

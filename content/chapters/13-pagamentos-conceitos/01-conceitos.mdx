@@ -1,0 +1,84 @@
+---
+title: "Conceitos — PIX, TED e DOC"
+order: 1
+description: "Os principais instrumentos de pagamento no Brasil e como funcionam"
+---
+
+O Brasil tem um dos sistemas de pagamento mais avançados do mundo. O Pix, lançado em 2020, transformou radicalmente a forma como pessoas e empresas transferem dinheiro. Mas entender o Pix exige entender o contexto em que ele surgiu.
+
+## O ecossistema de pagamentos brasileiro
+
+Antes do Pix, os principais instrumentos de transferência eram:
+
+**DOC — Documento de Ordem de Crédito**
+O DOC foi o primeiro instrumento de transferência eletrônica entre bancos no Brasil. Tinha liquidação em D+1 (o dinheiro chegava no dia seguinte) e limite de R$ 4.999,99. Foi descontinuado em 2020 com a chegada do Pix.
+
+**TED — Transferência Eletrônica Disponível**
+A TED trouxe liquidação no mesmo dia (D+0) para transferências acima de R$ 250 (o limite mínimo foi removido com o tempo). Opera apenas em dias úteis, no horário de funcionamento do STR (geralmente até 17h). Ainda existe e é usada para transferências de alto valor.
+
+**Boleto bancário**
+Não é uma transferência — é um instrumento de cobrança. O pagador paga o boleto em qualquer banco, e o valor é creditado na conta do beneficiário após a compensação (geralmente D+1 ou D+2). Amplamente usado para pagamentos de contas e cobranças empresariais.
+
+**Débito automático**
+Autorização permanente para que o banco debite automaticamente valores recorrentes (contas de luz, telefone, planos de saúde). O cliente autoriza uma vez e os débitos acontecem automaticamente nas datas de vencimento.
+
+## Pix: a revolução dos pagamentos
+
+O Pix foi criado pelo BACEN e entrou em operação em novembro de 2020. Em poucos anos, tornou-se o meio de pagamento mais usado no Brasil.
+
+**Características principais:**
+- **Disponibilidade:** 24 horas por dia, 7 dias por semana, 365 dias por ano
+- **Velocidade:** liquidação em segundos (geralmente menos de 10 segundos)
+- **Custo:** gratuito para pessoas físicas; para PJ, os bancos podem cobrar
+- **Limites:** definidos pelo banco e pelo cliente (com limites máximos regulatórios)
+- **Participação:** obrigatória para instituições com mais de 500 mil clientes
+
+**Modalidades do Pix:**
+- **Pix Transferência:** transferência entre contas usando chave Pix
+- **Pix Pagamento:** pagamento de cobranças (substitui o boleto em muitos casos)
+- **Pix Cobrança:** o recebedor gera um QR Code com os dados da cobrança
+- **Pix Saque e Pix Troco:** sacar dinheiro em estabelecimentos comerciais
+- **Pix Agendado:** agendar um Pix para uma data futura
+
+## As chaves Pix
+
+A chave Pix é um identificador que substitui os dados bancários (banco, agência, conta) nas transferências. Existem quatro tipos:
+
+| Tipo | Exemplo | Observação |
+|---|---|---|
+| CPF/CNPJ | 123.456.789-00 | Vinculado ao documento do titular |
+| E-mail | joao@email.com | Pode ser qualquer e-mail |
+| Telefone | +55 11 99999-9999 | Número com DDD e código do país |
+| Chave aleatória | 3a4b5c6d-... | UUID gerado pelo banco |
+
+As chaves são registradas no **DICT** (Diretório de Identificadores de Contas Transacionais), um banco de dados centralizado operado pelo BACEN. Quando você faz um Pix, o sistema consulta o DICT para descobrir em qual banco e conta a chave está registrada.
+
+## Como o Pix funciona tecnicamente
+
+O Pix usa uma arquitetura de mensageria baseada em padrões ISO 20022 (o mesmo padrão usado em sistemas de pagamento internacionais).
+
+**Fluxo de uma transferência Pix:**
+
+1. **Iniciação:** o pagador informa a chave Pix do destinatário e o valor
+2. **Consulta ao DICT:** o banco do pagador consulta o DICT para obter os dados bancários do destinatário
+3. **Instrução ao SPI:** o banco do pagador envia uma mensagem de pagamento ao SPI
+4. **Liquidação:** o SPI debita a conta de liquidação do banco pagador e credita a do banco recebedor
+5. **Notificação:** o banco recebedor é notificado e credita na conta do destinatário
+6. **Confirmação:** ambos os clientes recebem confirmação
+
+Todo esse processo acontece em segundos, com mensagens trafegando entre os sistemas em tempo real.
+
+## Limites e segurança
+
+O BACEN define limites máximos para transações Pix, e os bancos podem definir limites menores:
+
+- **Limite noturno:** transações entre 20h e 6h têm limite reduzido (padrão: R$ 1.000)
+- **Limite diário:** soma de todas as transações no dia
+- **Limite por transação:** valor máximo por operação individual
+
+Os clientes podem ajustar seus limites dentro dos máximos permitidos pelo banco. Aumentos de limite têm um período de carência (geralmente 24-48 horas) para prevenir fraudes.
+
+**Mecanismos de segurança:**
+- **MED (Mecanismo Especial de Devolução):** permite que o banco do pagador solicite a devolução de um Pix em casos de fraude ou erro, com prazo de 90 dias
+- **Infojud/Sisbajud:** integração com o judiciário para bloqueio de valores em casos de fraude
+- **Monitoramento em tempo real:** os bancos monitoram transações Pix em busca de padrões suspeitos

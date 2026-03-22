@@ -1,0 +1,149 @@
+---
+interface Props {
+  totalSections: number;
+  currentSlug: string;
+}
+
+const { totalSections, currentSlug } = Astro.props;
+---
+
+<div class="progress-tracker" aria-label="Progresso de leitura">
+  <p class="progress-text" id="progress-display">
+    <!-- Populated by client-side script -->
+    0 / {totalSections} seções lidas (0%)
+  </p>
+  <button
+    id="progress-reset-btn"
+    class="progress-reset-btn"
+    type="button"
+    aria-label="Redefinir progresso de leitura"
+  >
+    Redefinir progresso
+  </button>
+</div>
+
+<script define:vars={{ totalSections, currentSlug }}>
+  (function () {
+    const STORAGE_KEY = 'ibbook_progress';
+
+    function safeGet(key) {
+      try { return localStorage.getItem(key); } catch { return null; }
+    }
+
+    function safeSet(key, value) {
+      try { localStorage.setItem(key, value); } catch { /* ignore */ }
+    }
+
+    function safeRemove(key) {
+      try { localStorage.removeItem(key); } catch { /* ignore */ }
+    }
+
+    function loadProgress() {
+      const raw = safeGet(STORAGE_KEY);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          return {
+            visitedSections: Array.isArray(parsed.visitedSections) ? parsed.visitedSections : [],
+            lastVisited: typeof parsed.lastVisited === 'string' ? parsed.lastVisited : null,
+            totalSections,
+          };
+        } catch { /* corrupted */ }
+      }
+      return { visitedSections: [], lastVisited: null, totalSections };
+    }
+
+    function saveProgress(progress) {
+      safeSet(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function markVisited(slug) {
+      const progress = loadProgress();
+      if (!progress.visitedSections.includes(slug)) {
+        progress.visitedSections.push(slug);
+      }
+      progress.lastVisited = slug;
+      progress.totalSections = totalSections;
+      saveProgress(progress);
+    }
+
+    function getPercentage(visited) {
+      if (totalSections <= 0) return 0;
+      const raw = (visited / totalSections) * 100;
+      const clamped = Math.min(100, Math.max(0, raw));
+      return Math.round(clamped * 10) / 10;
+    }
+
+    function updateDisplay() {
+      const progress = loadProgress();
+      const count = progress.visitedSections.length;
+      const pct = getPercentage(count);
+      const display = document.getElementById('progress-display');
+      if (display) {
+        display.textContent = `${count} / ${totalSections} seções lidas (${pct}%)`;
+      }
+    }
+
+    // Mark current section as visited on mount
+    markVisited(currentSlug);
+    updateDisplay();
+
+    // Reset button with confirmation
+    const resetBtn = document.getElementById('progress-reset-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        const confirmed = window.confirm(
+          'Tem certeza que deseja redefinir todo o progresso de leitura? Esta ação não pode ser desfeita.'
+        );
+        if (confirmed) {
+          safeRemove(STORAGE_KEY);
+          updateDisplay();
+          // Also hide visited indicators in NavigationMenu
+          document.querySelectorAll('[data-visited-slug]').forEach((el) => {
+            el.style.display = 'none';
+          });
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .progress-tracker {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+  }
+
+  .progress-text {
+    margin: 0;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    color: color-mix(in srgb, var(--color-text, #1a1a2e) 75%, transparent);
+  }
+
+  .progress-reset-btn {
+    padding: 0.375rem 0.75rem;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.8rem;
+    color: var(--color-text, #1a1a2e);
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 30%, transparent);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .progress-reset-btn:hover,
+  .progress-reset-btn:focus-visible {
+    background: color-mix(in srgb, var(--color-primary, #2563eb) 8%, transparent);
+    border-color: var(--color-primary, #2563eb);
+    color: var(--color-primary, #2563eb);
+    outline: 2px solid var(--color-primary, #2563eb);
+    outline-offset: 2px;
+  }
+</style>

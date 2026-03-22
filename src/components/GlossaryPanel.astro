@@ -1,0 +1,425 @@
+---
+import type { GlossaryTerm } from '../utils/glossary';
+
+interface Props {
+  terms: GlossaryTerm[];
+  initialTerm?: string;
+}
+
+const { terms, initialTerm } = Astro.props;
+---
+
+<aside
+  id="glossary-panel"
+  role="complementary"
+  aria-label="Glossário"
+  aria-hidden="true"
+  class="glossary-panel"
+>
+  <div class="glossary-panel__header">
+    <h2 class="glossary-panel__title">Glossário</h2>
+    <button
+      id="glossary-close"
+      class="glossary-panel__close"
+      aria-label="Fechar glossário"
+      type="button"
+    >
+      <span aria-hidden="true">✕</span>
+    </button>
+  </div>
+
+  <div class="glossary-panel__search">
+    <label for="glossary-search" class="glossary-panel__search-label">
+      Pesquisar termos
+    </label>
+    <input
+      id="glossary-search"
+      type="search"
+      class="glossary-panel__search-input"
+      placeholder="Digite para filtrar..."
+      autocomplete="off"
+      aria-controls="glossary-list"
+    />
+  </div>
+
+  <ul
+    id="glossary-list"
+    class="glossary-panel__list"
+    role="list"
+    aria-live="polite"
+    aria-label="Termos do glossário"
+  >
+    {terms.map((term) => (
+      <li
+        class="glossary-panel__item"
+        data-term-id={term.id}
+        data-term={term.term.toLowerCase()}
+        data-definition={term.definition.toLowerCase()}
+      >
+        <h3 class="glossary-panel__term">{term.term}</h3>
+        <p class="glossary-panel__definition">{term.definition}</p>
+        {term.relatedTerms && term.relatedTerms.length > 0 && (
+          <p class="glossary-panel__related">
+            <span class="glossary-panel__related-label">Termos relacionados: </span>
+            {term.relatedTerms.join(', ')}
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+
+  <p id="glossary-empty" class="glossary-panel__empty" aria-live="polite" hidden>
+    Nenhum termo encontrado.
+  </p>
+</aside>
+
+<!-- Overlay backdrop -->
+<div id="glossary-overlay" class="glossary-overlay" aria-hidden="true"></div>
+
+<script define:vars={{ initialTerm }}>
+  const panel = document.getElementById('glossary-panel');
+  const overlay = document.getElementById('glossary-overlay');
+  const closeBtn = document.getElementById('glossary-close');
+  const searchInput = document.getElementById('glossary-search');
+  const list = document.getElementById('glossary-list');
+  const emptyMsg = document.getElementById('glossary-empty');
+
+  /** Element that triggered the panel open — focus returns here on close */
+  let returnFocusRef = null;
+
+  function openPanel(termId, triggerEl) {
+    if (!panel || !overlay) return;
+
+    returnFocusRef = triggerEl || null;
+
+    panel.setAttribute('aria-hidden', 'false');
+    panel.classList.add('glossary-panel--open');
+    overlay.classList.add('glossary-overlay--visible');
+    document.body.classList.add('glossary-body-lock');
+
+    // Clear search and show all terms
+    if (searchInput) {
+      searchInput.value = '';
+      filterTerms('');
+    }
+
+    // Scroll to the specific term if provided
+    if (termId) {
+      const termEl = list?.querySelector(`[data-term-id="${termId}"]`);
+      if (termEl) {
+        termEl.scrollIntoView({ block: 'nearest' });
+        termEl.classList.add('glossary-panel__item--highlighted');
+      }
+    }
+
+    // Move focus into the panel
+    if (closeBtn) {
+      closeBtn.focus();
+    }
+  }
+
+  function closePanel() {
+    if (!panel || !overlay) return;
+
+    panel.setAttribute('aria-hidden', 'true');
+    panel.classList.remove('glossary-panel--open');
+    overlay.classList.remove('glossary-overlay--visible');
+    document.body.classList.remove('glossary-body-lock');
+
+    // Remove any highlighted term
+    list?.querySelectorAll('.glossary-panel__item--highlighted').forEach((el) => {
+      el.classList.remove('glossary-panel__item--highlighted');
+    });
+
+    // Return focus to the element that triggered the panel
+    if (returnFocusRef && typeof returnFocusRef.focus === 'function') {
+      returnFocusRef.focus();
+    }
+    returnFocusRef = null;
+  }
+
+  function filterTerms(query) {
+    if (!list || !emptyMsg) return;
+
+    const q = query.toLowerCase().trim();
+    const items = list.querySelectorAll('.glossary-panel__item');
+    let visibleCount = 0;
+
+    items.forEach((item) => {
+      const term = item.getAttribute('data-term') || '';
+      const definition = item.getAttribute('data-definition') || '';
+      const matches = q === '' || term.includes(q) || definition.includes(q);
+
+      item.hidden = !matches;
+      if (matches) visibleCount++;
+    });
+
+    emptyMsg.hidden = visibleCount > 0;
+  }
+
+  // Close button
+  closeBtn?.addEventListener('click', closePanel);
+
+  // Overlay click closes panel
+  overlay?.addEventListener('click', closePanel);
+
+  // Escape key closes panel
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel?.classList.contains('glossary-panel--open')) {
+      closePanel();
+    }
+  });
+
+  // Real-time search filtering
+  searchInput?.addEventListener('input', (e) => {
+    filterTerms(e.target.value);
+  });
+
+  // Trap focus inside panel when open
+  panel?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    if (!panel.classList.contains('glossary-panel--open')) return;
+
+    const focusable = panel.querySelectorAll(
+      'button, input, a[href], [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Listen for clicks on [data-glossary-term] elements in the page
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('[data-glossary-term]');
+    if (!target) return;
+
+    e.preventDefault();
+    const termId = target.getAttribute('data-glossary-term');
+    openPanel(termId, target);
+  });
+
+  // Open with initialTerm if provided (e.g. from URL hash)
+  if (initialTerm) {
+    openPanel(initialTerm, null);
+  }
+
+  // Expose for programmatic use
+  window.__glossaryPanel = { open: openPanel, close: closePanel };
+</script>
+
+<style>
+  /* ── Panel base ── */
+  .glossary-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(420px, 100vw);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface, #f8f7f4);
+    border-left: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 12%, transparent);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+    transform: translateX(100%);
+    transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .glossary-panel--open {
+    transform: translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glossary-panel {
+      transition: none;
+    }
+  }
+
+  /* ── Overlay ── */
+  .glossary-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 280ms ease;
+  }
+
+  .glossary-overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glossary-overlay {
+      transition: none;
+    }
+  }
+
+  /* ── Body scroll lock ── */
+  :global(.glossary-body-lock) {
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .glossary-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 10%, transparent);
+    flex-shrink: 0;
+  }
+
+  .glossary-panel__title {
+    margin: 0;
+    font-family: var(--font-display, 'Playfair Display', Georgia, serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text, #1a1a2e);
+  }
+
+  .glossary-panel__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-text, #1a1a2e);
+    font-size: 1rem;
+    transition: background 150ms ease, border-color 150ms ease;
+    flex-shrink: 0;
+  }
+
+  .glossary-panel__close:hover,
+  .glossary-panel__close:focus-visible {
+    background: color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent);
+    border-color: var(--color-primary, #2563eb);
+    outline: 2px solid var(--color-primary, #2563eb);
+    outline-offset: 2px;
+  }
+
+  /* ── Search ── */
+  .glossary-panel__search {
+    padding: 1rem 1.5rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 8%, transparent);
+  }
+
+  .glossary-panel__search-label {
+    display: block;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-text, #1a1a2e) 70%, transparent);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .glossary-panel__search-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.9rem;
+    color: var(--color-text, #1a1a2e);
+    background: color-mix(in srgb, var(--color-text, #1a1a2e) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 20%, transparent);
+    border-radius: 6px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .glossary-panel__search-input:focus {
+    border-color: var(--color-primary, #2563eb);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary, #2563eb) 20%, transparent);
+  }
+
+  /* ── Term list ── */
+  .glossary-panel__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .glossary-panel__item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 6%, transparent);
+    transition: background 150ms ease;
+  }
+
+  .glossary-panel__item:last-child {
+    border-bottom: none;
+  }
+
+  .glossary-panel__item--highlighted {
+    background: color-mix(in srgb, var(--color-primary, #2563eb) 8%, transparent);
+    border-left: 3px solid var(--color-primary, #2563eb);
+    padding-left: calc(1.5rem - 3px);
+  }
+
+  .glossary-panel__term {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-display, 'Playfair Display', Georgia, serif);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary, #2563eb);
+  }
+
+  .glossary-panel__definition {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text, #1a1a2e);
+  }
+
+  .glossary-panel__related {
+    margin: 0;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--color-text, #1a1a2e) 65%, transparent);
+  }
+
+  .glossary-panel__related-label {
+    font-weight: 600;
+  }
+
+  /* ── Empty state ── */
+  .glossary-panel__empty {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--color-text, #1a1a2e) 55%, transparent);
+  }
+
+  /* ── Mobile adjustments ── */
+  @media (max-width: 480px) {
+    .glossary-panel {
+      width: 100vw;
+      border-left: none;
+    }
+  }
+</style>

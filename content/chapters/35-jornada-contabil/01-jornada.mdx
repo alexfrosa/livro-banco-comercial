@@ -1,0 +1,73 @@
+---
+title: "Jornada — Consolidação e balancete"
+order: 1
+description: "Como os lançamentos são consolidados e o balancete é gerado"
+---
+
+O processo contábil de um banco é contínuo: lançamentos são gerados a cada operação, ao longo de todo o dia. No final do dia, esses lançamentos precisam ser consolidados em um balancete que representa a posição financeira do banco.
+
+## Geração contínua de lançamentos
+
+Ao longo do dia, cada operação financeira gera lançamentos contábeis automaticamente:
+
+- Um Pix processado → lançamentos nas contas de depósitos e reservas
+- Uma parcela de crédito paga → lançamentos nas contas de crédito e receita
+- Uma tarifa cobrada → lançamentos nas contas de depósitos e receita de tarifas
+- Um CDB emitido → lançamentos nas contas de captação
+
+Esses lançamentos são gerados pelos sistemas operacionais (pagamentos, crédito, tarifas) e enviados ao sistema contábil (COSIF) em tempo real ou em lotes.
+
+## Validação dos lançamentos
+
+Antes de serem incorporados ao balancete, os lançamentos passam por validações:
+
+**Equilíbrio:** a soma dos débitos é igual à soma dos créditos?
+
+**Contas válidas:** as contas COSIF usadas existem e são válidas para o tipo de operação?
+
+**Valores:** os valores são positivos e dentro dos limites esperados?
+
+**Completude:** todos os lançamentos esperados foram gerados? (reconciliação com os sistemas operacionais)
+
+Lançamentos com erros são rejeitados e precisam ser corrigidos antes do fechamento.
+
+## Processo de fechamento diário
+
+O fechamento diário é o processo de "congelar" os lançamentos do dia e gerar o balancete:
+
+**1. Corte de movimentações:** a partir de um horário (geralmente 23h59), os lançamentos do dia são "congelados". Operações que chegarem depois são lançadas no dia seguinte.
+
+**2. Reconciliação final:** verificação de que todos os lançamentos esperados foram gerados e que não há divergências.
+
+**3. Cálculo de provisões:** as provisões para devedores duvidosos, para riscos operacionais e outras são calculadas e lançadas.
+
+**4. Apropriação de juros:** juros a receber (de operações de crédito) e a pagar (de captações) são apropriados pro rata die.
+
+**5. Marcação a mercado:** títulos e derivativos são reavaliados pelo valor de mercado.
+
+**6. Geração do balancete:** o sistema consolida todos os lançamentos e gera o balancete do dia.
+
+**7. Verificação de consistência:** o balancete é verificado: a soma dos ativos é igual à soma dos passivos + patrimônio líquido?
+
+**8. Aprovação:** o balancete é aprovado pelo responsável contábil.
+
+## Geração do balancete COSIF
+
+O balancete COSIF é um arquivo no formato definido pelo BACEN, contendo:
+- Código da instituição
+- Data de referência
+- Para cada conta COSIF: saldo devedor e saldo credor
+
+O arquivo é enviado ao BACEN dentro do prazo regulatório (geralmente até o 5º dia útil do mês seguinte para o balancete mensal).
+
+## Demonstrações financeiras
+
+Com base no balancete, o sistema gera as demonstrações financeiras:
+
+**Balanço patrimonial:** agrupa as contas COSIF nas categorias do balanço (ativo circulante, ativo não circulante, passivo circulante, etc.).
+
+**Demonstração de resultado:** agrupa as contas de receita e despesa para calcular o lucro ou prejuízo do período.
+
+**Demonstração de fluxo de caixa:** mostra as entradas e saídas de caixa classificadas por atividade (operacional, investimento, financiamento).
+
+Para bancos de capital aberto, essas demonstrações são publicadas trimestralmente e auditadas anualmente.

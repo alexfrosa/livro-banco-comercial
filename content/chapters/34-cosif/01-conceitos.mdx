@@ -1,0 +1,101 @@
+---
+title: "Conceitos — Plano contábil COSIF"
+order: 1
+description: "A estrutura do COSIF e como os bancos organizam seus lançamentos contábeis"
+---
+
+O COSIF (Plano Contábil das Instituições do Sistema Financeiro Nacional) é o plano de contas obrigatório para todas as instituições financeiras autorizadas pelo BACEN. É o "idioma contábil" do sistema financeiro brasileiro.
+
+## O que é o COSIF
+
+O COSIF define:
+- A estrutura de contas contábeis que os bancos devem usar
+- As regras de classificação de cada tipo de operação
+- O formato dos relatórios contábeis enviados ao BACEN
+- Os critérios de avaliação e reconhecimento de ativos e passivos
+
+Todos os bancos usam o mesmo plano de contas, o que permite ao BACEN comparar e consolidar as informações de todo o sistema financeiro.
+
+## Estrutura do COSIF
+
+O COSIF é organizado em 8 grupos principais:
+
+| Grupo | Descrição |
+|---|---|
+| 1 | Ativo |
+| 2 | Compensação (ativo) |
+| 3 | Passivo |
+| 4 | Compensação (passivo) |
+| 5 | Patrimônio líquido |
+| 6 | Contas de resultado credoras (receitas) |
+| 7 | Contas de resultado devedoras (despesas) |
+| 8 | Contas de compensação |
+
+Cada grupo é subdividido em subgrupos, títulos e subtítulos, formando uma hierarquia de até 8 níveis.
+
+**Exemplo de conta COSIF:**
+```
+1         Ativo
+1.1       Circulante e realizável a longo prazo
+1.1.1     Disponibilidades
+1.1.1.00  Disponibilidades
+1.1.1.00.10  Caixa
+1.1.1.00.10-0  Caixa em moeda nacional
+```
+
+## Contas mais importantes
+
+**Ativo:**
+- `1.1.1.00.10-0` — Caixa em moeda nacional
+- `1.1.1.10.00-0` — Reservas livres no BACEN
+- `1.6.0.00.00-0` — Operações de crédito
+- `1.8.0.00.00-0` — Outros créditos
+
+**Passivo:**
+- `4.1.1.10.00-0` — Depósitos à vista
+- `4.1.1.20.00-0` — Depósitos a prazo
+- `4.1.3.00.00-0` — Captações no mercado aberto
+
+**Resultado:**
+- `7.1.1.00.00-0` — Rendas de operações de crédito
+- `8.1.1.00.00-0` — Despesas de captação
+
+## Lançamentos contábeis no COSIF
+
+Cada operação financeira gera lançamentos em contas COSIF específicas. O backoffice contábil precisa garantir que cada operação seja classificada corretamente.
+
+**Exemplo: depósito em conta corrente**
+```
+Débito:  1.1.1.00.10-0 (Caixa)                    R$ 1.000
+Crédito: 4.1.1.10.00-0 (Depósitos à vista)         R$ 1.000
+```
+
+**Exemplo: concessão de empréstimo**
+```
+Débito:  1.6.0.00.00-0 (Operações de crédito)      R$ 5.000
+Crédito: 4.1.1.10.00-0 (Depósitos à vista)         R$ 5.000
+```
+
+**Exemplo: recebimento de juros**
+```
+Débito:  1.1.1.00.10-0 (Caixa)                    R$ 100
+Crédito: 7.1.1.00.00-0 (Rendas de crédito)         R$ 100
+```
+
+## Balancete e demonstrações financeiras
+
+O COSIF é a base para as demonstrações financeiras dos bancos:
+
+**Balancete:** lista de todas as contas com seus saldos em uma data específica. Enviado ao BACEN mensalmente.
+
+**Balanço patrimonial:** demonstração da posição financeira do banco (ativos, passivos e patrimônio líquido) em uma data.
+
+**Demonstração de resultado:** receitas e despesas do período, resultando no lucro ou prejuízo.
+
+**Notas explicativas:** informações adicionais sobre as políticas contábeis e os principais itens das demonstrações.
+
+## Diferenças entre COSIF e IFRS
+
+O COSIF é baseado nas normas contábeis brasileiras, que diferem em alguns aspectos das normas internacionais (IFRS). Os bancos de capital aberto precisam publicar demonstrações em ambos os padrões.
+
+As principais diferenças envolvem: reconhecimento de receitas, avaliação de instrumentos financeiros, e tratamento de provisões.

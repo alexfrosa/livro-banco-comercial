@@ -1,0 +1,137 @@
+---
+/**
+ * BaseLayout.astro
+ * Base HTML shell for all pages.
+ * Requirements: 11.1, 11.2, 12.1, 12.2, 12.3, 12.4, 6.4
+ */
+import SkipLink from '../components/SkipLink.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import NavigationMenu from '../components/NavigationMenu.astro';
+import { THEME_SCRIPT } from '../utils/themeManager';
+import type { NavItem } from '../utils/contentLoader';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogUrl?: string;
+  navItems: NavItem[];
+  currentUrl: string;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/og-image.png',
+  ogUrl = '',
+  navItems,
+  currentUrl,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Anti-FOUC: apply theme before first paint (Req 6.4) -->
+    <script is:inline set:html={THEME_SCRIPT}></script>
+
+    <!-- Google Fonts (also imported in global.css for build; this preconnect speeds up load) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- SEO (Req 11.1) -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph (Req 11.2) -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogUrl && <meta property="og:url" content={ogUrl} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+  </head>
+
+  <body>
+    <!-- Skip link: first focusable element (Req 12.3) -->
+    <!-- Also includes aria-live region for section announcements (Req 12.4) -->
+    <SkipLink />
+
+    <header class="site-header">
+      <a href="/" class="site-title" aria-label="Ir para a página inicial">
+        Interactive Banking Book
+      </a>
+      <ThemeToggle />
+    </header>
+
+    <div class="layout">
+      <!-- role="navigation" provided by NavigationMenu (Req 12.2) -->
+      <NavigationMenu items={navItems} currentUrl={currentUrl} />
+
+      <!-- role="main" landmark (Req 12.2) -->
+      <main id="main-content" role="main" class="main-content">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem var(--spacing-content, 24px);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 10%, transparent);
+    background: var(--color-surface, #f8f7f4);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .site-title {
+    font-family: var(--font-heading, 'Playfair Display', serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text, #1a1a2e);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+
+  .site-title:hover {
+    color: var(--color-accent, #4a90d9);
+  }
+
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 56px); /* subtract header height */
+    gap: 0;
+  }
+
+  .main-content {
+    flex: 1;
+    min-width: 0; /* prevent flex overflow */
+    padding: var(--spacing-content, 24px);
+
+    /* Fade-in transition on navigation (Req 10.11) */
+    animation: fadeIn 280ms ease both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Suppress animation if user prefers reduced motion (Req 10.11) */
+  @media (prefers-reduced-motion: reduce) {
+    .main-content {
+      animation: none;
+    }
+  }
+</style>

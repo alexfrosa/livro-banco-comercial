@@ -1,0 +1,494 @@
+---
+/**
+ * index.astro — Landing Page
+ * Displays the book title, intro description, CTA, and chapter list.
+ * Requirements: 13.1, 13.2, 13.3, 13.4
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { generateNavItems, type ChapterMeta, type SectionFrontmatter, type NavItem } from '../utils/contentLoader';
+
+// ── Discover chapter index files ──────────────────────────────────────────
+
+const indexModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+}>('/content/chapters/**/index.md');
+
+const mdxModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+  default: any;
+}>('/content/chapters/**/*.mdx');
+
+// ── Build chapter metadata list ───────────────────────────────────────────
+
+interface ChapterEntry {
+  slug: string;
+  meta: ChapterMeta;
+  sections: Array<{ slug: string; frontmatter: SectionFrontmatter }>;
+}
+
+const chapterMap = new Map<string, ChapterEntry>();
+
+// Load chapter metadata from index.md files
+for (const [path, loadFn] of Object.entries(indexModules)) {
+  const parts = path.split('/');
+  const chapterSlug = parts[3];
+  if (!chapterSlug) continue;
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    chapterMap.set(chapterSlug, {
+      slug: chapterSlug,
+      meta: {
+        title: rawTitle,
+        order: Number(rawOrder),
+        description: typeof fm['description'] === 'string' ? fm['description'] : '',
+        slug: chapterSlug,
+      },
+      sections: [],
+    });
+  } catch {
+    // Skip unreadable index files
+  }
+}
+
+// Load section files to find the first section URL
+for (const [path, loadFn] of Object.entries(mdxModules)) {
+  const parts = path.split('/');
+  const chapterSlug = parts[3];
+  const fileName = parts[4];
+  if (!chapterSlug || !fileName) continue;
+
+  const sectionSlug = fileName.replace(/\.mdx$/, '');
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    if (!chapterMap.has(chapterSlug)) {
+      // Chapter without index.md — synthesise metadata
+      chapterMap.set(chapterSlug, {
+        slug: chapterSlug,
+        meta: { title: chapterSlug, order: 0, description: '', slug: chapterSlug },
+        sections: [],
+      });
+    }
+
+    chapterMap.get(chapterSlug)!.sections.push({
+      slug: sectionSlug,
+      frontmatter: {
+        title: rawTitle as string,
+        order: Number(rawOrder),
+        description: typeof fm['description'] === 'string' ? fm['description'] : undefined,
+        simulation: typeof fm['simulation'] === 'string' ? fm['simulation'] : undefined,
+        diagram: typeof fm['diagram'] === 'string' ? fm['diagram'] : undefined,
+        ogImage: typeof fm['ogImage'] === 'string' ? fm['ogImage'] : undefined,
+      },
+    });
+  } catch {
+    // Skip invalid sections
+  }
+}
+
+// ── Sort chapters and derive first section URL ────────────────────────────
+
+const chapters = Array.from(chapterMap.values()).sort((a, b) => a.meta.order - b.meta.order);
+
+// Sort sections within each chapter
+for (const chapter of chapters) {
+  chapter.sections.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
+}
+
+// First section URL for "Começar a leitura" CTA
+const firstChapter = chapters[0];
+const firstSection = firstChapter?.sections[0];
+const firstSectionUrl = firstChapter && firstSection
+  ? `/${firstChapter.slug}/${firstSection.slug}`
+  : firstChapter
+    ? `/${firstChapter.slug}`
+    : '/';
+
+// ── Build navItems for BaseLayout ─────────────────────────────────────────
+
+const navItems: NavItem[] = generateNavItems(chapters);
+---
+
+<BaseLayout
+  title="Bancos Comerciais: Como Funciona o Dinheiro"
+  description="Um livro digital interativo sobre o funcionamento dos bancos comerciais, criação de dinheiro e o sistema de reserva fracionária."
+  navItems={navItems}
+  currentUrl="/"
+>
+  <!-- Hero Section (Req 13.1, 13.4) -->
+  <section class="hero" aria-labelledby="book-title">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Livro Digital Interativo</p>
+      <h1 id="book-title" class="hero-title">
+        Bancos Comerciais:<br />
+        <span class="hero-title-accent">Como Funciona o Dinheiro</span>
+      </h1>
+      <p class="hero-description">
+        Explore o sistema bancário moderno através de simulações interativas, diagramas
+        animados e explicações claras. Entenda como os bancos criam dinheiro, o papel
+        do Banco Central e os mecanismos que movem a economia.
+      </p>
+
+      <!-- CTA Button (Req 13.3) — updated client-side based on localStorage -->
+      <div class="hero-cta">
+        <a
+          id="cta-button"
+          href={firstSectionUrl}
+          class="btn btn-primary"
+          data-first-section={firstSectionUrl}
+        >
+          Começar a leitura
+        </a>
+      </div>
+    </div>
+
+    <!-- Book cover illustration -->
+    <div class="hero-illustration" aria-hidden="true">
+      <div class="book-cover">
+        <div class="book-cover-inner">
+          <span class="book-cover-icon">🏦</span>
+          <span class="book-cover-label">Bancos Comerciais</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter List (Req 13.2) -->
+  <section class="chapters-section" aria-labelledby="chapters-heading">
+    <h2 id="chapters-heading" class="chapters-heading">Capítulos</h2>
+
+    {chapters.length === 0 ? (
+      <p class="chapters-empty">
+        Nenhum capítulo disponível ainda. Adicione arquivos Markdown em
+        <code>content/chapters/</code> para começar.
+      </p>
+    ) : (
+      <ol class="chapters-list">
+        {chapters.map((chapter, index) => (
+          <li class="chapter-card">
+            <span class="chapter-number">{String(index + 1).padStart(2, '0')}</span>
+            <div class="chapter-info">
+              <h3 class="chapter-title">
+                {chapter.sections[0] ? (
+                  <a href={`/${chapter.slug}/${chapter.sections[0].slug}`} class="chapter-link">
+                    {chapter.meta.title}
+                  </a>
+                ) : (
+                  chapter.meta.title
+                )}
+              </h3>
+              {chapter.meta.description && (
+                <p class="chapter-description">{chapter.meta.description}</p>
+              )}
+              {chapter.sections.length > 0 && (
+                <p class="chapter-sections-count">
+                  {chapter.sections.length} {chapter.sections.length === 1 ? 'seção' : 'seções'}
+                </p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+    )}
+  </section>
+</BaseLayout>
+
+<!-- Client-side CTA logic: read localStorage to determine CTA text/link (Req 13.3) -->
+<script>
+  (function () {
+    try {
+      const raw = localStorage.getItem('ibbook_progress');
+      if (!raw) return;
+
+      const progress = JSON.parse(raw) as { lastVisited?: string | null };
+      const lastVisited = progress?.lastVisited;
+
+      if (lastVisited && typeof lastVisited === 'string') {
+        const btn = document.getElementById('cta-button') as HTMLAnchorElement | null;
+        if (btn) {
+          btn.href = `/${lastVisited}`;
+          btn.textContent = 'Continuar leitura';
+        }
+      }
+    } catch {
+      // localStorage unavailable or JSON parse error — keep default CTA
+    }
+  })();
+</script>
+
+<style>
+  /* ── Hero Section ──────────────────────────────────────── */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 4rem 0 var(--spacing-block);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    margin-bottom: var(--spacing-block);
+  }
+
+  .hero-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--color-text);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title-accent {
+    color: var(--color-primary);
+  }
+
+  .hero-description {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    opacity: 0.85;
+    max-width: 52ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color var(--transition-hover), transform var(--transition-hover),
+      box-shadow var(--transition-hover);
+    min-height: 44px; /* touch target (Req 7.3) */
+    min-width: 44px;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  }
+
+  .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 85%, black);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+    opacity: 1;
+  }
+
+  /* ── Book Cover Illustration ───────────────────────────── */
+  .hero-illustration {
+    flex-shrink: 0;
+  }
+
+  .book-cover {
+    width: 200px;
+    height: 280px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border-radius: 4px 12px 12px 4px;
+    box-shadow:
+      -6px 6px 0 color-mix(in srgb, var(--color-primary) 60%, black),
+      0 8px 32px rgba(37, 99, 235, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .book-cover::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 12px;
+    background: color-mix(in srgb, var(--color-primary) 70%, black);
+    border-radius: 4px 0 0 4px;
+  }
+
+  .book-cover-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .book-cover-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  .book-cover-label {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.3;
+  }
+
+  /* ── Chapters Section ──────────────────────────────────── */
+  .chapters-section {
+    margin-bottom: var(--spacing-block);
+  }
+
+  .chapters-heading {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    color: var(--color-text);
+    margin-bottom: 2rem;
+  }
+
+  .chapters-empty {
+    color: var(--color-text);
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  .chapters-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .chapter-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: color-mix(in srgb, var(--color-text) 4%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    border-radius: 8px;
+    transition: border-color var(--transition-hover), box-shadow var(--transition-hover);
+  }
+
+  .chapter-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 12px rgba(37, 99, 235, 0.1);
+  }
+
+  .chapter-number {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    opacity: 0.4;
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 2.5rem;
+  }
+
+  .chapter-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .chapter-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h3);
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-link {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .chapter-link:hover {
+    color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .chapter-description {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    opacity: 0.75;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-sections-count {
+    font-size: 0.8125rem;
+    color: var(--color-primary);
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      padding: 2rem 0 var(--spacing-block);
+      gap: 2rem;
+    }
+
+    .hero-illustration {
+      order: -1;
+    }
+
+    .book-cover {
+      width: 140px;
+      height: 196px;
+    }
+
+    .book-cover-icon {
+      font-size: 2.5rem;
+    }
+
+    .chapter-card {
+      gap: 1rem;
+    }
+
+    .chapter-number {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover {
+      transform: none;
+    }
+  }
+</style>

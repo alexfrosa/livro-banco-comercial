@@ -1,0 +1,101 @@
+---
+/**
+ * ThemeToggle.astro
+ * Accessible button to toggle between light and dark themes.
+ * Integrates with themeManager.ts — applies theme via data-theme on <html> without reload.
+ * Requirements: 6.1, 6.2, 6.3, 6.4, 6.5
+ */
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Ativar tema claro"
+  title="Alternar tema"
+  class="theme-toggle"
+>
+  <!-- Sun icon: shown in dark mode (click to switch to light) -->
+  <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀️</span>
+  <!-- Moon icon: shown in light mode (click to switch to dark) -->
+  <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">🌙</span>
+</button>
+
+<style>
+  .theme-toggle {
+    /* Minimum 44×44px touch target (Req 7.3) */
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: 2px solid var(--color-text);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--color-text);
+
+    /* Smooth hover transition (Req 10.7) */
+    transition: background-color var(--transition-hover), border-color var(--transition-hover);
+  }
+
+  .theme-toggle:hover {
+    background-color: var(--callout-bg);
+  }
+
+  /* Visible focus ring for keyboard navigation (Req 12.1) */
+  .theme-toggle:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Icon visibility controlled by data-theme on <html> */
+
+  /* Light mode: show moon (to switch to dark), hide sun */
+  :root:not([data-theme="dark"]) .theme-toggle__icon--sun,
+  [data-theme="light"] .theme-toggle__icon--sun {
+    display: none;
+  }
+
+  :root:not([data-theme="dark"]) .theme-toggle__icon--moon,
+  [data-theme="light"] .theme-toggle__icon--moon {
+    display: inline;
+  }
+
+  /* Dark mode: show sun (to switch to light), hide moon */
+  [data-theme="dark"] .theme-toggle__icon--sun {
+    display: inline;
+  }
+
+  [data-theme="dark"] .theme-toggle__icon--moon {
+    display: none;
+  }
+</style>
+
+<script>
+  import { getResolvedTheme, setTheme } from '../utils/themeManager';
+
+  const btn = document.getElementById('theme-toggle') as HTMLButtonElement | null;
+
+  function updateButton(resolved: 'light' | 'dark') {
+    if (!btn) return;
+    if (resolved === 'dark') {
+      btn.setAttribute('aria-label', 'Ativar tema claro');
+    } else {
+      btn.setAttribute('aria-label', 'Ativar tema escuro');
+    }
+  }
+
+  // Initialise button state from current resolved theme
+  updateButton(getResolvedTheme());
+
+  btn?.addEventListener('click', () => {
+    const current = getResolvedTheme();
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    updateButton(next);
+  });
+</script>

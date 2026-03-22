@@ -1,0 +1,74 @@
+---
+title: "Backoffice — Revisão manual e atualização cadastral"
+order: 2
+description: "Como o backoffice trata inconsistências, faz revisão manual e mantém o cadastro atualizado"
+---
+
+Nem todo onboarding é automático. Uma parte significativa dos casos exige intervenção humana — e mesmo os casos automáticos precisam de monitoramento e manutenção ao longo do tempo. Esse é o trabalho do backoffice de cadastro.
+
+## A fila de análise manual
+
+Quando o sistema automático não consegue tomar uma decisão, o caso vai para uma fila de análise manual. Os analistas de backoffice revisam esses casos e tomam a decisão final.
+
+**Casos típicos na fila:**
+- Biometria com baixa confiança (foto do documento borrada, iluminação ruim)
+- Inconsistências menores nos dados (nome com grafia diferente no documento vs. Receita Federal)
+- Clientes PEP que precisam de aprovação de nível superior
+- Empresas com estrutura societária complexa (holdings, fundos)
+- Documentação incompleta que o cliente precisa complementar
+
+**O processo de análise:**
+1. O analista recebe o caso na fila com todos os dados coletados e os resultados das validações automáticas
+2. Revisa os documentos, verifica as inconsistências, pode solicitar documentos adicionais ao cliente
+3. Consulta bases adicionais se necessário
+4. Toma a decisão: aprovar, reprovar, ou solicitar mais informações
+5. Registra a justificativa da decisão (obrigatório para auditoria)
+
+## Solicitação de documentos adicionais
+
+Quando o analista precisa de mais informações, o sistema envia uma notificação ao cliente solicitando os documentos faltantes. O cliente tem um prazo para enviar (geralmente 5-10 dias úteis). Se não enviar, o processo é cancelado.
+
+Documentos comuns solicitados:
+- Comprovante de renda atualizado (holerite, extrato bancário, declaração de IR)
+- Comprovante de residência recente (conta de luz, água, telefone)
+- Contrato social atualizado (para PJ)
+- Declaração de beneficiário final (para empresas com estrutura complexa)
+
+## Atualização cadastral periódica
+
+O KYC não é um processo único — é contínuo. Os bancos são obrigados a manter os dados dos clientes atualizados.
+
+**Gatilhos para atualização:**
+- Prazo periódico (geralmente a cada 2-3 anos, dependendo do perfil de risco)
+- Mudança de comportamento transacional (o cliente começa a movimentar valores muito maiores)
+- Mudança de status (cliente se torna PEP, empresa muda de sócios)
+- Solicitação do próprio cliente (mudança de endereço, telefone, etc.)
+
+**Processo de atualização:**
+O banco notifica o cliente que seus dados precisam ser atualizados. O cliente acessa o app ou agência e confirma/atualiza as informações. Se o cliente não atualizar dentro do prazo, o banco pode restringir operações na conta.
+
+## Bloqueio por KYC
+
+Se um cliente não atualiza seus dados dentro do prazo, ou se surgem indícios de irregularidades, o banco pode bloquear a conta para novas operações enquanto o KYC é resolvido.
+
+O bloqueio por KYC é diferente de um bloqueio judicial ou por inadimplência. O cliente ainda pode sacar o saldo existente, mas não pode fazer novos depósitos ou transferências de entrada.
+
+## Gestão de documentos
+
+O backoffice de cadastro também é responsável pela gestão dos documentos dos clientes:
+
+**Armazenamento:** documentos digitalizados são armazenados em sistemas de gestão documental com controle de acesso rigoroso. O BACEN exige que os documentos sejam mantidos por pelo menos 5 anos após o encerramento da conta.
+
+**Validade:** alguns documentos têm prazo de validade (CNH, passaporte). O sistema monitora as datas de vencimento e notifica quando um documento está próximo de expirar.
+
+**Auditoria:** todo acesso a documentos de clientes é registrado. Quem acessou, quando, e por qual motivo. Isso é essencial para conformidade com a LGPD e para investigações internas.
+
+## Indicadores de qualidade do backoffice de cadastro
+
+Os times de backoffice monitoram métricas para garantir a qualidade do processo:
+
+- **Taxa de aprovação automática:** quanto maior, mais eficiente o processo
+- **Tempo médio de análise manual:** quanto menor, melhor a experiência do cliente
+- **Taxa de documentos solicitados:** indica a qualidade do processo de coleta inicial
+- **Taxa de reprovação:** se muito alta, pode indicar problemas no processo de captação; se muito baixa, pode indicar que os critérios estão frouxos demais
+- **Pendências em aberto:** casos na fila há mais de X dias precisam de atenção especial

@@ -1,0 +1,98 @@
+---
+title: "Conceitos — Core banking e sistemas satélite"
+order: 1
+description: "O núcleo do banco, os sistemas periféricos e as diferenças entre arquiteturas event-driven e batch"
+---
+
+Um banco moderno é um ecossistema de dezenas (às vezes centenas) de sistemas de software. Entender como esses sistemas se organizam e se comunicam é fundamental para trabalhar com tecnologia bancária.
+
+## O core banking
+
+O **core banking** é o sistema central de um banco. É onde vivem os registros mestres: clientes, contas, saldos, contratos. Tudo o mais se conecta a ele.
+
+As funções típicas de um core banking incluem:
+
+- **Gestão de clientes:** cadastro, dados pessoais, relacionamentos
+- **Gestão de contas:** abertura, manutenção, encerramento, saldos
+- **Ledger:** registro de todos os lançamentos financeiros
+- **Produtos:** definição de produtos bancários (tipos de conta, modalidades de crédito)
+- **Tarifas:** cálculo e cobrança de tarifas
+
+O core banking é o sistema mais crítico do banco. Uma hora de indisponibilidade pode significar milhões em perdas e danos à reputação. Por isso, os bancos investem pesadamente em alta disponibilidade, redundância e disaster recovery para o core.
+
+### Sistemas legados vs modernos
+
+Muitos bancos grandes ainda operam cores bancários desenvolvidos nas décadas de 1970-1990, escritos em COBOL e rodando em mainframes. Esses sistemas são extremamente estáveis e performáticos, mas difíceis de modificar e integrar com tecnologias modernas.
+
+Bancos digitais e fintechs geralmente usam cores modernos, construídos com arquiteturas de microsserviços, APIs REST e bancos de dados distribuídos. São mais flexíveis, mas precisam provar a mesma estabilidade dos sistemas legados.
+
+## Sistemas satélite
+
+Em torno do core banking, existem sistemas especializados que tratam de domínios específicos:
+
+**Sistema de pagamentos:** processa Pix, TED, DOC, boletos. Integra com o SPI e o STR do BACEN. Gerencia filas de processamento, retentativas e tratamento de falhas.
+
+**Sistema de crédito:** gerencia o ciclo de vida de contratos de crédito. Calcula parcelas, gera cobranças, controla inadimplência, faz provisões.
+
+**Sistema antifraude:** analisa transações em tempo real para detectar padrões suspeitos. Usa modelos de machine learning e regras de negócio.
+
+**Sistema de câmbio:** processa operações de compra e venda de moeda estrangeira. Integra com o BACEN e com correspondentes internacionais.
+
+**Sistema contábil (COSIF):** registra todos os eventos no plano contábil regulatório. Gera balancetes e relatórios para o BACEN.
+
+**CRM:** gestão do relacionamento com clientes. Histórico de interações, campanhas, segmentação.
+
+## Arquiteturas de integração
+
+Como esses sistemas se comunicam? Existem dois paradigmas principais:
+
+### Batch (processamento em lote)
+
+No modelo batch, as operações são acumuladas durante um período e processadas de uma vez. Por exemplo, todas as cobranças de tarifas do dia são calculadas e debitadas à meia-noite.
+
+**Vantagens:** simples de implementar, eficiente para grandes volumes, fácil de auditar.
+
+**Desvantagens:** latência alta (o cliente só vê o resultado horas depois), difícil de tratar erros individualmente, janelas de processamento criam picos de carga.
+
+Sistemas legados são frequentemente baseados em batch. O "fechamento do dia" bancário é um processo batch que ainda existe em praticamente todos os bancos.
+
+### Event-driven (orientado a eventos)
+
+No modelo event-driven, cada operação gera um evento que é processado imediatamente. Quando você faz um Pix, um evento é publicado em um tópico (ex: Kafka), e múltiplos sistemas consomem esse evento para fazer suas respectivas atualizações.
+
+**Vantagens:** baixa latência, desacoplamento entre sistemas, escalabilidade, rastreabilidade.
+
+**Desvantagens:** complexidade maior, necessidade de garantir ordenação e idempotência, debugging mais difícil.
+
+Bancos modernos tendem a usar event-driven para operações em tempo real (pagamentos, notificações) e batch para processamentos periódicos (fechamento contábil, geração de extratos).
+
+## Idempotência: o princípio mais importante
+
+Em sistemas bancários, **idempotência** é um requisito não-negociável. Uma operação idempotente pode ser executada múltiplas vezes com o mesmo resultado — sem efeitos colaterais adicionais.
+
+Por que isso importa? Porque em sistemas distribuídos, falhas de rede são comuns. Se um pagamento é enviado mas a confirmação não chega, o sistema precisa poder reenviar a mesma instrução sem risco de debitar o cliente duas vezes.
+
+A implementação típica usa um **ID de idempotência** (ou chave de idempotência): um identificador único gerado pelo cliente para cada operação. O servidor armazena esse ID e, se receber a mesma operação novamente, retorna o resultado anterior sem reprocessar.
+
+```
+POST /pagamentos
+{
+  "idempotency_key": "abc-123-def-456",
+  "valor": 500.00,
+  "destino": "chave-pix@email.com"
+}
+```
+
+Se essa requisição chegar duas vezes (por retry), o servidor processa apenas uma vez e retorna o mesmo resultado para ambas.
+
+## Alta disponibilidade e disaster recovery
+
+Os sistemas bancários precisam estar disponíveis praticamente o tempo todo. O BACEN exige disponibilidade mínima para sistemas críticos como o Pix.
+
+As estratégias típicas incluem:
+
+**Redundância ativa-ativa:** múltiplos datacenters processando em paralelo. Se um cai, o outro continua sem interrupção.
+
+**Redundância ativa-passiva:** um datacenter principal e um standby. Em caso de falha, o standby assume (failover). Há uma pequena janela de indisponibilidade durante o failover.
+
+**RPO e RTO:** Recovery Point Objective (quanto de dados pode ser perdido) e Recovery Time Objective (quanto tempo pode ficar fora do ar). Para sistemas críticos bancários, o RPO é próximo de zero e o RTO é de segundos a minutos.

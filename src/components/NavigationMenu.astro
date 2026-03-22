@@ -48,11 +48,21 @@ function isActive(url: string): boolean {
       </li>
       {items.map((chapter) => (
         <li class="nav-chapter">
-          <span
-            class:list={['nav-chapter-label', { 'nav-active': isActive(chapter.url) }]}
-          >
-            <span class="nav-item-title">{chapter.title}</span>
-          </span>
+          {chapter.children && chapter.children.length > 0 ? (
+            <span
+              class:list={['nav-chapter-label', { 'nav-active': isActive(chapter.url) }]}
+            >
+              <span class="nav-item-title">{chapter.title}</span>
+            </span>
+          ) : (
+            <a
+              href={`${import.meta.env.BASE_URL}${chapter.url}`}
+              class:list={['nav-chapter-link', { 'nav-active': isActive(chapter.url) }]}
+              aria-current={isActive(chapter.url) ? 'page' : undefined}
+            >
+              <span class="nav-item-title">{chapter.title}</span>
+            </a>
+          )}
 
           {chapter.children && chapter.children.length > 0 && (
             <ul class="nav-section-list" role="list">

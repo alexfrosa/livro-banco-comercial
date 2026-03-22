@@ -78,6 +78,64 @@ section,
   margin-bottom: var(--spacing-block); /* mín. 3rem */
 }
 
+/* ── Headings — espaçamento vertical (Req 10.5, 10.9) ───── */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
+
+/* ── Listas (Req 10.2) ──────────────────────────────────── */
+ul,
+ol {
+  margin-bottom: var(--spacing-paragraph);
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.4em;
+  line-height: var(--line-height-body);
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+/* Espaço após lista seguida de parágrafo ou heading */
+ul + p,
+ol + p,
+ul + h2,
+ol + h2,
+ul + h3,
+ol + h3 {
+  margin-top: var(--spacing-paragraph);
+}
+
+/* ── Tabelas (Req 10.2) ─────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-paragraph);
+  font-size: 0.9375rem;
+}
+
+th,
+td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--color-text) 15%, transparent);
+  text-align: left;
+}
+
+th {
+  background: color-mix(in srgb, var(--color-text) 6%, transparent);
+  font-weight: 600;
+}
+
 /* ── Callouts e blockquotes (Req 10.10) ─────────────────── */
 blockquote,
 .callout {

@@ -1,0 +1,351 @@
+---
+/**
+ * referencias.astro — Página estática de referências regulatórias
+ * Route: /referencias
+ * Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 4.2, 4.3, 4.4
+ */
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { parseReferences, groupByCategory } from '../utils/referencesLoader';
+import { generateNavItems, type NavItem, type ChapterMeta, type SectionFrontmatter } from '../utils/contentLoader';
+
+// ── Load and parse Reference_Registry at build time (Req 2.1, 5.1) ────────
+
+const yamlPath = resolve(process.cwd(), 'content/references.yaml');
+const yamlText = readFileSync(yamlPath, 'utf-8');
+
+// Parser YAML mínimo para lista de objetos com campos string
+// Suporta a estrutura exata de content/references.yaml
+function parseYamlList(text: string): Record<string, string>[] {
+  const entries: Record<string, string>[] = [];
+  let current: Record<string, string> | null = null;
+
+  for (const rawLine of text.split('\n')) {
+    const line = rawLine.trimEnd();
+
+    if (line.trim() === '' || line.trim().startsWith('#')) continue;
+
+    if (/^- /.test(line)) {
+      if (current) entries.push(current);
+      current = {};
+      const rest = line.slice(2).trim();
+      if (rest) {
+        const colonIdx = rest.indexOf(':');
+        if (colonIdx !== -1) {
+          const key = rest.slice(0, colonIdx).trim();
+          const val = rest.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+          current[key] = val;
+        }
+      }
+      continue;
+    }
+
+    if (current !== null && /^\s+\w/.test(line)) {
+      const colonIdx = line.indexOf(':');
+      if (colonIdx !== -1) {
+        const key = line.slice(0, colonIdx).trim();
+        const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+        current[key] = val;
+      }
+    }
+  }
+
+  if (current) entries.push(current);
+  return entries;
+}
+
+const raw = parseYamlList(yamlText);
+const references = parseReferences(raw);
+
+// Req 2.2 — agrupar por categoria
+const grouped = groupByCategory(references);
+
+// ── Build navItems (same pattern as index.astro) ──────────────────────────
+
+const indexModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+}>('/content/chapters/**/index.md');
+
+const mdxModules = import.meta.glob<{
+  frontmatter: Record<string, unknown>;
+  default: any;
+}>('/content/chapters/**/*.mdx');
+
+interface ChapterEntry {
+  slug: string;
+  meta: ChapterMeta;
+  sections: Array<{ slug: string; frontmatter: SectionFrontmatter }>;
+}
+
+const chapterMap = new Map<string, ChapterEntry>();
+
+for (const [path, loadFn] of Object.entries(indexModules)) {
+  const parts = path.split('/');
+  const chapterSlug = parts[3];
+  if (!chapterSlug) continue;
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    chapterMap.set(chapterSlug, {
+      slug: chapterSlug,
+      meta: {
+        title: rawTitle,
+        order: Number(rawOrder),
+        description: typeof fm['description'] === 'string' ? fm['description'] : '',
+        slug: chapterSlug,
+      },
+      sections: [],
+    });
+  } catch {
+    // Skip unreadable index files
+  }
+}
+
+for (const [path, loadFn] of Object.entries(mdxModules)) {
+  const parts = path.split('/');
+  const chapterSlug = parts[3];
+  const fileName = parts[4];
+  if (!chapterSlug || !fileName) continue;
+
+  const sectionSlug = fileName.replace(/\.mdx$/, '');
+
+  try {
+    const mod = await loadFn();
+    const fm = mod.frontmatter as Record<string, unknown>;
+    const rawTitle = fm['title'];
+    const rawOrder = fm['order'];
+
+    if (typeof rawTitle !== 'string' || rawTitle.trim() === '') continue;
+    if (typeof rawOrder !== 'number' && typeof rawOrder !== 'string') continue;
+
+    if (!chapterMap.has(chapterSlug)) {
+      chapterMap.set(chapterSlug, {
+        slug: chapterSlug,
+        meta: { title: chapterSlug, order: 0, description: '', slug: chapterSlug },
+        sections: [],
+      });
+    }
+
+    chapterMap.get(chapterSlug)!.sections.push({
+      slug: sectionSlug,
+      frontmatter: {
+        title: rawTitle as string,
+        order: Number(rawOrder),
+        description: typeof fm['description'] === 'string' ? fm['description'] : undefined,
+        simulation: typeof fm['simulation'] === 'string' ? fm['simulation'] : undefined,
+        diagram: typeof fm['diagram'] === 'string' ? fm['diagram'] : undefined,
+        ogImage: typeof fm['ogImage'] === 'string' ? fm['ogImage'] : undefined,
+      },
+    });
+  } catch {
+    // Skip invalid sections
+  }
+}
+
+const chapters = Array.from(chapterMap.values()).sort((a, b) => a.meta.order - b.meta.order);
+for (const chapter of chapters) {
+  chapter.sections.sort((a, b) => a.frontmatter.order - b.frontmatter.order);
+}
+
+// Req 2.6 — append /referencias nav item after chapters
+const referencesNavItem: NavItem = {
+  title: 'Referências',
+  slug: 'referencias',
+  url: '/referencias',
+  children: [],
+};
+
+const navItems: NavItem[] = [...generateNavItems(chapters), referencesNavItem];
+---
+
+<BaseLayout
+  title="Referências Regulatórias — Bancos Comerciais"
+  description="Lista completa das normas, leis e regulações referenciadas no livro, agrupadas por categoria."
+  navItems={navItems}
+  currentUrl="/referencias"
+>
+  <!-- Req 2.1, 2.2 — página de referências com heading principal -->
+  <div class="referencias-page">
+    <header class="page-header">
+      <h1 class="page-title">Referências Regulatórias</h1>
+      <p class="page-description">
+        Normas, leis e regulações referenciadas ao longo do livro, organizadas por órgão emissor.
+      </p>
+    </header>
+
+    <!-- Req 2.2, 4.2 — cada categoria como <section> com <h2> -->
+    {Array.from(grouped.entries()).map(([category, entries]) => (
+      <section class="ref-category" aria-labelledby={`cat-${category.toLowerCase().replace(/\s+/g, '-')}`}>
+        <h2
+          id={`cat-${category.toLowerCase().replace(/\s+/g, '-')}`}
+          class="ref-category-title"
+        >
+          {category}
+        </h2>
+
+        <div class="ref-list">
+          {entries.map((ref) => (
+            <!-- Req 2.4, 4.2 — cada referência como <article> com âncora id="ref-{id}" -->
+            <article id={`ref-${ref.id}`} class="ref-entry">
+              <!-- Req 2.3 — título, emissor, descrição, link externo -->
+              <h3 class="ref-title">{ref.title}</h3>
+              <p class="ref-issuer">{ref.issuer}</p>
+              {ref.description && <p class="ref-description">{ref.description}</p>}
+              <!-- Req 2.5, 4.3, 4.4 — link externo com target="_blank", aria-label -->
+              <a
+                href={ref.url}
+                class="ref-external-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${ref.title} (abre em nova aba)`}
+              >
+                Acessar documento oficial
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .referencias-page {
+    max-width: 72ch;
+  }
+
+  /* ── Page header ───────────────────────────────────────── */
+  .page-header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+  }
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h1, clamp(1.75rem, 4vw, 2.5rem));
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-description {
+    font-size: 1.0625rem;
+    color: var(--color-text);
+    opacity: 0.75;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Category sections (Req 2.2, 4.2) ─────────────────── */
+  .ref-category {
+    margin-bottom: 3rem;
+  }
+
+  .ref-category-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2, 1.5rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+
+  /* ── Reference list ────────────────────────────────────── */
+  .ref-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* ── Reference entry (Req 2.3, 2.4, 4.2) ──────────────── */
+  .ref-entry {
+    padding: 1.25rem 1.5rem;
+    background: color-mix(in srgb, var(--color-text) 3%, var(--color-surface));
+    border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 6px;
+  }
+
+  .ref-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h3, 1.125rem);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .ref-issuer {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text);
+    opacity: 0.65;
+    margin-bottom: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ref-description {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  /* Req 2.5, 4.3, 4.4 — link externo visualmente distinto, touch target >= 44px */
+  .ref-external-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    min-height: 44px;
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 35%, transparent);
+    border-radius: 4px;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color var(--transition-hover, 150ms ease),
+                border-color var(--transition-hover, 150ms ease);
+  }
+
+  .ref-external-link::after {
+    content: '↗';
+    font-size: 0.8125rem;
+    opacity: 0.75;
+  }
+
+  .ref-external-link:hover {
+    background: color-mix(in srgb, var(--color-primary) 18%, transparent);
+    border-color: var(--color-primary);
+    opacity: 1;
+  }
+
+  .ref-external-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* ── Responsive ────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .referencias-page {
+      max-width: 100%;
+    }
+
+    .ref-entry {
+      padding: 1rem 1.125rem;
+    }
+  }
+</style>

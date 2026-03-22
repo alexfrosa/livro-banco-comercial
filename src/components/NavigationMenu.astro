@@ -137,6 +137,18 @@ function isActive(url: string): boolean {
   }
 
   updateVisitedIndicators();
+
+  // Scroll the active nav item into view within the nav panel
+  function scrollActiveItemIntoView() {
+    const activeLink = document.querySelector<HTMLElement>('.nav-section-link.nav-active, .nav-chapter-link.nav-active');
+    if (!activeLink) return;
+    const navPanel = document.getElementById('nav-panel');
+    if (!navPanel) return;
+    // Use scrollIntoView with 'nearest' so it doesn't scroll the whole page
+    activeLink.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }
+
+  scrollActiveItemIntoView();
 </script>
 
 <style>

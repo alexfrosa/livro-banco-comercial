@@ -155,7 +155,13 @@ for (const section of sections) {
   });
 }
 
-const navItems: NavItem[] = generateNavItems(Array.from(chapterMap.values()));
+const referencesNavItem: NavItem = {
+  title: 'Referências',
+  slug: 'referencias',
+  url: '/referencias',
+  children: [],
+};
+const navItems: NavItem[] = [...generateNavItems(Array.from(chapterMap.values())), referencesNavItem];
 const totalSections = sections.length;
 
 // ── Glossary terms (loaded from content/glossary/terms.md in Task 20) ─────

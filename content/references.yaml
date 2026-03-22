@@ -1,0 +1,56 @@
+# Reference_Registry — normas e leis referenciadas no livro
+# Campos obrigatórios: id, title, issuer, category, url
+# Campos opcionais: description, publishedAt (ISO 8601: YYYY-MM-DD)
+
+- id: resolucao-cmn-4966
+  title: "Resolução CMN nº 4.966/2021"
+  issuer: "Conselho Monetário Nacional"
+  category: CMN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolução CMN&numero=4966"
+  description: "Dispõe sobre instrumentos financeiros, sobre redução ao valor recuperável de ativos e sobre apresentação e divulgação de informações de instrumentos financeiros."
+  publishedAt: "2021-11-25"
+
+- id: resolucao-cmn-4557
+  title: "Resolução CMN nº 4.557/2017"
+  issuer: "Conselho Monetário Nacional"
+  category: CMN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolução&numero=4557"
+  description: "Dispõe sobre a estrutura de gerenciamento de riscos e a estrutura de gerenciamento de capital."
+  publishedAt: "2017-02-23"
+
+- id: circular-bacen-3978
+  title: "Circular BACEN nº 3.978/2020"
+  issuer: "Banco Central do Brasil"
+  category: BACEN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Circular&numero=3978"
+  description: "Dispõe sobre a política de prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/FT) e sobre os procedimentos a serem adotados pelas instituições autorizadas a funcionar pelo Banco Central do Brasil."
+  publishedAt: "2020-01-23"
+
+- id: resolucao-bcb-277
+  title: "Resolução BCB nº 277/2022"
+  issuer: "Banco Central do Brasil"
+  category: BACEN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolução BCB&numero=277"
+
+- id: lei-4595-1964
+  title: "Lei nº 4.595/1964"
+  issuer: "Presidência da República"
+  category: "Lei Federal"
+  url: "https://www.planalto.gov.br/ccivil_03/leis/l4595.htm"
+  description: "Dispõe sobre a Política e as Instituições Monetárias, Bancárias e Creditícias, cria o Conselho Monetário Nacional e dá outras providências."
+  publishedAt: "1964-12-31"
+
+- id: lei-12865-2013
+  title: "Lei nº 12.865/2013"
+  issuer: "Presidência da República"
+  category: "Lei Federal"
+  url: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12865.htm"
+  description: "Autoriza o pagamento de equalizações de taxas de juros e subvenções necessárias à implementação do Programa de Sustentação do Investimento e institui o arranjo de pagamento e a instituição de pagamento no âmbito do Sistema de Pagamentos Brasileiro."
+  publishedAt: "2013-10-09"
+
+- id: mp-2158-35-2001
+  title: "Medida Provisória nº 2.158-35/2001"
+  issuer: "Presidência da República"
+  category: "Medida Provisória"
+  url: "https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm"
+  publishedAt: "2001-08-24"

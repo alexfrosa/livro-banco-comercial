@@ -1,0 +1,110 @@
+---
+// Ref.astro — componente inline para referenciar normas e leis cadastradas no Reference_Registry
+// Req 3.1, 3.2, 3.3, 3.4, 3.5, 4.1
+
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { parseReferences, lookupReference, referenceHref } from '../utils/referencesLoader';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+
+// Lê e parseia o Reference_Registry em build time — Req 5.1
+const yamlPath = resolve(process.cwd(), 'content/references.yaml');
+const yamlText = readFileSync(yamlPath, 'utf-8');
+
+// Parser YAML mínimo para lista de objetos com campos string
+// Suporta a estrutura exata de content/references.yaml
+function parseYamlList(text: string): Record<string, string>[] {
+  const entries: Record<string, string>[] = [];
+  let current: Record<string, string> | null = null;
+
+  for (const rawLine of text.split('\n')) {
+    const line = rawLine.trimEnd();
+
+    // Comentários e linhas vazias
+    if (line.trim() === '' || line.trim().startsWith('#')) continue;
+
+    // Novo item da lista
+    if (/^- /.test(line)) {
+      if (current) entries.push(current);
+      current = {};
+      // Pode ter um campo na mesma linha: "- id: valor"
+      const rest = line.slice(2).trim();
+      if (rest) {
+        const colonIdx = rest.indexOf(':');
+        if (colonIdx !== -1) {
+          const key = rest.slice(0, colonIdx).trim();
+          const val = rest.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+          current[key] = val;
+        }
+      }
+      continue;
+    }
+
+    // Campo de um item existente (indentado com espaços)
+    if (current !== null && /^\s+\w/.test(line)) {
+      const colonIdx = line.indexOf(':');
+      if (colonIdx !== -1) {
+        const key = line.slice(0, colonIdx).trim();
+        const val = line.slice(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+        current[key] = val;
+      }
+    }
+  }
+
+  if (current) entries.push(current);
+  return entries;
+}
+
+const raw = parseYamlList(yamlText);
+const entries = parseReferences(raw);
+
+// Req 3.3 — falha o build se o id não existir no registry
+const entry = lookupReference(entries, id);
+if (!entry) {
+  throw new Error(
+    `[references] ID de referência não encontrado: "${id}" em Ref.astro. Verifique o Reference_Registry.`
+  );
+}
+
+const BASE_URL = import.meta.env.BASE_URL;
+const href = referenceHref(id, BASE_URL.replace(/\/$/, ''));
+const { title } = entry;
+---
+
+<!-- Req 3.1, 3.4 — link inline com título da referência -->
+<!-- Req 4.1 — aria-label no formato "Ver referência: {título}" -->
+<a
+  href={href}
+  class="ref-link"
+  aria-label={`Ver referência: ${title}`}
+>{title}</a>
+
+<style>
+  /* Req 3.5 — visualmente diferenciado de nav links (--color-primary) e links externos */
+  .ref-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    font-weight: 500;
+    transition: color var(--transition-hover, 150ms ease),
+                text-decoration-color var(--transition-hover, 150ms ease);
+  }
+
+  .ref-link:hover {
+    color: var(--color-accent);
+    text-decoration-style: solid;
+    opacity: 0.85;
+  }
+
+  .ref-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+</style>

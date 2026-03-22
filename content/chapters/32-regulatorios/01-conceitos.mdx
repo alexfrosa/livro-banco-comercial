@@ -4,11 +4,13 @@ order: 1
 description: "O Sistema de Informações de Crédito (SCR) e o Cadastro de Clientes do Sistema Financeiro (CCS)"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 O BACEN mantém dois sistemas centrais de informações que todos os bancos precisam alimentar: o SCR e o CCS. Entender esses sistemas é essencial para o backoffice de regulatórios.
 
 ## SCR — Sistema de Informações de Crédito
 
-O SCR é um banco de dados centralizado que consolida informações sobre as operações de crédito de todos os clientes do sistema financeiro brasileiro.
+O SCR (<Ref id="resolucao-bcb-96" />) é um banco de dados centralizado que consolida informações sobre as operações de crédito de todos os clientes do sistema financeiro brasileiro.
 
 **O que é reportado:**
 - Todas as operações de crédito acima de R$ 200 (o limite foi reduzido ao longo dos anos)
@@ -32,7 +34,7 @@ O SCR é um banco de dados centralizado que consolida informações sobre as ope
 
 ## CCS — Cadastro de Clientes do Sistema Financeiro
 
-O CCS é um sistema que permite ao BACEN e ao Poder Judiciário identificar em quais instituições financeiras um determinado cliente tem relacionamento.
+O CCS é um sistema que permite ao BACEN e ao Poder Judiciário identificar em quais instituições financeiras um determinado cliente tem relacionamento. O sigilo das informações bancárias é protegido pela <Ref id="lei-complementar-105-2001" />, que define as condições em que podem ser compartilhadas com autoridades.
 
 **O que é reportado:**
 - Existência de relacionamento (conta, investimento, crédito) entre o cliente e a instituição

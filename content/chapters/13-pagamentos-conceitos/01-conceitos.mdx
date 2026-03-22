@@ -4,6 +4,8 @@ order: 1
 description: "Os principais instrumentos de pagamento no Brasil e como funcionam"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 O Brasil tem um dos sistemas de pagamento mais avançados do mundo. O Pix, lançado em 2020, transformou radicalmente a forma como pessoas e empresas transferem dinheiro. Mas entender o Pix exige entender o contexto em que ele surgiu.
 
 ## O ecossistema de pagamentos brasileiro
@@ -33,12 +35,13 @@ O Pix foi criado pelo BACEN e entrou em operação em novembro de 2020. Em pouco
 - **Limites:** definidos pelo banco e pelo cliente (com limites máximos regulatórios)
 - **Participação:** obrigatória para instituições com mais de 500 mil clientes
 
-**Modalidades do Pix:**
+**Modalidades do Pix** (<Ref id="resolucao-bcb-80" />):
 - **Pix Transferência:** transferência entre contas usando chave Pix
 - **Pix Pagamento:** pagamento de cobranças (substitui o boleto em muitos casos)
 - **Pix Cobrança:** o recebedor gera um QR Code com os dados da cobrança
 - **Pix Saque e Pix Troco:** sacar dinheiro em estabelecimentos comerciais
 - **Pix Agendado:** agendar um Pix para uma data futura
+- **Pix Garantido:** modalidade que permite ao pagador usar um limite de crédito pré-aprovado para realizar transações Pix, sem débito imediato na conta (<Ref id="resolucao-bcb-403" />). O banco do pagador garante a liquidação ao banco recebedor, e o cliente paga o banco posteriormente — similar ao cartão de crédito, mas com a velocidade e ubiquidade do Pix.
 
 ## As chaves Pix
 
@@ -79,6 +82,18 @@ O BACEN define limites máximos para transações Pix, e os bancos podem definir
 Os clientes podem ajustar seus limites dentro dos máximos permitidos pelo banco. Aumentos de limite têm um período de carência (geralmente 24-48 horas) para prevenir fraudes.
 
 **Mecanismos de segurança:**
-- **MED (Mecanismo Especial de Devolução):** permite que o banco do pagador solicite a devolução de um Pix em casos de fraude ou erro, com prazo de 90 dias
+- **MED (Mecanismo Especial de Devolução):** permite que o banco do pagador solicite a devolução de um Pix em casos de fraude ou erro. Os prazos são distintos por motivo: **90 dias** para fraude confirmada (o banco recebedor pode bloquear o valor preventivamente) e **7 dias** para erro operacional (ex: valor errado, destinatário errado). O banco recebedor não é obrigado a devolver se o saldo já não estiver disponível na conta do destinatário, mas deve colaborar com a investigação.
 - **Infojud/Sisbajud:** integração com o judiciário para bloqueio de valores em casos de fraude
 - **Monitoramento em tempo real:** os bancos monitoram transações Pix em busca de padrões suspeitos
+
+## Open Finance e iniciação de pagamento
+
+O Open Finance (<Ref id="resolucao-bcb-150" />) introduziu a figura do **PISP** (Payment Initiation Service Provider) — um iniciador de pagamentos. Um PISP é uma instituição autorizada pelo BACEN que pode iniciar um Pix em nome do cliente, sem que o cliente precise acessar o app do seu banco.
+
+**Como funciona:**
+1. O cliente acessa um app de terceiro (ex: um marketplace, um app de gestão financeira)
+2. Autoriza o PISP a iniciar um pagamento em seu nome
+3. O PISP envia a instrução de pagamento diretamente ao banco do cliente via API padronizada
+4. O banco do cliente executa o Pix após validar o consentimento
+
+Isso cria um ecossistema onde qualquer empresa pode oferecer pagamentos via Pix sem precisar ser uma instituição financeira — apenas um participante autorizado do Open Finance. O consentimento é granular, com prazo máximo de 1 ano, e pode ser revogado pelo cliente a qualquer momento.

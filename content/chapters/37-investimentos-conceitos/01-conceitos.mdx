@@ -4,6 +4,8 @@ order: 1
 description: "Os principais produtos de investimento bancário e suas características"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Os produtos de investimento bancário são, do ponto de vista do banco, instrumentos de captação. Do ponto de vista do cliente, são formas de fazer o dinheiro render. Entender ambas as perspectivas é essencial para o backoffice de investimentos.
 
 ## CDB — Certificado de Depósito Bancário
@@ -20,6 +22,8 @@ O CDB é o produto de investimento mais comum dos bancos. O cliente empresta din
 - **CDB com liquidez diária:** pode ser resgatado a qualquer momento. Taxa menor.
 - **CDB com prazo definido:** só pode ser resgatado no vencimento (ou com penalidade). Taxa maior.
 - **CDB com carência:** pode ser resgatado após um período mínimo. Taxa intermediária.
+
+> A classificação contábil dos CDBs e demais instrumentos financeiros segue as regras da <Ref id="resolucao-cmn-4966" /> (IFRS 9), que determina se o ativo é mensurado ao custo amortizado, ao valor justo por outros resultados abrangentes (VJORA) ou ao valor justo por resultado (VJR).
 
 ## LCI — Letra de Crédito Imobiliário
 
@@ -72,3 +76,23 @@ O FGC é fundamental para a confiança no sistema financeiro. Sem ele, os client
 | Fundos de ações | 15% | Não |
 
 O backoffice de investimentos precisa calcular e reter o IR na fonte no momento do resgate.
+
+## Come-cotas — antecipação de IR em fundos
+
+O **come-cotas** é um mecanismo de antecipação do Imposto de Renda aplicado a fundos de investimento abertos de renda fixa, multimercado e cambial. Em vez de cobrar o IR apenas no resgate, o governo antecipa a cobrança duas vezes por ano: no último dia útil de maio e de novembro.
+
+**Como funciona:** o IR é cobrado sobre o rendimento acumulado no período, reduzindo a quantidade de cotas do investidor (daí o nome "come-cotas"). A alíquota aplicada é a menor da tabela regressiva correspondente ao tipo do fundo:
+- Fundos de curto prazo (carteira com prazo médio ≤ 365 dias): 20%
+- Fundos de longo prazo (carteira com prazo médio > 365 dias): 15%
+
+No resgate, o IR complementar é cobrado sobre o rendimento restante, usando a alíquota correspondente ao prazo total da aplicação.
+
+**Impacto:** o come-cotas reduz o efeito dos juros compostos, pois parte do capital que renderia juros é antecipada ao governo. Para o investidor, isso significa retorno líquido menor em comparação com produtos sem come-cotas (como CDB, LCI, LCA).
+
+## Tributação de fundos fechados — mudança de 2023
+
+Até 2023, os **fundos fechados** (aqueles que não permitem resgate antes do vencimento ou da liquidação) eram isentos do come-cotas. Isso os tornava veículos eficientes de planejamento tributário para grandes patrimônios — o IR só era pago na liquidação do fundo, muitas vezes décadas depois.
+
+A Lei 14.754/2023 encerrou esse benefício: a partir de 2024, os fundos fechados passaram a ser tributados pelo come-cotas nas mesmas datas dos fundos abertos (maio e novembro). A mudança afetou principalmente fundos exclusivos e fundos de investimento em participações (FIPs) utilizados por famílias de alta renda para gestão patrimonial.
+
+**Impacto no backoffice:** sistemas de custódia e administração de fundos precisaram ser adaptados para calcular e recolher o IR semestral em fundos que historicamente não tinham esse fluxo.

@@ -4,11 +4,14 @@ order: 1
 description: "Os principais órgãos reguladores e os sistemas de pagamento STR e SPI"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 O sistema financeiro brasileiro é um dos mais regulados e sofisticados do mundo. Entender quem regula, o que regula e como funciona a infraestrutura de pagamentos é fundamental para qualquer pessoa que trabalha com sistemas bancários.
 
 ## Os reguladores
 
 ### Conselho Monetário Nacional (CMN)
+
 
 O CMN é o órgão máximo do sistema financeiro brasileiro. Ele **define as políticas** monetária, de crédito, orçamentária e da dívida pública. Não executa — apenas normatiza.
 
@@ -82,8 +85,48 @@ Existem diferentes tipos de licença: banco múltiplo, banco comercial, banco de
 
 ## Basileia e capital regulatório
 
-O **Acordo de Basileia** (atualmente na versão III) define os requisitos mínimos de capital que os bancos precisam manter em relação aos seus ativos ponderados pelo risco.
+O **Acordo de Basileia III** (<Ref id="basileia-iii" />) define os requisitos mínimos de capital que os bancos precisam manter em relação aos seus ativos ponderados pelo risco (<Ref id="lei-4595-1964" />).
 
-A ideia é simples: quanto mais arriscada a carteira de um banco, mais capital próprio ele precisa ter como "colchão" para absorver perdas. Isso protege os depositantes e o sistema financeiro como um todo.
+A ideia central: quanto mais arriscada a carteira de um banco, mais capital próprio ele precisa ter como "colchão" para absorver perdas. Isso protege os depositantes e o sistema financeiro como um todo.
 
-O BACEN implementa as regras de Basileia no Brasil através de resoluções do CMN, com algumas adaptações à realidade local.
+O BACEN implementa as regras de Basileia no Brasil via resoluções do CMN (<Ref id="resolucao-cmn-4557" />), com algumas adaptações à realidade local.
+
+**Buffers de capital do Basileia III:**
+
+Além do capital mínimo básico (Pilar 1), o Basileia III introduziu três buffers adicionais obrigatórios:
+
+| Buffer | Finalidade | Percentual (Brasil) |
+|---|---|---|
+| Conservação de capital (ACPConservação) | Absorver perdas em períodos de estresse sem violar o mínimo regulatório | 2,5% dos APR |
+| Contracíclico (ACPContracíclico) | Acumular capital em períodos de expansão do crédito para usar em recessões | 0% a 2,5% (definido pelo BACEN) |
+| Sistêmico (ACPSistêmico) | Exigência adicional para bancos de importância sistêmica (G-SIBs e D-SIBs) | 0,5% a 3,5% dos APR |
+
+Quando um banco viola o buffer de conservação, fica sujeito a restrições automáticas na distribuição de dividendos e bônus — sem necessidade de intervenção regulatória explícita.
+
+## Open Finance
+
+O **Open Finance** (Sistema Financeiro Aberto) é a evolução do Open Banking no Brasil, regulamentado pelo BACEN (<Ref id="resolucao-bcb-150" />). Permite que clientes autorizem o compartilhamento de seus dados financeiros entre diferentes instituições.
+
+**Fases do Open Finance no Brasil:**
+
+1. **Fase 1 — Dados abertos:** as instituições publicam informações sobre seus produtos e serviços (sem dados de clientes)
+2. **Fase 2 — Dados de clientes:** com consentimento, o cliente pode compartilhar dados cadastrais, de transações e de produtos entre instituições
+3. **Fase 3 — Iniciação de pagamentos (PISP):** terceiros autorizados podem iniciar pagamentos em nome do cliente, sem que o cliente precise acessar o app do banco
+4. **Fase 4 — Dados de câmbio, investimentos e seguros:** expansão para outros produtos financeiros
+
+**Impacto regulatório:** instituições com mais de 500 mil clientes são obrigadas a participar. O consentimento do cliente é granular, revogável a qualquer momento, e limitado a 12 meses por padrão. A LGPD (<Ref id="lei-13709-2018" />) se aplica integralmente ao compartilhamento de dados no Open Finance.
+
+## DREX — Real Digital
+
+O **DREX** é o projeto de moeda digital do Banco Central do Brasil (CBDC — Central Bank Digital Currency). É uma versão digital do Real, emitida e garantida pelo BACEN, que opera em infraestrutura de blockchain permissionada.
+
+**Diferenças do Pix:**
+- O Pix é uma transferência de dinheiro entre contas bancárias convencionais
+- O DREX é uma representação digital do Real que pode ser programada via contratos inteligentes (*smart contracts*)
+
+**Casos de uso previstos:**
+- Liquidação de operações de mercado de capitais com entrega contra pagamento (DvP) em tempo real
+- Contratos financeiros programáveis (ex: liberação automática de crédito imobiliário na transferência do imóvel)
+- Inclusão financeira via carteiras digitais sem conta bancária
+
+O DREX está em fase piloto com instituições financeiras selecionadas. A regulamentação definitiva ainda está em desenvolvimento pelo BACEN.

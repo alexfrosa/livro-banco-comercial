@@ -4,6 +4,8 @@ order: 1
 description: "Os principais tipos de fraude bancária e os mecanismos de prevenção e detecção"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 A fraude é um dos maiores desafios do sistema financeiro. Com a digitalização dos serviços bancários, os golpes evoluíram e se tornaram mais sofisticados. Entender os tipos de fraude e como combatê-los é essencial para qualquer profissional de backoffice.
 
 ## Fraude interna vs. externa
@@ -55,6 +57,15 @@ O fraudador usa os dados de outra pessoa para abrir contas, contrair crédito ou
 **Análise comportamental:** o sistema aprende o comportamento normal do cliente (horário de acesso, dispositivos usados, padrão de digitação) e alerta quando há desvios.
 
 **Biometria:** reconhecimento facial, digital, ou de voz. Difícil de falsificar.
+
+**Deepfakes e ameaças à biometria facial:** a evolução das técnicas de inteligência artificial generativa criou uma ameaça emergente: os *deepfakes* — vídeos e imagens sintéticas que imitam o rosto e a voz de uma pessoa real com alta fidelidade. Sistemas de validação biométrica que dependem de "prova de vida" (*liveness detection*) baseada em vídeo estão vulneráveis a ataques com deepfakes gerados em tempo real.
+
+Os bancos precisam evoluir seus sistemas de liveness detection para além da análise de movimento facial passivo, incorporando:
+- **Desafios ativos:** solicitar ações imprevisíveis (piscar, virar a cabeça, repetir uma frase aleatória)
+- **Detecção de artefatos de IA:** análise de inconsistências nos pixels, bordas e iluminação típicas de vídeos sintéticos
+- **Verificação cruzada:** combinar biometria facial com outros fatores (dispositivo conhecido, geolocalização, comportamento de digitação)
+
+A ameaça é especialmente crítica no onboarding digital, onde a biometria é o principal mecanismo de validação de identidade sem presença física.
 
 ### Limites e controles
 

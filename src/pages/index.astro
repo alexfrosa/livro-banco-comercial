@@ -119,6 +119,8 @@ const firstSectionUrl = firstChapter && firstSection
     ? `/${firstChapter.slug}`
     : '/';
 
+const firstSectionUrlFull = `${import.meta.env.BASE_URL}${firstSectionUrl}`.replace(/\/\//g, '/');
+
 // ── Build navItems for BaseLayout ─────────────────────────────────────────
 
 const navItems: NavItem[] = generateNavItems(chapters);
@@ -148,9 +150,9 @@ const navItems: NavItem[] = generateNavItems(chapters);
       <div class="hero-cta">
         <a
           id="cta-button"
-          href={firstSectionUrl}
+          href={firstSectionUrlFull}
           class="btn btn-primary"
-          data-first-section={firstSectionUrl}
+          data-first-section={firstSectionUrlFull}
         >
           Começar a leitura
         </a>
@@ -185,7 +187,7 @@ const navItems: NavItem[] = generateNavItems(chapters);
             <div class="chapter-info">
               <h3 class="chapter-title">
                 {chapter.sections[0] ? (
-                  <a href={`/${chapter.slug}/${chapter.sections[0].slug}`} class="chapter-link">
+                  <a href={`${import.meta.env.BASE_URL}/${chapter.slug}/${chapter.sections[0].slug}`.replace(/\/\//g, '/')} class="chapter-link">
                     {chapter.meta.title}
                   </a>
                 ) : (
@@ -221,7 +223,8 @@ const navItems: NavItem[] = generateNavItems(chapters);
       if (lastVisited && typeof lastVisited === 'string') {
         const btn = document.getElementById('cta-button') as HTMLAnchorElement | null;
         if (btn) {
-          btn.href = `/${lastVisited}`;
+          const base = btn.getAttribute('data-first-section')?.replace(/[^/]*$/, '') ?? '';
+          btn.href = `${import.meta.env.BASE_URL}/${lastVisited}`.replace(/\/\//g, '/');
           btn.textContent = 'Continuar leitura';
         }
       }

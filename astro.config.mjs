@@ -3,7 +3,8 @@ import mdx from '@astrojs/mdx';
 import preact from '@astrojs/preact';
 
 export default defineConfig({
-  site: 'https://user.github.io/interactive-banking-book',
+  site: 'https://alexfrosa.github.io',
+  base: '/livro-banco-comercial',
   integrations: [
     mdx(),
     preact({ compat: true }),

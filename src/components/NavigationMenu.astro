@@ -39,7 +39,7 @@ function isActive(url: string): boolean {
     <ul class="nav-list" role="list">
       <li class="nav-chapter nav-home">
         <a
-          href="/"
+          href={`${import.meta.env.BASE_URL}`}
           class:list={['nav-chapter-link', { 'nav-active': currentUrl === '/' }]}
           aria-current={currentUrl === '/' ? 'page' : undefined}
         >
@@ -49,7 +49,7 @@ function isActive(url: string): boolean {
       {items.map((chapter) => (
         <li class="nav-chapter">
           <a
-            href={chapter.url}
+            href={`${import.meta.env.BASE_URL}${chapter.url}`}
             class:list={['nav-chapter-link', { 'nav-active': isActive(chapter.url) }]}
             aria-current={isActive(chapter.url) ? 'page' : undefined}
             data-nav-url={chapter.url}
@@ -68,7 +68,7 @@ function isActive(url: string): boolean {
               {chapter.children.map((section) => (
                 <li class="nav-section">
                   <a
-                    href={section.url}
+                    href={`${import.meta.env.BASE_URL}${section.url}`}
                     class:list={['nav-section-link', { 'nav-active': isActive(section.url) }]}
                     aria-current={isActive(section.url) ? 'page' : undefined}
                     data-nav-url={section.url}

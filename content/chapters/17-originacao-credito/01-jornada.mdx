@@ -28,9 +28,13 @@ A análise de crédito avalia a capacidade e a disposição do cliente de pagar 
 
 **Análise de garantias:** para créditos com garantia (financiamento imobiliário, veículo), o bem é avaliado para garantir que cobre o valor do empréstimo.
 
+**FGTS como garantia:** no crédito consignado FGTS, o saldo do Fundo de Garantia do cliente serve como garantia e fonte de pagamento. O banco consulta a plataforma do FGTS (via integração com a Caixa Econômica Federal) para verificar o saldo disponível para antecipação. As parcelas são descontadas diretamente do saldo do FGTS, o que reduz significativamente o risco de inadimplência e permite taxas menores.
+
 ## Etapa 3: Decisão
 
-Com base na análise, o sistema toma uma decisão:
+Com base na análise, o sistema toma uma decisão seguindo a **política de crédito** do banco — um conjunto de regras e parâmetros que define quem pode receber crédito, em quais condições e até qual valor.
+
+A política de crédito define também as **alçadas de aprovação**: limites de valor acima dos quais a decisão precisa ser escalada para um nível hierárquico superior (analista sênior, comitê de crédito). Quanto maior o valor ou o risco da operação, maior a alçada exigida.
 
 **Aprovação automática:** o cliente atende todos os critérios. O sistema aprova com as condições calculadas (taxa, prazo, valor máximo).
 

@@ -4,6 +4,8 @@ order: 1
 description: "O que é liquidez bancária, como o caixa do banco funciona e o papel dos sistemas STR e SPI"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 A tesouraria é o coração financeiro de um banco. Enquanto o backoffice de pagamentos processa as transações dos clientes, a tesouraria garante que o banco tem dinheiro suficiente para honrar todos os seus compromissos — agora e no futuro.
 
 ## O que é liquidez bancária
@@ -67,5 +69,17 @@ O risco de liquidez é o risco de o banco não conseguir honrar seus compromisso
 **Risco de liquidez de funding:** o banco não consegue captar recursos suficientes para financiar suas operações.
 
 O BACEN exige que os bancos mantenham indicadores mínimos de liquidez:
-- **LCR (Liquidity Coverage Ratio):** o banco deve ter ativos líquidos suficientes para cobrir saídas de caixa por 30 dias em um cenário de estresse
-- **NSFR (Net Stable Funding Ratio):** o banco deve ter funding estável suficiente para financiar seus ativos de longo prazo
+- **LCR (Liquidity Coverage Ratio):** o banco deve ter ativos líquidos de alta qualidade (HQLA) suficientes para cobrir saídas líquidas de caixa por 30 dias em um cenário de estresse. <Ref id="resolucao-bcb-229" />
+- **NSFR (Net Stable Funding Ratio):** o banco deve ter funding estável suficiente para financiar seus ativos de longo prazo por um horizonte de 1 ano. <Ref id="resolucao-bcb-230" />
+
+Ambos os indicadores foram introduzidos pelo Acordo de Basileia III e implementados no Brasil pelo BACEN.
+
+## Operações compromissadas (repo)
+
+As **operações compromissadas** (ou *repo*, de *repurchase agreement*) são um instrumento central de gestão de liquidez. O banco vende títulos públicos com compromisso de recompra em data futura — na prática, é um empréstimo colateralizado.
+
+**Repo com o BACEN:** o banco pode vender LFTs ao BACEN e recomprá-las no dia seguinte. É a principal ferramenta de ajuste de liquidez de curtíssimo prazo do sistema financeiro brasileiro.
+
+**Repo interbancário:** bancos também fazem operações compromissadas entre si, usando títulos como colateral.
+
+As compromissadas permitem que o banco transforme ativos ilíquidos (títulos) em caixa imediato sem precisar vendê-los definitivamente — preservando a carteira de títulos e evitando perdas de marcação a mercado.

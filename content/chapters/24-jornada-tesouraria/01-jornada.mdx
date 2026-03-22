@@ -53,6 +53,12 @@ Isso cria um desafio: como garantir liquidez na conta SPI durante fins de semana
 
 A solução é manter um **buffer de liquidez** na conta SPI: um saldo mínimo que cobre as saídas esperadas durante o período sem STR. A tesouraria calcula esse buffer com base no histórico de transações Pix.
 
+## Compulsório
+
+O **recolhimento compulsório** é uma exigência do BACEN: os bancos devem manter uma fração dos depósitos captados depositada no BACEN, sem remuneração (ou com remuneração abaixo do mercado). O objetivo é controlar a expansão do crédito e a liquidez do sistema.
+
+A tesouraria monitora diariamente a posição de compulsório. Déficits de compulsório geram multas; excessos imobilizam capital desnecessariamente. O cálculo considera o período de movimentação (quinzena anterior) e o período de manutenção (quinzena atual).
+
 ## Fechamento do dia
 
 No final do dia útil, a tesouraria:

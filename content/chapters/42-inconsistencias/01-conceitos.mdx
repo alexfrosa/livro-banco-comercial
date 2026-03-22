@@ -89,6 +89,7 @@ A melhor correção é a prevenção:
 
 - **Idempotência:** garantir que operações podem ser reprocessadas sem efeitos colaterais
 - **Transações atômicas:** usar transações de banco de dados para garantir que múltiplas atualizações são feitas juntas ou não são feitas
-- **Padrão Outbox:** garantir que eventos são publicados na mesma transação que a operação
+- **Padrão Outbox:** garantir que eventos são publicados na mesma transação que a operação — evita o problema de "operação gravada mas evento não publicado"
+- **Padrão Saga com compensação:** em fluxos distribuídos, definir transações compensatórias para cada etapa, garantindo que falhas parciais sejam revertidas de forma consistente
 - **Reconciliações frequentes:** detectar inconsistências rapidamente, antes que se acumulem
 - **Testes de carga:** verificar que o sistema se comporta corretamente sob alta concorrência

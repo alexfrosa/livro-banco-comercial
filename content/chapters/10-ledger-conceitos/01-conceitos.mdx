@@ -83,6 +83,32 @@ Cada instrução de lançamento inclui um **ID de idempotência** (também chama
 
 Se essa instrução chegar duas vezes, o ledger processa apenas uma vez e retorna o mesmo resultado para ambas as chamadas.
 
+## Event Sourcing
+
+O **Event Sourcing** é um padrão arquitetural que se alinha naturalmente com os princípios do ledger. Em vez de armazenar apenas o estado atual (saldo), o sistema armazena a sequência completa de eventos que levou a esse estado (cada lançamento).
+
+O saldo atual de uma conta é sempre derivado da soma dos lançamentos — nunca armazenado diretamente como um campo mutável. Isso garante auditabilidade total e permite reconstruir o estado da conta em qualquer ponto no tempo.
+
+```
+Eventos:
+  [Depósito R$1.000] → [Saque R$200] → [Pix recebido R$500]
+
+Estado atual (projeção):
+  Saldo = 1.000 - 200 + 500 = R$ 1.300
+```
+
+Event Sourcing é diferente de simplesmente logar operações: os eventos são a fonte de verdade, não um log secundário.
+
+## Ledger interno vs. COSIF
+
+É importante distinguir dois tipos de ledger que coexistem em um banco:
+
+**Ledger interno (operacional):** registra os lançamentos nas contas dos clientes e nas contas internas do banco. Usa uma estrutura de contas definida pelo próprio banco, otimizada para operações em tempo real. É o ledger que o cliente vê no extrato.
+
+**COSIF (Plano Contábil das Instituições do Sistema Financeiro Nacional):** é o plano de contas regulatório definido pelo BACEN. Todo banco deve mapear seus lançamentos internos para o COSIF e reportar ao BACEN. O COSIF é padronizado para todo o sistema financeiro, permitindo comparabilidade entre instituições.
+
+O processo de mapear lançamentos do ledger interno para o COSIF é chamado de **contabilização** ou **escrituração contábil**. Geralmente ocorre em batch (diário ou intraday), e o sistema contábil (COSIF) é um sistema separado do ledger operacional.
+
 ## Consistência eventual vs. consistência forte
 
 Em sistemas distribuídos, há uma tensão entre performance e consistência:

@@ -4,6 +4,8 @@ order: 1
 description: "Os fundamentos do Asset-Liability Management: descasamento, duration e risco de liquidez"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 O ALM (Asset-Liability Management, ou Gestão de Ativos e Passivos) é a disciplina que garante que o banco está equilibrado: que seus ativos e passivos têm características compatíveis em termos de prazo, taxa e moeda.
 
 ## O balanço de um banco
@@ -49,6 +51,28 @@ Variação no preço ≈ -Duration modificada × Variação na taxa
 **Exemplo:** um título com duration modificada de 5 anos perde aproximadamente 5% do seu valor se a taxa de juros subir 1%.
 
 O ALM usa a duration para medir e gerenciar o risco de taxa de juros do balanço. O objetivo é manter a duration dos ativos próxima à duration dos passivos — ou gerenciar conscientemente o descasamento.
+
+## Métricas centrais do ALM
+
+### NII — Net Interest Income
+
+O **NII (Resultado de Intermediação Financeira)** é a diferença entre as receitas de juros dos ativos e as despesas de juros dos passivos. É a principal métrica de rentabilidade do ALM.
+
+```
+NII = Receitas de juros (ativos) − Despesas de juros (passivos)
+```
+
+O ALM monitora como o NII se comporta em diferentes cenários de taxa de juros. Um banco com gap negativo no curto prazo (mais passivos que ativos reprecificando) verá seu NII cair se as taxas subirem.
+
+### EVE — Economic Value of Equity
+
+O **EVE (Valor Econômico do Patrimônio)** é o valor presente dos fluxos de caixa dos ativos menos o valor presente dos fluxos de caixa dos passivos. Mede o impacto de variações nas taxas de juros sobre o valor econômico do banco.
+
+```
+EVE = VP(fluxos dos ativos) − VP(fluxos dos passivos)
+```
+
+Enquanto o NII mede o impacto no curto prazo (resultado do exercício), o EVE mede o impacto de longo prazo (valor do banco). O BACEN exige que os bancos monitorem e reportem o EVE como parte da gestão de risco de taxa de juros. <Ref id="resolucao-bcb-229" /> <Ref id="resolucao-bcb-230" />
 
 ## Gap de reprecificação
 

@@ -7,6 +7,7 @@
  */
 import ChapterLayout from '../layouts/ChapterLayout.astro';
 import ContentError from '../components/ContentError.astro';
+import ChapterNav from '../components/ChapterNav.astro';
 import {
   parseFrontmatter,
   generateNavItems,
@@ -200,6 +201,25 @@ const { path: mdxPath, chapterSlug, sectionSlug } = Astro.props as {
 
 const currentUrl = generateSectionUrl(chapterSlug, sectionSlug);
 
+// ── Prev / Next navigation ────────────────────────────────────────────────
+
+// Build a flat ordered list of all sections for prev/next
+const orderedSections = sections
+  .slice()
+  .sort((a, b) => {
+    const chapterA = chapterMetaMap.get(a.chapterSlug)?.order ?? 0;
+    const chapterB = chapterMetaMap.get(b.chapterSlug)?.order ?? 0;
+    if (chapterA !== chapterB) return chapterA - chapterB;
+    return a.frontmatter.order - b.frontmatter.order;
+  });
+
+const currentIndex = orderedSections.findIndex(
+  (s) => s.chapterSlug === chapterSlug && s.sectionSlug === sectionSlug
+);
+
+const prevSection = currentIndex > 0 ? orderedSections[currentIndex - 1] : null;
+const nextSection = currentIndex < orderedSections.length - 1 ? orderedSections[currentIndex + 1] : null;
+
 // Find the section entry for this page
 const sectionEntry = sections.find(
   (s) => s.chapterSlug === chapterSlug && s.sectionSlug === sectionSlug
@@ -247,6 +267,13 @@ const ogImage = sectionEntry?.frontmatter.ogImage;
       <Content />
     </article>
   )}
+
+  <ChapterNav
+    prevUrl={prevSection ? generateSectionUrl(prevSection.chapterSlug, prevSection.sectionSlug) : undefined}
+    prevTitle={prevSection?.frontmatter.title}
+    nextUrl={nextSection ? generateSectionUrl(nextSection.chapterSlug, nextSection.sectionSlug) : undefined}
+    nextTitle={nextSection?.frontmatter.title}
+  />
 </ChapterLayout>
 
 <style>

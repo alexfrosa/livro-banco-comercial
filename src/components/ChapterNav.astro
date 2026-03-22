@@ -1,0 +1,131 @@
+---
+/**
+ * ChapterNav.astro
+ * Prev/Next navigation buttons shown at the bottom of each chapter/section page.
+ */
+
+interface Props {
+  prevUrl?: string;
+  prevTitle?: string;
+  nextUrl?: string;
+  nextTitle?: string;
+}
+
+const { prevUrl, prevTitle, nextUrl, nextTitle } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+{(prevUrl || nextUrl) && (
+  <nav class="chapter-nav" aria-label="Navegação entre seções">
+    <div class="chapter-nav-inner">
+      {prevUrl ? (
+        <a href={`${base}${prevUrl}`} class="chapter-nav-btn chapter-nav-prev" rel="prev">
+          <span class="chapter-nav-arrow" aria-hidden="true">←</span>
+          <span class="chapter-nav-label">
+            <span class="chapter-nav-hint">Anterior</span>
+            <span class="chapter-nav-title">{prevTitle}</span>
+          </span>
+        </a>
+      ) : <div />}
+
+      {nextUrl ? (
+        <a href={`${base}${nextUrl}`} class="chapter-nav-btn chapter-nav-next" rel="next">
+          <span class="chapter-nav-label">
+            <span class="chapter-nav-hint">Próximo</span>
+            <span class="chapter-nav-title">{nextTitle}</span>
+          </span>
+          <span class="chapter-nav-arrow" aria-hidden="true">→</span>
+        </a>
+      ) : <div />}
+    </div>
+  </nav>
+)}
+
+<style>
+  .chapter-nav {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 12%, transparent);
+  }
+
+  .chapter-nav-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .chapter-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 15%, transparent);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--color-text, #1a1a2e);
+    background: color-mix(in srgb, var(--color-text, #1a1a2e) 3%, transparent);
+    transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+    max-width: 48%;
+    min-height: 44px;
+  }
+
+  .chapter-nav-btn:hover {
+    border-color: var(--color-primary, #2563eb);
+    background: color-mix(in srgb, var(--color-primary, #2563eb) 6%, transparent);
+    color: var(--color-primary, #2563eb);
+    opacity: 1;
+  }
+
+  .chapter-nav-next {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .chapter-nav-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .chapter-nav-hint {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.6;
+  }
+
+  .chapter-nav-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.3;
+    /* truncate long titles */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .chapter-nav-arrow {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    color: var(--color-primary, #2563eb);
+  }
+
+  @media (max-width: 480px) {
+    .chapter-nav-btn {
+      max-width: 100%;
+      padding: 0.75rem 1rem;
+    }
+
+    .chapter-nav-inner {
+      flex-direction: column;
+    }
+
+    .chapter-nav-next {
+      margin-left: 0;
+      text-align: left;
+      flex-direction: row-reverse;
+    }
+  }
+</style>

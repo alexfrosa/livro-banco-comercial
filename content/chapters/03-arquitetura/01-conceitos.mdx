@@ -44,7 +44,23 @@ Em torno do core banking, existem sistemas especializados que tratam de domínio
 
 ## Arquiteturas de integração
 
-Como esses sistemas se comunicam? Existem dois paradigmas principais:
+Como esses sistemas se comunicam? Existem três paradigmas principais:
+
+### Síncrono via API (request-response)
+
+No modelo síncrono, um sistema chama outro diretamente e aguarda a resposta antes de continuar. É o padrão dominante para operações que precisam de resultado imediato.
+
+**Exemplos no contexto bancário:**
+- Consulta de score de crédito ao Serasa durante o onboarding
+- Validação de CPF na Receita Federal
+- Consulta ao DICT (Diretório de Identificadores de Contas Transacionais) para resolver uma chave Pix
+- Autorização de cartão junto à bandeira
+
+**Vantagens:** simples de implementar e depurar, resultado imediato, semântica clara de sucesso/falha.
+
+**Desvantagens:** acoplamento temporal — se o sistema chamado estiver lento ou indisponível, o chamador fica bloqueado. Requer circuit breakers e timeouts bem configurados para evitar falhas em cascata.
+
+APIs bancárias seguem geralmente REST/HTTP com JSON, autenticação via OAuth 2.0/mTLS, e versionamento explícito (ex: `/v1/`, `/v2/`). O Open Finance Brasil padronizou esse modelo para todas as instituições participantes.
 
 ### Batch (processamento em lote)
 

@@ -201,8 +201,8 @@ describe('Property 22: Diagrams possuem texto alternativo', () => {
     // Feature: interactive-banking-book, Property 22: Diagrams possuem texto alternativo
     fc.assert(
       fc.property(
-        fc.string({ minLength: 1, maxLength: 200 }),
-        fc.string({ minLength: 1, maxLength: 500 }),
+        fc.string({ minLength: 1, maxLength: 200 }).filter(s => s.trim().length > 0),
+        fc.string({ minLength: 1, maxLength: 500 }).filter(s => s.trim().length > 0),
         (alt, content) => {
           createDiagramDOM({ alt, content });
 

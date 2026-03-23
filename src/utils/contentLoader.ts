@@ -8,6 +8,7 @@ export interface SectionFrontmatter {
   simulation?: string;
   diagram?: string;
   ogImage?: string;
+  part?: string; // Req 1.1 — lido do frontmatter do index.md do capítulo
 }
 
 export interface ChapterMeta {
@@ -15,6 +16,7 @@ export interface ChapterMeta {
   order: number;
   description: string;
   slug: string;
+  part?: string; // Req 1.1, 1.3 — valor exato do frontmatter, sem transformação
 }
 
 export interface NavItem {
@@ -69,6 +71,7 @@ export function parseFrontmatter(raw: string): SectionFrontmatter {
     simulation: result['simulation'] as string | undefined,
     diagram: result['diagram'] as string | undefined,
     ogImage: result['ogImage'] as string | undefined,
+    part: result['part'] as string | undefined, // Req 1.1, 1.4 — preservado sem transformação
   };
 }
 
@@ -77,6 +80,115 @@ export function parseFrontmatter(raw: string): SectionFrontmatter {
  */
 export function generateSectionUrl(chapterSlug: string, sectionSlug: string): string {
   return `/${chapterSlug}/${sectionSlug}`;
+}
+
+/**
+ * Convert a category title to a kebab-case slug.
+ * Removes accents, lowercases, replaces spaces and special chars with `-`,
+ * and collapses multiple hyphens. Req 2.6
+ */
+function toCategorySlug(part: string): string {
+  return part
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // remove diacritics
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // remove special chars (parens, em-dash, etc.)
+    .trim()
+    .replace(/[\s]+/g, '-')        // spaces → hyphens
+    .replace(/-{2,}/g, '-');       // collapse multiple hyphens
+}
+
+/**
+ * Represents a category group in the navigation (Req 2.6).
+ */
+export interface CategoryNavItem {
+  title: string;   // Category_Label (ex: "Parte 2 — Cadastro e Onboarding (KYC)")
+  slug: string;    // kebab-case derived from title
+  url: string;     // always "#"
+  children: NavItem[];
+}
+
+/**
+ * Group chapters by `part` and return a CategoryNavItem[] sorted by the minimum
+ * `order` of each group. Chapters without `part` go to a nameless group at the end.
+ * Req 2.1, 2.2, 2.3, 2.4, 2.5, 2.6
+ */
+export function generateCategoryNavItems(
+  chapters: Array<{
+    slug: string;
+    meta: ChapterMeta;
+    sections: Array<{ slug: string; frontmatter: SectionFrontmatter }>;
+  }>
+): CategoryNavItem[] {
+  // Map from part title → { minOrder, navItems }
+  const groups = new Map<string, { minOrder: number; children: NavItem[] }>();
+  const uncategorized: NavItem[] = [];
+  let uncategorizedMinOrder = Infinity;
+
+  const sortedChapters = [...chapters].sort((a, b) => a.meta.order - b.meta.order);
+
+  for (const chapter of sortedChapters) {
+    const part = chapter.meta.part && chapter.meta.part.trim() ? chapter.meta.part : null;
+
+    const sortedSections = [...chapter.sections].sort(
+      (a, b) => a.frontmatter.order - b.frontmatter.order
+    );
+    const chapterNavItem: NavItem = {
+      title: chapter.meta.title,
+      slug: chapter.slug,
+      url: `/${chapter.slug}`,
+      children: sortedSections.map((s) => ({
+        title: s.frontmatter.title,
+        slug: s.slug,
+        url: generateSectionUrl(chapter.slug, s.slug),
+      })),
+    };
+
+    if (part === null) {
+      // Req 2.5 — capítulos sem part vão ao final
+      uncategorized.push(chapterNavItem);
+      if (chapter.meta.order < uncategorizedMinOrder) {
+        uncategorizedMinOrder = chapter.meta.order;
+      }
+    } else {
+      if (!groups.has(part)) {
+        groups.set(part, { minOrder: chapter.meta.order, children: [] });
+      }
+      const group = groups.get(part)!;
+      group.children.push(chapterNavItem);
+      if (chapter.meta.order < group.minOrder) {
+        group.minOrder = chapter.meta.order;
+      }
+    }
+  }
+
+  // Build result sorted by minOrder of each group (Req 2.3)
+  const result: CategoryNavItem[] = Array.from(groups.entries())
+    .sort((a, b) => a[1].minOrder - b[1].minOrder)
+    .map(([title, { children }]) => ({
+      title,
+      slug: toCategorySlug(title),
+      url: '#',
+      children: [...children].sort((a, b) => {
+        // children are already sorted by order from the loop above,
+        // but re-sort for correctness (Req 2.4)
+        const aOrder = chapters.find((c) => c.slug === a.slug)?.meta.order ?? 0;
+        const bOrder = chapters.find((c) => c.slug === b.slug)?.meta.order ?? 0;
+        return aOrder - bOrder;
+      }),
+    }));
+
+  // Append uncategorized group at the end (Req 2.5)
+  if (uncategorized.length > 0) {
+    result.push({
+      title: '',
+      slug: 'sem-categoria',
+      url: '#',
+      children: uncategorized,
+    });
+  }
+
+  return result;
 }
 
 /**

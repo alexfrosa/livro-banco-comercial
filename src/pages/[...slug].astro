@@ -11,6 +11,7 @@ import ChapterNav from '../components/ChapterNav.astro';
 import {
   parseFrontmatter,
   generateNavItems,
+  generateCategoryNavItems,
   generateSectionUrl,
   type NavItem,
   type ChapterMeta,
@@ -69,6 +70,7 @@ for (const [path, loadFn] of Object.entries(indexModules)) {
       order: Number(rawOrder),
       description: typeof fm['description'] === 'string' ? fm['description'] : '',
       slug: chapterSlug,
+      part: typeof fm['part'] === 'string' && fm['part'].trim() ? fm['part'] : undefined, // Req 1.1
     });
   } catch {
     // Skip chapters with unreadable index files
@@ -161,7 +163,7 @@ const referencesNavItem: NavItem = {
   url: '/referencias',
   children: [],
 };
-const navItems: NavItem[] = [...generateNavItems(Array.from(chapterMap.values())), referencesNavItem];
+const navItems: NavItem[] = [...generateCategoryNavItems(Array.from(chapterMap.values())), referencesNavItem];
 const totalSections = sections.length;
 
 // ── Glossary terms (loaded from content/glossary/terms.md in Task 20) ─────

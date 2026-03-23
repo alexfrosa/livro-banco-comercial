@@ -5,7 +5,7 @@
  * Requirements: 13.1, 13.2, 13.3, 13.4
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { generateNavItems, type ChapterMeta, type SectionFrontmatter, type NavItem } from '../utils/contentLoader';
+import { generateNavItems, generateCategoryNavItems, type ChapterMeta, type SectionFrontmatter, type NavItem } from '../utils/contentLoader';
 
 // ── Discover chapter index files ──────────────────────────────────────────
 
@@ -50,6 +50,7 @@ for (const [path, loadFn] of Object.entries(indexModules)) {
         order: Number(rawOrder),
         description: typeof fm['description'] === 'string' ? fm['description'] : '',
         slug: chapterSlug,
+        part: typeof fm['part'] === 'string' && fm['part'].trim() ? fm['part'] : undefined, // Req 1.1
       },
       sections: [],
     });
@@ -121,6 +122,10 @@ const firstSectionUrl = firstChapter && firstSection
 
 const firstSectionUrlFull = `${import.meta.env.BASE_URL}${firstSectionUrl}`.replace(/\/\//g, '/');
 
+// ── Build category groups for landing page (Req 6.1, 6.2, 6.4) ──────────
+
+const categoryGroups = generateCategoryNavItems(chapters);
+
 // ── Build navItems for BaseLayout ─────────────────────────────────────────
 
 const referencesNavItem: NavItem = {
@@ -129,7 +134,7 @@ const referencesNavItem: NavItem = {
   url: '/referencias',
   children: [],
 };
-const navItems: NavItem[] = [...generateNavItems(chapters), referencesNavItem];
+const navItems: NavItem[] = [...generateCategoryNavItems(chapters), referencesNavItem];
 ---
 
 <BaseLayout
@@ -186,32 +191,52 @@ const navItems: NavItem[] = [...generateNavItems(chapters), referencesNavItem];
         <code>content/chapters/</code> para começar.
       </p>
     ) : (
-      <ol class="chapters-list">
-        {chapters.map((chapter, index) => (
-          <li class="chapter-card">
-            <span class="chapter-number">{String(index + 1).padStart(2, '0')}</span>
-            <div class="chapter-info">
-              <h3 class="chapter-title">
-                {chapter.sections[0] ? (
-                  <a href={`${import.meta.env.BASE_URL}/${chapter.slug}/${chapter.sections[0].slug}`.replace(/\/\//g, '/')} class="chapter-link">
-                    {chapter.meta.title}
-                  </a>
-                ) : (
-                  chapter.meta.title
-                )}
-              </h3>
-              {chapter.meta.description && (
-                <p class="chapter-description">{chapter.meta.description}</p>
+      /* Req 6.1, 6.2, 6.3, 6.4 — grouped by category */
+      <div class="chapters-grouped">
+        {(() => {
+          let globalIndex = 0;
+          return categoryGroups.map((group) => (
+            <div class="chapter-group">
+              {/* Req 6.2, 6.3 — category label above group, omit when title empty */}
+              {group.title && (
+                <h3 class="category-label">{group.title}</h3>
               )}
-              {chapter.sections.length > 0 && (
-                <p class="chapter-sections-count">
-                  {chapter.sections.length} {chapter.sections.length === 1 ? 'seção' : 'seções'}
-                </p>
-              )}
+              <ol class="chapters-list" start={globalIndex + 1}>
+                {group.children.map((chapterNav) => {
+                  globalIndex++;
+                  const chapter = chapters.find((c) => c.slug === chapterNav.slug);
+                  if (!chapter) return null;
+                  const num = globalIndex;
+                  return (
+                    <li class="chapter-card">
+                      <span class="chapter-number">{String(num).padStart(2, '0')}</span>
+                      <div class="chapter-info">
+                        <h3 class="chapter-title">
+                          {chapter.sections[0] ? (
+                            <a href={`${import.meta.env.BASE_URL}/${chapter.slug}/${chapter.sections[0].slug}`.replace(/\/\//g, '/')} class="chapter-link">
+                              {chapter.meta.title}
+                            </a>
+                          ) : (
+                            chapter.meta.title
+                          )}
+                        </h3>
+                        {chapter.meta.description && (
+                          <p class="chapter-description">{chapter.meta.description}</p>
+                        )}
+                        {chapter.sections.length > 0 && (
+                          <p class="chapter-sections-count">
+                            {chapter.sections.length} {chapter.sections.length === 1 ? 'seção' : 'seções'}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
-          </li>
-        ))}
-      </ol>
+          ));
+        })()}
+      </div>
     )}
   </section>
 </BaseLayout>
@@ -399,6 +424,32 @@ const navItems: NavItem[] = [...generateNavItems(chapters), referencesNavItem];
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  /* Req 6.1, 6.2 — grouped layout wrapper */
+  .chapters-grouped {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .chapter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Req 6.3 — category-label visually distinct from chapter-title */
+  .category-label {
+    font-family: var(--font-body, 'Inter', system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent, #0891b2);
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent, #0891b2) 25%, transparent);
   }
 
   .chapter-card {

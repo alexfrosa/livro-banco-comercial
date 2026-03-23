@@ -8,7 +8,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { parseReferences, groupByCategory } from '../utils/referencesLoader';
-import { generateNavItems, type NavItem, type ChapterMeta, type SectionFrontmatter } from '../utils/contentLoader';
+import { generateCategoryNavItems, type NavItem, type ChapterMeta, type SectionFrontmatter } from '../utils/contentLoader';
 
 // ── Load and parse Reference_Registry at build time (Req 2.1, 5.1) ────────
 
@@ -101,6 +101,7 @@ for (const [path, loadFn] of Object.entries(indexModules)) {
         order: Number(rawOrder),
         description: typeof fm['description'] === 'string' ? fm['description'] : '',
         slug: chapterSlug,
+        part: typeof fm['part'] === 'string' && fm['part'].trim() ? fm['part'] : undefined,
       },
       sections: [],
     });
@@ -163,7 +164,7 @@ const referencesNavItem: NavItem = {
   children: [],
 };
 
-const navItems: NavItem[] = [...generateNavItems(chapters), referencesNavItem];
+const navItems: NavItem[] = [...generateCategoryNavItems(chapters), referencesNavItem];
 ---
 
 <BaseLayout

@@ -60,7 +60,14 @@ describe('Property 3: Item ativo no Navigation_Menu', () => {
       fc.property(
         fc.array(chapterArb, { minLength: 1, maxLength: 5 }),
         (chapterDefs) => {
-          const chapters = buildChapters(chapterDefs);
+          // Ensure unique slugs to avoid URL collisions
+          const uniqueDefs = chapterDefs.map((c, i) => ({
+            ...c,
+            slug: `chapter-${i}-${c.slug}`,
+            sections: c.sections.map((s, j) => ({ ...s, slug: `section-${i}-${j}-${s.slug}` })),
+          }));
+
+          const chapters = buildChapters(uniqueDefs);
           const navItems = generateNavItems(chapters);
 
           // Collect all possible URLs from the nav

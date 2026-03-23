@@ -4,6 +4,8 @@ order: 2
 description: "Como o backoffice trata inconsistências, faz revisão manual e mantém o cadastro atualizado"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Nem todo onboarding é automático. Uma parte significativa dos casos exige intervenção humana — e mesmo os casos automáticos precisam de monitoramento e manutenção ao longo do tempo. Esse é o trabalho do backoffice de cadastro.
 
 ## A fila de análise manual
@@ -61,7 +63,7 @@ O backoffice de cadastro também é responsável pela gestão dos documentos dos
 
 **Validade:** alguns documentos têm prazo de validade (CNH, passaporte). O sistema monitora as datas de vencimento e notifica quando um documento está próximo de expirar.
 
-**Auditoria:** todo acesso a documentos de clientes é registrado. Quem acessou, quando, e por qual motivo. Isso é essencial para conformidade com a LGPD e para investigações internas.
+**Auditoria:** todo acesso a documentos de clientes é registrado. Quem acessou, quando, e por qual motivo. Isso é essencial para conformidade com a LGPD (<Ref id="lei-13709-2018" />) e para investigações internas.
 
 ## Indicadores de qualidade do backoffice de cadastro
 

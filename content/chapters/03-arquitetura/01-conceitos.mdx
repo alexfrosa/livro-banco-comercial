@@ -62,7 +62,7 @@ No modelo síncrono, um sistema chama outro diretamente e aguarda a resposta ant
 
 **Desvantagens:** acoplamento temporal — se o sistema chamado estiver lento ou indisponível, o chamador fica bloqueado. Requer circuit breakers e timeouts bem configurados para evitar falhas em cascata.
 
-APIs bancárias seguem geralmente REST/HTTP com JSON, autenticação via OAuth 2.0/mTLS, e versionamento explícito (ex: `/v1/`, `/v2/`). O Open Finance Brasil (<Ref id="resolucao-bcb-150" />) padronizou esse modelo para todas as instituições participantes.
+APIs bancárias seguem geralmente REST/HTTP com JSON, autenticação via OAuth 2.0/mTLS, e versionamento explícito (ex: `/v1/`, `/v2/`). O Open Finance Brasil (<Ref id="resolucao-bcb-150" />) padronizou esse modelo para todas as instituições participantes. A Circular BACEN 3.978/2020 (<Ref id="circular-bacen-3978" />) também define requisitos de segurança e autenticação para APIs de instituições financeiras no contexto de PLD/FT.
 
 ### Batch (processamento em lote)
 

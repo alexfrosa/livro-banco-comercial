@@ -714,9 +714,9 @@ function isCategoryActive(item: NavItem): boolean {
     color: color-mix(in srgb, var(--color-text, #1a1a2e) 55%, transparent);
     flex: 1;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .nav-category-chevron {

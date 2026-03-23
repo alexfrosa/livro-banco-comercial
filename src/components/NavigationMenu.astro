@@ -34,22 +34,7 @@ function isCategoryActive(item: NavItem): boolean {
   id="navigation-menu"
   class="nav-menu"
 >
-  <!-- Mobile hamburger button -->
-  <button
-    id="nav-toggle"
-    class="nav-toggle"
-    aria-expanded="false"
-    aria-controls="nav-panel"
-    aria-label="Abrir menu de navegação"
-  >
-    <span class="hamburger-icon" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
-  </button>
-
-  <!-- Navigation panel -->
+  <!-- Navigation panel (nav-toggle moved to BaseLayout.astro site-header — Bug 4 fix) -->
   <div id="nav-panel" class="nav-panel" aria-hidden="true">
     <ul class="nav-list" role="list">
       <li class="nav-chapter nav-home">
@@ -170,6 +155,9 @@ function isCategoryActive(item: NavItem): boolean {
   </div>
 </nav>
 
+<!-- Overlay backdrop — Bug 5 fix (análogo ao glossary-overlay) -->
+<div id="nav-menu-overlay" class="nav-menu-overlay" aria-hidden="true"></div>
+
 <script>
   // Smooth scroll to section when clicking a nav item
   function smoothScrollToSection(event: MouseEvent, anchor: HTMLAnchorElement) {
@@ -190,18 +178,52 @@ function isCategoryActive(item: NavItem): boolean {
   // Expose for inline onclick
   (window as any).smoothScrollToSection = smoothScrollToSection;
 
-  // Mobile hamburger toggle
+  // ── Mobile menu open/close (Bugs 1, 5, 6 fix) ───────────────────────────
+
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('nav-panel');
+  const overlay = document.getElementById('nav-menu-overlay');
+
+  function openMenu(): void {
+    if (!toggle || !panel || !overlay) return;
+    panel.classList.add('nav-panel--open');
+    panel.setAttribute('aria-hidden', 'false');
+    overlay.classList.add('nav-menu-overlay--visible');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('nav-body-lock');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Fechar menu de navegação');
+  }
+
+  function closeMenu(): void {
+    if (!toggle || !panel || !overlay) return;
+    panel.classList.remove('nav-panel--open');
+    panel.setAttribute('aria-hidden', 'true');
+    overlay.classList.remove('nav-menu-overlay--visible');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('nav-body-lock');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Abrir menu de navegação');
+    toggle.focus();
+  }
 
   if (toggle && panel) {
+    // Toggle on hamburger click (Bug 1 fix)
     toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      panel.setAttribute('aria-hidden', String(expanded));
-      panel.classList.toggle('nav-panel--open', !expanded);
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      isOpen ? closeMenu() : openMenu();
     });
   }
+
+  // Close on overlay click (Bug 1 + Bug 5 fix)
+  overlay?.addEventListener('click', closeMenu);
+
+  // Close on Escape key (Bug 1 fix — Req 2.3)
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+    }
+  });
 
   // Mark visited sections from localStorage (Req 8.2, 8.3)
   function updateVisitedIndicators() {
@@ -307,8 +329,6 @@ function isCategoryActive(item: NavItem): boolean {
   function scrollActiveItemIntoView() {
     const activeLink = document.querySelector<HTMLElement>('.nav-section-link.nav-active, .nav-chapter-link.nav-active');
     if (!activeLink) return;
-    const navPanel = document.getElementById('nav-panel');
-    if (!navPanel) return;
     activeLink.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
@@ -319,44 +339,6 @@ function isCategoryActive(item: NavItem): boolean {
   /* ── Base nav container ── */
   .nav-menu {
     position: relative;
-  }
-
-  /* ── Hamburger button (hidden on desktop) ── */
-  .nav-toggle {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    padding: 8px;
-    background: transparent;
-    border: 1px solid var(--color-text, #1a1a2e);
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--color-text, #1a1a2e);
-    transition: background 150ms ease;
-  }
-
-  .nav-toggle:hover,
-  .nav-toggle:focus-visible {
-    background: color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent);
-    outline: 2px solid var(--color-primary, #2563eb);
-    outline-offset: 2px;
-  }
-
-  .hamburger-icon {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 20px;
-  }
-
-  .hamburger-icon span {
-    display: block;
-    height: 2px;
-    background: currentColor;
-    border-radius: 2px;
-    transition: transform 200ms ease, opacity 200ms ease;
   }
 
   /* ── Nav panel ── */
@@ -380,7 +362,7 @@ function isCategoryActive(item: NavItem): boolean {
   .nav-chapter-link,
   .nav-chapter-label {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     padding: 0.5rem 0.75rem;
     border-radius: 6px;
@@ -414,7 +396,7 @@ function isCategoryActive(item: NavItem): boolean {
 
   .nav-section-link {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     padding: 0.375rem 0.625rem;
     border-radius: 4px;
@@ -464,10 +446,6 @@ function isCategoryActive(item: NavItem): boolean {
       border-radius: 8px;
     }
 
-    .nav-toggle {
-      display: none;
-    }
-
     .nav-panel {
       display: block !important;
     }
@@ -492,10 +470,6 @@ function isCategoryActive(item: NavItem): boolean {
       border-radius: 6px;
     }
 
-    .nav-toggle {
-      display: none;
-    }
-
     .nav-panel {
       display: block !important;
     }
@@ -510,39 +484,37 @@ function isCategoryActive(item: NavItem): boolean {
       padding: 0.3rem 0.5rem;
     }
 
+    /* Bug 3 fix — títulos completos no tablet (remove max-width fixo e nowrap) */
     .nav-item-title {
-      /* Truncate long titles in compact mode */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 140px;
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      max-width: none;
     }
   }
 
   /* ── Mobile (< 768px): hidden/collapsible ── */
   @media (max-width: 767px) {
     .nav-menu {
-      position: relative;
-      width: 100%;
-    }
-
-    .nav-toggle {
-      display: flex;
+      /* nav-menu ocupa largura zero no mobile; o toggle está no site-header */
+      position: static;
+      width: 0;
+      overflow: visible;
     }
 
     .nav-panel {
       display: none;
-      position: absolute;
-      top: calc(100% + 0.5rem);
+      position: fixed;
+      top: 57px; /* altura do site-header */
       left: 0;
       right: 0;
-      z-index: 100;
+      z-index: 100; /* acima do overlay (z-index: 99) */
       background: var(--color-surface, #f8f7f4);
-      border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 15%, transparent);
-      border-radius: 8px;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 15%, transparent);
+      border-radius: 0 0 8px 8px;
       padding: 0.75rem;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-      max-height: 70vh;
+      max-height: calc(100vh - 57px);
       overflow-y: auto;
     }
 
@@ -550,13 +522,50 @@ function isCategoryActive(item: NavItem): boolean {
       display: block;
     }
 
+    /* Bug 2 fix — títulos completos no mobile */
+    .nav-item-title {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      max-width: none;
+    }
+
     .nav-section-link {
       min-height: 44px;
+      align-items: flex-start;
     }
 
     .nav-chapter-link {
       min-height: 44px;
+      align-items: flex-start;
     }
+  }
+
+  /* ── Overlay backdrop (Bug 5 fix) ── */
+  .nav-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 280ms ease;
+  }
+
+  .nav-menu-overlay--visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-menu-overlay {
+      transition: none;
+    }
+  }
+
+  /* Bug 6 fix — scroll lock no body quando menu mobile está aberto */
+  :global(.nav-body-lock) {
+    overflow: hidden;
   }
 
   /* ── Category groups (Req 3.3, 5.1, 5.2) ── */

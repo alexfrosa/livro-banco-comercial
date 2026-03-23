@@ -63,6 +63,20 @@ const {
       <a href={`${import.meta.env.BASE_URL}`} class="site-title" aria-label="Ir para a página inicial">
         Interactive Banking Book
       </a>
+      <!-- Hambúrguer: visível apenas em mobile via CSS (Bug 4 fix) -->
+      <button
+        id="nav-toggle"
+        class="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+        aria-label="Abrir menu de navegação"
+      >
+        <span class="hamburger-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
       <ThemeToggle />
     </header>
 
@@ -89,6 +103,72 @@ const {
     position: sticky;
     top: 0;
     z-index: 50;
+    gap: 0.5rem;
+  }
+
+  /* ── Hambúrguer (Bug 4 fix) — visível apenas em mobile ── */
+  .nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 25%, transparent);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--color-text, #1a1a2e);
+    flex-shrink: 0;
+    /* margin-left: auto empurra o botão para a direita, antes do ThemeToggle */
+    margin-left: auto;
+  }
+
+  .nav-toggle:hover,
+  .nav-toggle:focus-visible {
+    background: color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent);
+    outline: 2px solid var(--color-primary, #2563eb);
+    outline-offset: 2px;
+  }
+
+  .hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 20px;
+  }
+
+  .hamburger-icon span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  /* Ícone X quando menu está aberto (Bug 1 fix — feedback visual) */
+  .nav-toggle[aria-expanded="true"] .hamburger-icon span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded="true"] .hamburger-icon span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hamburger-icon span {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .nav-toggle {
+      display: flex;
+    }
   }
 
   .site-title {

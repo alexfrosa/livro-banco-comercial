@@ -1,0 +1,95 @@
+---
+title: "Mapa de Liquidação e Rotina de Fechamento de Caixa"
+order: 2
+description: "D+0 a D+2 por instrumento, débito automático e o fechamento operacional diário"
+---
+
+import Ref from '@/components/Ref.astro';
+
+## Mapa de liquidação por instrumento
+
+A liquidação financeira de cada instrumento de pagamento ou investimento segue um prazo diferente. Conhecer esse mapa é essencial para qualquer profissional de operações, tesouraria, ou atendimento a clientes.
+
+| Instrumento | Liquidação financeira | Horário limite | Sistema |
+|-------------|----------------------|----------------|---------|
+| Pix (pessoa para pessoa) | D+0 (segundos) | 24/7 | SPI |
+| Pix agendado | D+0 (data agendada) | Qualquer hora | SPI |
+| TED | D+0 | Até 17h | STR |
+| TED após 17h | D+1 | — | STR |
+| DOC | D+1 | Até 22h | STR/compensação |
+| Boleto (vencimento hoje) | D+0 ou D+1 | Depende do banco compensador | CIP / B3 |
+| Boleto bancário (liquidação) | D+1 após compensação | — | CIP |
+| Cheque (compensação) | D+1 | Até 18h30 no depositante | Compe/B3 |
+| CDB (aplicação) | D+0 (rentabilidade a partir de D+0) | Dentro do horário do banco | CETIP |
+| CDB (resgate) | D+0 ou D+1 (depende do banco) | — | CETIP |
+| Ações (negociação em bolsa) | D+2 financeiro | Até 17h55 | B3 |
+| Tesouro Direto (compra) | D+1 | Até 18h | STN/SELIC |
+| Tesouro Direto (venda) | D+1 | Até 18h | STN/SELIC |
+| Câmbio pronto (spot) | D+2 | Até 16h | B3 Câmbio |
+| Pix Garantido | D+0 (para o recebedor) | 24/7 | SPI |
+
+**Observações práticas:**
+- "D+0" significa liquidação no mesmo dia do evento
+- Para instrumentos interbancários, o horário limite é crítico — uma TED enviada às 17h01 fica para D+1
+- O boleto bancário: o correntista paga no banco, mas o crédito para o beneficiário ocorre no próximo dia útil após a compensação
+
+## Débito Automático
+
+O débito automático permite que empresas cobrem clientes de forma recorrente (mensalidades, assinaturas, seguros) sem intervenção manual por transação. É operado pelo banco com intermediação da **CIP (Câmara Interbancária de Pagamentos)** para débitos interbancários.
+
+### Processo de autorização
+
+1. O cliente assina uma autorização de débito automático com a empresa (pode ser física ou eletrônica)
+2. A empresa envia o arquivo de autorização ao banco do cliente, que registra o mandato
+3. Nas datas de vencimento, a empresa envia o arquivo de cobrança ao banco
+4. O banco debita a conta do cliente e credita a empresa (se mesma instituição) ou envia via CIP (interbancário)
+
+### Processo de cancelamento
+
+O cliente pode cancelar o débito automático:
+- Diretamente no banco (internet banking, agência), sem precisar da autorização da empresa
+- O banco tem obrigação de executar o cancelamento imediatamente
+- O banco notifica a empresa do cancelamento via arquivo de retorno
+
+### Prazo de contestação
+
+O cliente pode contestar um débito automático executado por **90 dias** após a data do débito. Nesse caso, o banco estorna o valor e credita na conta do cliente, depois resolve a disputa com a empresa.
+
+O banco do cliente repassa o débito estornado para o banco da empresa via CIP, que debita a conta da empresa. Se a empresa discordar, a disputa é resolvida entre as partes (o banco não é árbitro do mérito comercial).
+
+## Rotina de Fechamento de Caixa
+
+O fechamento de caixa diário é o processo pelo qual o banco verifica e encerra o processamento do dia. Ocorre após o encerramento dos sistemas transacionais (geralmente entre 22h e meia-noite):
+
+### Checklist de fechamento
+
+**1. Conciliação da posição de reservas (STR):**
+O saldo final da conta de reservas bancárias no BACEN deve ser verificado e registrado. Qualquer diferença em relação ao sistema interno de tesouraria é investigada antes do encerramento.
+
+**2. Verificação do compulsório:**
+Cálculo diário da posição de compulsório. O banco verifica se está dentro da margem exigida para o período de movimentação vigente.
+
+**3. Conciliação de contas transitórias de Pix:**
+A conta contábil de trânsito de Pix deve estar zerada ao final do dia — todo Pix iniciado foi liquidado, ou o motivo de não liquidação está identificado.
+
+**4. Processamento overnight do CNAB:**
+Arquivos CNAB de remessa recebidos ao longo do dia são processados em lote overnight para crédito no dia seguinte.
+
+**5. Processamento de compensação de cheques:**
+O banco envia ao sistema de compensação (B3/Compe) os cheques depositados ao longo do dia. A compensação processa overnight e o resultado (cheques pagos vs. devolvidos) retorna na manhã seguinte.
+
+**6. Backup e integridade dos sistemas:**
+Os sistemas de missão crítica (core banking, STR, Pix) passam por rotinas de backup e verificação de integridade. Qualquer anomalia é escalada para a equipe técnica de plantão.
+
+**7. Relatório de posição de fechamento:**
+A tesouraria elabora o relatório de posição diária: saldo de reservas, posição de compulsório, posição cambial, exposição de crédito, e quaisquer eventos relevantes do dia.
+
+### Sistema de plantão
+
+O backoffice bancário funciona 24/7 para sistemas críticos. Em bancos de grande porte, há sempre equipe de plantão para:
+- Resolver alertas de indisponibilidade de sistemas
+- Atender contestações urgentes de Pix (MED com urgência)
+- Processar operações de câmbio em mercados internacionais fora do horário comercial
+- Acionar BCP em caso de falha grave
+
+O primeiro contato em um incidente crítico é geralmente o **plantão de operações**, que aciona as equipes técnicas e escalada conforme a severidade do problema.

@@ -1,0 +1,57 @@
+---
+title: "SCR — Sistema de Informações de Crédito"
+order: 1
+description: "O que é o SCR, o que contém o relatório, como consultar e como o cliente contesta"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O SCR (Sistema de Informações de Crédito) é o banco de dados centralizado do BACEN que reúne informações sobre operações de crédito de todas as pessoas físicas e jurídicas no sistema financeiro brasileiro. É a primeira ferramenta consultada por qualquer analista de crédito antes de aprovar uma proposta.
+
+A base legal é a <Ref id="resolucao-bcb-96" /> e a <Ref id="lei-complementar-105-2001" />, que autoriza o compartilhamento dessas informações entre instituições financeiras sem configurar quebra de sigilo bancário, desde que para fins de análise de crédito.
+
+## O que o SCR contém
+
+O relatório do SCR é organizado por instituição financeira e apresenta as seguintes informações consolidadas:
+
+**Operações ativas:** saldo devedor de cada contrato de crédito (empréstimos, financiamentos, cartão de crédito, cheque especial, garantias prestadas). Os valores são reportados mensalmente por cada banco que detém o crédito.
+
+**Coobrigações e garantias prestadas:** avais, fianças e garantias que o cliente prestou em favor de terceiros. Um sócio que avaliza uma dívida da empresa aparece no seu SCR como coobrigação.
+
+**Limites de crédito:** o limite total disponível em modalidades rotativas (cartão de crédito, cheque especial, conta garantida), independente do quanto está utilizado. Esse campo é relevante para avaliar o EAD (Exposure at Default) potencial.
+
+**Histórico de classificação de risco:** como cada banco classificou aquela operação ao longo dos meses (AA a H conforme <Ref id="resolucao-cmn-2682" />). Um histórico de E ou F indica inadimplência recente.
+
+**Prazo:** o vencimento de cada operação, permitindo ver o perfil de maturidade da carteira de crédito do cliente.
+
+O SCR exibe os dados dos **últimos 12 meses** para operações encerradas e o histórico completo para operações em aberto.
+
+## Como o banco consulta o SCR
+
+A consulta ao SCR é feita via sistema SISBACEN com credenciais da instituição financeira. O banco pode consultar o SCR de um cliente desde que:
+
+1. Tenha **relacionamento de crédito vigente ou proposta em análise** com aquele cliente
+2. O cliente tenha sido **devidamente informado** sobre a consulta (obrigação prevista na Resolução BCB 96/2021)
+
+Na prática, a autorização de consulta ao SCR é incluída no contrato de abertura de conta ou na proposta de crédito. O banco deve manter registro dessa autorização.
+
+**O que o analista busca no SCR:**
+- Total de endividamento do cliente no sistema financeiro — não apenas no banco onde está pedindo crédito
+- Se há operações em atraso em outros bancos (mesmo que o banco consultante não saiba)
+- A concentração de dívida: se 80% da dívida está em um único banco, pode indicar dificuldade de diversificação
+- O prazo médio das dívidas: dívida concentrada de curto prazo com receita de longo prazo é sinal de pressão de liquidez
+- Coobrigações: o cliente pode ter endividamento indireto relevante via aval de empresas do grupo
+
+## Direito do cliente: consulta e contestação
+
+O cliente tem direito de consultar seu próprio SCR a qualquer momento, gratuitamente, por meio do sistema **Registrato** do BACEN (registrato.bcb.gov.br). O relatório exibe todas as informações que as instituições reportaram sobre ele.
+
+**Processo de contestação:** se o cliente identificar informação incorreta no SCR (valor errado, operação já quitada ainda aparecendo como ativa, classificação de risco inadequada), pode contestar diretamente ao banco que reportou a informação. O banco tem prazo regulatório para verificar e, se necessário, corrigir o reporte ao BACEN.
+
+O banco que reportar informação incorreta e não a corrigir pode ser responsabilizado por danos morais ao cliente — há farta jurisprudência no STJ sobre o tema.
+
+## Limite de crédito por cliente e o SCR
+
+A <Ref id="resolucao-cmn-4677" /> limita a exposição de um único banco a um único cliente a **25% do Patrimônio de Referência (PR)** do banco. O SCR é a ferramenta que permite ao banco verificar se a concessão de um novo crédito, somada às exposições já existentes no banco e considerando coobrigações, ultrapassa esse limite.
+
+Para grupos econômicos, o limite se aplica ao conjunto de empresas e pessoas relacionadas — o que exige que o banco mapeie as conexões societárias (beneficiário final) para consolidar a exposição.

@@ -1,0 +1,78 @@
+---
+title: "CNAB 240 — O formato padrão de pagamentos em lote"
+order: 1
+description: "Estrutura do CNAB 240, principais segmentos e casos de uso no backoffice bancário"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O **CNAB** (Centro Nacional de Automação Bancária, nome histórico) é o padrão de arquivo eletrônico definido pela FEBRABAN para troca de informações de pagamentos em lote entre empresas e bancos. Apesar de ser uma especificação com décadas de existência, o CNAB 240 continua sendo o formato dominante para folha de pagamento, pagamento de fornecedores, cobranças em lote e DDA.
+
+## Por que o CNAB ainda é relevante
+
+O Pix e as APIs do Open Finance são mais modernos e mais ágeis para transações individuais, mas o CNAB 240 ainda domina o processamento em lote porque:
+
+1. **Volume:** uma empresa com 10.000 funcionários não faz 10.000 Pix individuais — envia um único arquivo CNAB com todos os pagamentos para o banco processar overnight
+2. **Integração legada:** ERPs (SAP, TOTVS, Oracle) geram CNAB nativamente há décadas; migrar para APIs é custo e prazo significativos
+3. **Responsabilidade:** o banco processa o lote e retorna um arquivo de ocorrências confirmando cada pagamento — há rastreabilidade e comprovante batch
+
+## Estrutura do arquivo CNAB 240
+
+O "240" refere-se ao número de caracteres por linha (posições fixas, sem delimitadores). Cada arquivo tem uma estrutura hierárquica rígida:
+
+```
+HEADER DE ARQUIVO       (1 registro — identificação do arquivo, banco, empresa, data)
+  HEADER DE LOTE        (1 registro por tipo de serviço — ex: um lote de TEDs, um lote de boletos)
+    DETALHE SEGMENTO    (N registros — cada linha é uma transação ou informação complementar)
+  TRAILER DE LOTE       (1 registro — totalizadores do lote: quantidade e valor)
+TRAILER DE ARQUIVO      (1 registro — totalizadores gerais)
+```
+
+## Os principais segmentos de detalhe
+
+Cada tipo de transação usa um ou mais segmentos específicos identificados por uma letra:
+
+**Segmento A — Crédito em conta corrente / Pix:**
+Usado para TED, crédito em conta e Pix em lote. Contém os campos: banco destino, agência, conta, nome do favorecido, CPF/CNPJ, valor, data de pagamento, finalidade.
+
+```
+Posições relevantes do Segmento A:
+003-004: código do banco favorecido
+006-009: agência favorecida
+010-019: conta favorecida
+021-060: nome do favorecido
+062-071: CPF/CNPJ favorecido
+104-118: valor do pagamento (com centavos, sem ponto)
+129-142: data efetiva do pagamento (DDMMAAAA)
+```
+
+**Segmento B — Informações complementares do favorecido:**
+Usado junto com o A para fornecer dados adicionais (endereço do favorecido, código ISPB do banco, chave Pix). Obrigatório para Pix via CNAB.
+
+**Segmento J — Pagamento de boleto (código de barras):**
+Contém o código de barras do boleto ou linha digitável, valor, data de vencimento, descontos/juros/multa. O banco lê o código de barras e executa o pagamento na data indicada.
+
+**Segmento C — Informação de IR e deduções:**
+Usado em pagamentos a pessoas físicas (autônomos, freelancers) que precisam de dedução de IR na fonte. Informa a base de cálculo e alíquota.
+
+**Segmento O — Pagamento de título — cobrança própria:**
+Para pagamento de títulos emitidos pelo próprio banco (cobrança escritural).
+
+## Fluxo operacional com CNAB
+
+**Remessa:** a empresa gera o arquivo CNAB, envia ao banco via internet banking corporate ou SFTP. O banco valida o arquivo (formato, campos obrigatórios, saldo disponível), agenda os pagamentos para a data especificada.
+
+**Processamento:** na data de pagamento, o banco executa os créditos. Para TED, o processamento ocorre dentro do horário do STR (até 17h). Para Pix, ocorre 24/7 se o segmento B incluir chave Pix.
+
+**Retorno:** o banco gera um arquivo de retorno CNAB com o resultado de cada transação. Cada registro tem um código de ocorrência:
+- `00` = pagamento efetuado com sucesso
+- `AB` = conta destino encerrada
+- `ED` = saldo insuficiente
+- `BC` = banco/agência/conta inválidos
+- `CA` = Pix retornado (beneficiário contestou)
+
+A empresa processa o arquivo de retorno e reconcilia com sua contabilidade interna.
+
+## CNAB 240 vs. CNAB 444
+
+O **CNAB 444** (444 caracteres por linha) é o formato mais antigo, ainda usado por alguns bancos para cobrança de boletos e recebimentos. O 240 é mais moderno e suporta mais tipos de operação. A tendência é a migração total para o 240, mas muitos sistemas legados ainda geram 444.

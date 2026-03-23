@@ -1,0 +1,69 @@
+---
+title: "ACC e ACE — Adiantamento sobre Câmbio para Exportadores"
+order: 1
+description: "Como funcionam o ACC (pré-embarque) e o ACE (pós-embarque), prazos, taxas e risco para o banco"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O ACC (Adiantamento sobre Contrato de Câmbio) e o ACE (Adiantamento sobre Cambiais Entregues) são os principais instrumentos de financiamento de exportação do mercado cambial brasileiro. Permitem que o exportador antecipe a receita em reais da exportação, sem precisar esperar o pagamento do comprador estrangeiro. A regulação cambial está na <Ref id="resolucao-cmn-3568" />.
+
+## ACC — Adiantamento sobre Contrato de Câmbio
+
+### Como funciona
+
+O ACC ocorre **antes do embarque** da mercadoria. O exportador assina um contrato de câmbio com o banco, comprometendo-se a entregar divisas (dólares, euros, etc.) em uma data futura, quando o pagamento do comprador estrangeiro chegar. Em troca, o banco adianta o equivalente em reais agora.
+
+**Fluxo do ACC:**
+
+1. O exportador tem um pedido firmado com o importador estrangeiro, com previsão de embarque e pagamento futuro
+2. O exportador fecha o contrato de câmbio com o banco: "vendo ao banco USD 500.000 a ser entregue em 90 dias, pelo câmbio de hoje"
+3. O banco antecipa os reais ao exportador imediatamente — financiamento em reais a custo inferior ao CDI (pois a taxa de referência internacional é o SOFR/LIBOR + spread, geralmente bem abaixo do custo doméstico)
+4. Em 90 dias, o importador paga; o exportador entrega as divisas ao banco, liquidando o contrato de câmbio
+
+### Taxa e custo
+
+A grande vantagem do ACC é o **custo de financiamento**. Por ser lastreado em moeda estrangeira, a taxa de referência é a taxa de juros internacional (ex: SOFR + spread do banco), não o CDI. Em um ambiente com Selic a 10%, um ACC pode custar efetivamente 4-5% a.a. — uma vantagem competitiva significativa para o exportador.
+
+A taxa final para o exportador depende de:
+- Taxa de juros internacional (SOFR ou similar) + spread do banco
+- Prazo do ACC
+- Risco de crédito do exportador
+- Câmbio contratado (forward ou spot)
+
+### Prazo máximo
+
+O ACC pré-embarque tem prazo máximo de **360 dias** contados da data de fechamento do câmbio. Prazos mais longos exigem análise específica e autorização do BACEN.
+
+### Risco de performance (risco de embarque)
+
+O principal risco do banco no ACC é o **risco de performance** (ou risco de exportação): o exportador pode não embarcar a mercadoria — por problemas produtivos, cancelamento do pedido, ou mesmo fraude. Nesse caso, as divisas não chegam e o banco está exposto ao crédito em reais adiantado.
+
+Por isso, o banco analisa o ACC como uma operação de crédito, não apenas como uma operação cambial: verifica o histórico de exportação do cliente, a solidez do comprador estrangeiro, e pode exigir garantias adicionais ou carta de crédito do importador como suporte.
+
+## ACE — Adiantamento sobre Cambiais Entregues
+
+O ACE ocorre **após o embarque** da mercadoria. O exportador já tem os documentos de embarque (Conhecimento de Embarque — BL, fatura comercial, etc.) e os apresenta ao banco como evidência da exportação realizada.
+
+Como o risco de performance foi eliminado (a mercadoria já saiu do país), o ACE tem **risco de crédito menor** que o ACC. A taxa pode ser ligeiramente mais favorável, e a aprovação é mais simples.
+
+**Fluxo do ACE:**
+1. Exportador embarca a mercadoria e obtém os documentos de embarque
+2. Apresenta os documentos ao banco e fecha o contrato de câmbio
+3. O banco antecipa os reais, retendo os documentos como garantia
+4. Quando o importador paga, o banco recebe as divisas e libera os documentos
+5. O importador usa os documentos para desembaraçar a mercadoria no porto de destino
+
+O ACE é essencialmente um **desconto de duplicata de exportação** — o banco antecipa o crédito comercial já gerado.
+
+## Diferença prática: ACC vs ACE vs Pré-pagamento
+
+| | ACC | ACE | Pré-pagamento |
+|---|---|---|---|
+| Momento | Pré-embarque | Pós-embarque | Pré-embarque |
+| Quem financia | Banco brasileiro | Banco brasileiro | Importador/banco externo |
+| Risco cambial | Banco brasileiro | Banco brasileiro | Importador |
+| Custo típico | SOFR + spread médio | SOFR + spread baixo | Custo de funding externo |
+| Garantia principal | Promessa de exportação | Documentos de embarque | Contrato comercial |
+
+No pré-pagamento, o importador estrangeiro adianta os dólares diretamente — o exportador recebe as divisas antes de embarcar. O banco processa a operação cambial mas não assume risco de crédito.

@@ -1,0 +1,78 @@
+---
+title: "Sanções Internacionais e LGPD vs. Sigilo Bancário"
+order: 3
+description: "Screening OFAC/ONU, freeze de ativos e o conflito aparente entre proteção de dados e obrigações legais"
+---
+
+import Ref from '@/components/Ref.astro';
+
+## Sanções Internacionais
+
+Sanções são restrições econômicas e financeiras impostas por governos e organizações internacionais contra países, entidades e indivíduos específicos. Para um banco brasileiro com operações em dólares (via correspondente americano) ou em euros (via correspondente europeu), o cumprimento de sanções é obrigatório — não cumprir pode significar multas devastadoras e a perda do acesso ao sistema financeiro internacional.
+
+### As principais listas de sanções
+
+**OFAC (Office of Foreign Assets Control — EUA):** a lista mais crítica para bancos com operações em dólar. O OFAC é parte do Departamento do Tesouro americano e mantém listas de Specially Designated Nationals (SDN) — pessoas, empresas e governos com quem qualquer transação em dólar é proibida.
+
+As multas do OFAC podem chegar a **dezenas de bilhões de dólares** para bancos que processam transações proibidas. Bancos europeus (BNP Paribas, Commerzbank, Deutsche Bank) já pagaram multas bilionárias ao OFAC por violações. Um banco brasileiro que processe pagamentos em dólar via correspondente americano pode ser responsabilizado pelas mesmas regras.
+
+**Conselho de Segurança da ONU:** lista de sanções internacionais para pessoas e entidades ligadas ao terrorismo, proliferação nuclear, e conflitos armados. O Brasil, como membro da ONU, é obrigado a implementar essas sanções.
+
+**UE (União Europeia):** lista de sanções para pessoas e entidades ligadas a conflitos, violações de direitos humanos. Relevante para bancos com operações em euro ou com contrapartes europeias.
+
+**COAF/Brasil:** lista brasileira de pessoas ligadas ao terrorismo, conforme exigência da Lei 13.260/2016 e das <Ref id="gafi-40-recomendacoes" />.
+
+### O processo de screening
+
+O banco deve verificar automaticamente **em cada transação e abertura de conta** se as partes envolvidas constam nas listas de sanções:
+
+**Na abertura de conta:**
+O nome, CPF/CNPJ e demais dados são cruzados contra as listas. Qualquer match (coincidência) aciona uma fila de revisão manual.
+
+**Em transações:**
+Cada Pix, TED, transferência SWIFT e operação de câmbio passa pelo motor de screening antes de ser executada. O sistema verifica nome do ordenante, nome do beneficiário, e países envolvidos.
+
+**Match vs. falso positivo:**
+Os nomes nas listas de sanções são frequentemente comuns em português (ex: "José Silva" pode ter dezenas de homonímias). O analista precisa verificar outros dados identificadores (data de nascimento, CPF, país de residência) para confirmar se é o mesmo indivíduo.
+
+### O que fazer em caso de match confirmado
+
+1. **Bloquear imediatamente a transação e os ativos do cliente**
+2. **Reportar ao BACEN** (Departamento de Regulação do Sistema Financeiro)
+3. **Dependendo da lista:** pode ser necessário reportar ao COAF, à Polícia Federal, ou diretamente ao Departamento do Tesouro americano (OFAC)
+4. **Congelar a conta:** o cliente não pode movimentar os ativos enquanto o caso não for resolvido pelas autoridades
+5. **Não devolver os ativos sem autorização regulatória:** devolver assets para um indivíduo sancionado pode constituir violação de sanções
+
+## LGPD vs. Sigilo Bancário vs. Obrigações de PLD
+
+A chegada da <Ref id="lei-13709-2018" /> (LGPD) criou aparentes conflitos com as obrigações de compartilhamento de dados exigidas pela regulação financeira. Na prática, a lei resolve esses conflitos explicitamente:
+
+### A LGPD não prevalece sobre obrigações legais
+
+O artigo 4º da LGPD e o artigo 23 listam as bases legais que permitem o tratamento de dados pessoais **sem consentimento do titular**. As mais relevantes para bancos:
+
+- **Cumprimento de obrigação legal ou regulatória:** o banco pode compartilhar dados de clientes com o BACEN, COAF, Receita Federal e autoridades judiciais sem pedir autorização ao cliente, pois a lei obriga esse compartilhamento
+- **Execução de contrato:** o banco pode usar dados pessoais do cliente para operacionalizar os serviços contratados
+- **Legítimo interesse:** análise de risco de crédito, prevenção a fraudes
+
+### A árvore de decisão prática
+
+**Pergunta: posso compartilhar dados deste cliente?**
+
+1. É uma solicitação do COAF ou de autoridade policial com amparo legal? → **Sim, pode e deve compartilhar.** Não precisa de autorização do cliente, não viola LGPD, não viola sigilo bancário (<Ref id="lei-complementar-105-2001" /> permite).
+
+2. É uma solicitação da Receita Federal via e-Financeira (declaração automática de movimentações)? → **Sim, obrigação legal.** O banco envia automaticamente movimentações acima dos limites estabelecidos.
+
+3. É uma solicitação de um PISP (iniciador de pagamentos Open Finance) com consentimento do cliente? → **Sim, com consentimento específico e vigente.** A LGPD é o fundamento, e o Open Finance regulamenta o mecanismo.
+
+4. É uma solicitação de um terceiro privado (empresa, outro banco sem base legal)? → **Não, sem autorização judicial ou consentimento específico do cliente.** Viola a LGPD e possivelmente o sigilo bancário.
+
+5. É uma solicitação do cônjuge do cliente para saber o saldo? → **Não.** Mesmo com a declaração do cônjuge de que "somos casados", o sigilo bancário protege o cliente individualmente.
+
+### DPO (Data Protection Officer) no banco
+
+Com a LGPD, bancos são obrigados a ter um **Encarregado de Proteção de Dados (DPO)**. No contexto bancário, o DPO enfrenta desafios específicos:
+
+- Responder a requisições de titulares que querem saber quais dados o banco tem sobre eles — sem revelar que há uma investigação de PLD em andamento (conflito entre direito do titular e proibição de tipping-off)
+- Mapear o fluxo de dados pessoais em sistemas legados complexos
+- Garantir que dados exportados para correspondentes internacionais (ex: mensagens SWIFT) estão protegidos adequadamente

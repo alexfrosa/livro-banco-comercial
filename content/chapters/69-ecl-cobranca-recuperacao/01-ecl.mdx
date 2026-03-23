@@ -1,0 +1,69 @@
+---
+title: "ECL e os três estágios de provisão (IFRS 9)"
+order: 1
+description: "Modelo de Perda de Crédito Esperada: estágios 1, 2 e 3, diferenças com a Res. 2682 e a transição no Brasil"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A <Ref id="resolucao-cmn-4966" /> implementou no Brasil o modelo de **Perda de Crédito Esperada (ECL — Expected Credit Loss)** do IFRS 9, substituindo gradualmente a <Ref id="resolucao-cmn-2682" />. A diferença conceitual é profunda: enquanto a Res. 2682 provisiona a perda *depois que ela ocorre* (modelo de perda incorrida), o ECL provisiona a perda *antes*, com base na expectativa probabilística de inadimplência futura.
+
+## Os três estágios do ECL
+
+O IFRS 9 classifica cada operação de crédito em um dos três estágios, que determinam como calcular a provisão:
+
+### Estágio 1 — Risco normal
+
+**Critério:** a operação não teve deterioração significativa de risco desde a concessão. Inclui operações recentes e aquelas cujo risco se mantém próximo ao original.
+
+**Provisão:** **12 meses de perda esperada** — a perda que o banco estima ocorrer nos próximos 12 meses, ponderada pela probabilidade de default.
+
+**Exemplo:** Um empréstimo consignado recém-concedido a um servidor público com histórico limpo. O banco calcula que há 0,5% de probabilidade de default nos próximos 12 meses e que, em caso de default, recuperaria 40% via consignação. A provisão seria: PD (0,5%) × LGD (60%) × EAD (valor do contrato).
+
+### Estágio 2 — Deterioração significativa de risco
+
+**Critério:** houve aumento significativo no risco de crédito desde a concessão, mas ainda não há default. Os indicadores incluem: queda relevante no score do cliente, setor em crise, atraso entre 30 e 90 dias, renegociação, ou deterioração dos dados macro que afetam o portfólio.
+
+**Provisão:** **perda esperada para toda a vida do contrato** (lifetime ECL) — muito maior que 12 meses, podendo chegar a vários anos para créditos longos.
+
+**A mudança é qualitativa, não só temporal:** um cliente que ainda não atrasou, mas cujo setor econômico entrou em grave crise (como aconteceu com varejo durante a pandemia), pode migrar para o Estágio 2 preventivamente.
+
+### Estágio 3 — Default
+
+**Critério:** a operação está em default. No IFRS 9, o default é definido por cada banco em sua política (geralmente atraso > 90 dias, mas pode ser antes se houver evidência de dificuldade financeira severa).
+
+**Provisão:** **perda esperada para toda a vida** (lifetime ECL), calculada sobre o valor líquido de recuperação esperada. Na prática, a provisão já considera que parte significativa do valor não será recuperada.
+
+**Reconhecimento de receita:** no Estágio 3, os juros passam a ser reconhecidos sobre o valor líquido do ativo (saldo menos provisão), não sobre o valor bruto — o que reduz a receita de intermediação financeira reconhecida.
+
+## Diferença prática entre a Res. 2682 e o ECL
+
+| Aspecto | Res. 2682 (modelo antigo) | ECL / Res. 4966 (IFRS 9) |
+|---------|--------------------------|--------------------------|
+| Gatilho da provisão | Perda já ocorrida (atraso) | Probabilidade de perda futura |
+| Base de cálculo | % fixo por faixa de atraso | PD × LGD × EAD prospectivo |
+| Granularidade | Por contrato, olhando o passado | Por portfólio, olhando o futuro |
+| Timing | Provisão tardia | Provisão antecipada (pró-cíclica) |
+| Dados necessários | Histórico de atraso | Modelos econométricos, cenários macro |
+
+## A coexistência no Brasil
+
+A implementação brasileira foi faseada. Para grandes bancos (Segmento 1 e 2 do BACEN), a Res. 4966 passou a ser exigida com relatórios paralelos a partir de 2022 e plena adoção contábil a partir de 2025. Para bancos menores, os prazos são mais longos.
+
+Na prática, muitos bancos mantêm **dois sistemas paralelos** durante a transição:
+- O sistema da Res. 2682 para fins regulatórios e fiscais (PDD dedutível do IR)
+- O sistema ECL para fins contábeis (IFRS 9, demonstrações financeiras consolidadas)
+
+Essa dualidade cria trabalho adicional para as áreas de crédito, risco e contabilidade, e é um tema recorrente em auditorias externas.
+
+## Impacto na gestão do banco
+
+O modelo ECL exige que o banco desenvolva capacidades analíticas que a Res. 2682 não demandava:
+
+**Modelos de PD prospectivos:** que incorporem cenários macroeconômicos (PIB, desemprego, taxa de juros) para estimar probabilidade de default futura — não apenas histórica.
+
+**Segmentação de portfólio:** a ECL é calculada por segmentos homogêneos de risco, não contrato a contrato (inviável para carteiras com milhões de operações).
+
+**Governança de modelos:** os modelos de ECL precisam de validação independente, back-testing periódico e aprovação pela diretoria — conforme as exigências da <Ref id="resolucao-cmn-4557" />.
+
+**Dados históricos:** o cálculo de LGD (perda dado o default) requer séries históricas longas de recuperação, que muitos bancos não tinham estruturadas antes da regulação.

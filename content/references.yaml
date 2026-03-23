@@ -260,6 +260,66 @@
   description: "Altera a legislação tributária federal, incluindo disposições sobre IOF em operações financeiras e regras de tributação de investimentos."
   publishedAt: "2001-08-24"
 
+# ── CVM — Comissão de Valores Mobiliários ─────────────────────────────────
+
+- id: resolucao-cvm-30-2021
+  title: "Resolução CVM nº 30/2021"
+  issuer: "Comissão de Valores Mobiliários"
+  category: CVM
+  url: "https://conteudo.cvm.gov.br/legislacao/resolucoes/resol030.html"
+  description: "Dispõe sobre a atividade de distribuição de valores mobiliários e a verificação da adequação dos produtos, serviços e operações ao perfil do cliente (suitability). Substitui a Instrução CVM 539/2013. Exige aplicação do API (Análise de Perfil do Investidor) e establece as regras de atualização do perfil e de comunicação de inadequação ao cliente."
+  publishedAt: "2021-05-27"
+
+- id: resolucao-cvm-175-2022
+  title: "Resolução CVM nº 175/2022"
+  issuer: "Comissão de Valores Mobiliários"
+  category: CVM
+  url: "https://conteudo.cvm.gov.br/legislacao/resolucoes/resol175.html"
+  description: "Dispõe sobre a constituição, o funcionamento e a divulgação de informações dos fundos de investimento. Consolida e moderniza a regulação de fundos, substituindo a Instrução CVM 555/2014 e a regulação dos FICs. Introduz novas classes de fundos, regras de liquidez e responsabilização de prestadores de serviço."
+  publishedAt: "2022-12-23"
+
+- id: instrucao-cvm-356-2001
+  title: "Instrução CVM nº 356/2001"
+  issuer: "Comissão de Valores Mobiliários"
+  category: CVM
+  url: "https://conteudo.cvm.gov.br/legislacao/instrucoes/inst356.html"
+  description: "Regulamenta a constituição e o funcionamento de Fundos de Investimento em Direitos Creditórios (FIDC). Estabelece os requisitos para a securitização de recebíveis via fundos, incluindo a estrutura de cotas sênior e subordinada, os limites de concentração e as obrigações de custódia e escrituração."
+  publishedAt: "2001-12-17"
+
+# ── BACEN — Banco Central do Brasil (complementares) ──────────────────────
+
+- id: resolucao-bcb-88-2021
+  title: "Resolução BCB nº 88/2021"
+  issuer: "Banco Central do Brasil"
+  category: BACEN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=88"
+  description: "Dispõe sobre as entidades registradoras de ativos financeiros (registradoras de recebíveis). Regulamenta o registro obrigatório de contratos de crédito com garantia de recebíveis nas infraestruturas de registro autorizadas (Cerc, TAG, B3 Registradora), garantindo unicidade e visibilidade das garantias para o sistema financeiro."
+  publishedAt: "2021-03-25"
+
+- id: resolucao-bcb-85-2021
+  title: "Resolução BCB nº 85/2021"
+  issuer: "Banco Central do Brasil"
+  category: BACEN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=85"
+  description: "Dispõe sobre a política de segurança cibernética e sobre os requisitos para a contratação de serviços de processamento e armazenamento de dados e de computação em nuvem pelas instituições autorizadas. Inclui obrigações de reporte ao BACEN de incidentes relevantes de segurança cibernética e indisponibilidade operacional."
+  publishedAt: "2021-03-25"
+
+- id: circular-bacen-3569-2011
+  title: "Circular BACEN nº 3.569/2011"
+  issuer: "Banco Central do Brasil"
+  category: BACEN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Circular&numero=3569"
+  description: "Dispõe sobre o recolhimento compulsório e o encaixe obrigatório sobre recursos à vista. Estabelece as alíquotas, a base de cálculo, os prazos e as formas de recolhimento (espécie e títulos) dos depósitos compulsórios das instituições financeiras junto ao BACEN."
+  publishedAt: "2011-12-29"
+
+- id: resolucao-cmn-5081-2023
+  title: "Resolução CMN nº 5.081/2023"
+  issuer: "Conselho Monetário Nacional"
+  category: CMN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=5081"
+  description: "Dispõe sobre os requisitos mínimos de capital principal, nível I e patrimônio de referência, além dos buffers de capital (conservação, contracíclico e sistêmico) das instituições financeiras, consolidando a implementação do Basileia III no Brasil."
+  publishedAt: "2023-06-29"
+
 # ── Acordo Internacional ───────────────────────────────────────────────────
 
 - id: basileia-iii

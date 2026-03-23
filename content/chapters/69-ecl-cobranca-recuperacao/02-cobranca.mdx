@@ -1,0 +1,94 @@
+---
+title: "Régua de cobrança, recuperação e write-off"
+order: 2
+description: "Da primeira parcela em atraso ao write-off: cobrança interna, terceirizada, cessão e tratamento contábil"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A gestão do crédito inadimplente é uma das funções mais críticas do backoffice de crédito. O custo da inadimplência afeta diretamente o resultado do banco, e a eficiência na recuperação determina o quanto do prejuízo é minimizado. Existe um fluxo regulatório e operacional bem definido, do primeiro dia de atraso até a baixa contábil.
+
+## A régua de cobrança
+
+A **régua de cobrança** é o conjunto de ações automatizadas e manuais que o banco executa em função do tempo de atraso. Cada banco tem sua régua própria, mas o padrão do mercado segue esta lógica:
+
+**D+1 a D+5 — Prevenção (autoatendimento):**
+- SMS e push notification automáticos lembrando o vencimento
+- Disponibilização de segunda via do boleto nos canais digitais
+- Oferta de prorrogação de data de vencimento (quando dentro da política)
+
+Nesta fase, o custo por contato é baixo e a taxa de regularização é alta — muitos atrasos são por esquecimento ou problema pontual de caixa.
+
+**D+6 a D+15 — Cobrança ativa (banco):**
+- Ligação telefônica pelo contact center de cobrança do banco
+- E-mail com oferta de acordo (refinanciamento, desconto de juros para pagamento à vista)
+- WhatsApp (cada vez mais utilizado, respeitando as restrições do BACEN sobre contato abusivo)
+
+**D+16 a D+60 — Cobrança intensiva:**
+- Múltiplas tentativas de contato por canais
+- Oferta de renegociação com condições diferenciadas
+- Inclusão em bureaus de crédito (SERASA, SPC) geralmente ocorre nessa faixa para operações sem garantia
+
+**D+61 a D+90 — Pré-contencioso:**
+- Avaliação de viabilidade de execução judicial ou extrajudicial de garantias
+- Para crédito com garantia real (alienação fiduciária), início do processo de notificação extrajudicial
+- Análise de cessão da carteira inadimplente para terceiros
+
+**Acima de D+90 — Contencioso:**
+- Execução judicial (ação de cobrança, busca e apreensão, execução de hipoteca)
+- Cobrança terceirizada via empresas especializadas
+- Cessão definitiva da carteira
+
+## Cobrança terceirizada
+
+Quando a cobrança interna não obtém resultado, o banco pode transferir a carteira para **empresas especializadas em cobrança**. Existem dois modelos:
+
+**Serviço de cobrança (sem cessão):** o banco mantém a titularidade do crédito e contrata uma empresa para executar a cobrança em seu nome. O banco paga uma comissão sobre os valores recuperados (success fee). É o modelo mais comum para carteiras com atraso entre 90 e 180 dias.
+
+**Cessão de carteira:** o banco vende definitivamente os direitos creditórios para um terceiro (fundo especializado em recuperação de crédito, empresa de cobrança). O banco realiza a perda no momento da cessão, mas sai do risco e da operação. É comum para carteiras muito antigas (acima de 2 anos) onde a probabilidade de recuperação é baixa.
+
+O preço de cessão de carteiras inadimplentes é função do perfil da carteira: produto, tempo de atraso, presença de garantia, renda dos devedores. Carteiras de crédito consignado com atraso de 6 meses podem ser cedidas por 40-60% do valor de face; carteiras de cartão de crédito sem garantia com 3 anos de atraso podem ser cedidas por 2-5% do valor de face.
+
+## Execução de garantias
+
+Para crédito com garantia real, o banco tem instrumentos mais rápidos que a via judicial ordinária:
+
+**Alienação fiduciária de bem móvel (veículo — Lei 9.298/1996):** após o atraso, o banco notifica extrajudicialmente o devedor. Se não houver pagamento no prazo, o banco pode ajuizar busca e apreensão (liminar com alta taxa de concessão). Após a apreensão, o bem é avaliado e leiloado. O valor apurado abate a dívida; se insuficiente, o banco pode cobrar o restante.
+
+**Alienação fiduciária de bem imóvel (Lei 9.514/1997):** após 3 parcelas em atraso (padrão de mercado), o banco notifica o devedor por cartório. Se não houver purga da mora em 15 dias, o banco consolida a propriedade do imóvel no registro de imóveis. O imóvel é levado a leilão em dois estágios: primeiro pelo valor de avaliação, depois por qualquer valor. O processo pode ser concluído em 6-12 meses, muito mais rápido que a execução hipotecária tradicional.
+
+**Penhor de recebíveis (via registradora):** o banco simplesmente aciona o direcionamento dos recebíveis registrados na Cerc ou TAG, sem necessidade de ação judicial. É a garantia mais líquida e de execução mais rápida.
+
+## Write-off e tratamento contábil
+
+O **write-off** (baixa como prejuízo) é o reconhecimento definitivo de que o crédito não será recuperado. É uma decisão contábil, não jurídica — o banco pode dar baixa e continuar tentando recuperar o valor judicialmente.
+
+Pela <Ref id="resolucao-cmn-2682" />, o banco é **obrigado** a dar baixa em operações classificadas como risco H (atraso superior a 180 dias) após permanecerem 6 meses consecutivos nessa classificação. Ou seja, operações com mais de **360 dias de atraso** devem necessariamente ser baixadas.
+
+**Lançamento contábil do write-off:**
+```
+Débito: Provisão para Devedores Duvidosos (PDD) — reduz o ativo já provisionado
+Crédito: Operações de Crédito — baixa o ativo bruto
+```
+
+Se a provisão era insuficiente para cobrir o valor total, a diferença vai diretamente para despesa.
+
+**Após o write-off:** o banco mantém o registro em **contas de compensação** (fora do balanço) e continua as ações de recuperação. Se recuperar algum valor, o lançamento é:
+```
+Débito: Caixa/Conta do cliente
+Crédito: Recuperação de Créditos Baixados como Prejuízo (receita operacional)
+```
+
+Essa recuperação é receita tributável, o que cria um incentivo perverso: o banco pode preferir não dar baixa para não precisar reconhecer a recuperação como receita. A regulação impõe o prazo máximo para evitar esse comportamento.
+
+## Indicadores de eficiência em recuperação
+
+As áreas de crédito monitoram regularmente:
+
+**Taxa de recuperação por safra:** qual percentual do valor original das operações baixadas foi recuperado, agrupado por mês de concessão ou de baixa.
+
+**Custo por recuperação:** quanto custa (equipe, jurídico, terceiros) para cada real recuperado. Se o custo superar o valor esperado de recuperação, a ação não é economicamente justificável.
+
+**Curva de recuperação:** em que prazos após o write-off a recuperação se concentra. Normalmente a maior parte ocorre nos primeiros 24 meses; após isso, a curva é assintótica.
+
+**NPL (Non-Performing Loans):** índice de inadimplência acima de 90 dias sobre a carteira total. É o principal indicador de saúde da carteira reportado ao mercado.

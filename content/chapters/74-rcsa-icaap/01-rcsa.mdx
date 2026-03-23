@@ -1,0 +1,78 @@
+---
+title: "RCSA — Risk and Control Self-Assessment"
+order: 1
+description: "Processo de autoavaliação de riscos e controles: matriz, risco inerente vs. residual e governança"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O RCSA (Risk and Control Self-Assessment, ou Autoavaliação de Risco e Controle) é o processo pelo qual cada área do banco identifica, avalia e documenta seus riscos operacionais e os controles existentes para mitigá-los. É o alicerce da gestão de risco operacional exigida pela <Ref id="resolucao-cmn-4557" /> e pelo framework de Basileia III (<Ref id="basileia-iii" />).
+
+A lógica é simples: quem melhor conhece os riscos de um processo é quem o executa diariamente. O RCSA formaliza esse conhecimento em uma linguagem estruturada que permite comparação, priorização e acompanhamento.
+
+## A Matriz de Risco e Controle
+
+O produto do RCSA é a **matriz de risco e controle** — uma tabela que lista, para cada processo do banco:
+
+| Processo | Risco identificado | Probabilidade | Impacto | Risco inerente | Controle existente | Efetividade do controle | Risco residual |
+|---------|-------------------|--------------|---------|---------------|-------------------|------------------------|----------------|
+| Concessão de crédito | Aprovação fraudulenta com documentos falsos | Baixa | Alto | Médio-alto | Checagem de documentos + SCR | Moderada | Médio |
+| Liquidação de Pix | Envio duplicado por falha de sistema | Muito baixa | Alto | Médio | Idempotência + reconciliação D0 | Alta | Baixo |
+| Câmbio comercial | Contrato registrado com taxa errada | Baixa | Médio | Médio | Double check + aprovação supervisor | Alta | Muito baixo |
+
+### Risco inerente vs. risco residual
+
+**Risco inerente:** o risco que existe antes de qualquer controle. É o nível de risco "natural" do processo — quanto o banco estaria exposto se não tivesse controles.
+
+**Risco residual:** o risco que permanece após a aplicação dos controles. É o risco que o banco efetivamente aceita correr.
+
+**A relação entre os dois:** se o risco inerente é alto e o controle é eficaz, o risco residual pode ser baixo. Se o controle existe mas é pouco eficaz (manual, sujeito a falha humana, sem auditoria), o risco residual se mantém elevado mesmo com o controle formalmente documentado.
+
+## Escalas de avaliação
+
+A avaliação de probabilidade e impacto usa escalas padronizadas pelo banco:
+
+**Probabilidade:**
+- Raro: menos de 1 vez por ano
+- Improvável: 1-2 vezes por ano
+- Possível: 1 vez por trimestre
+- Provável: 1 vez por mês
+- Quase certo: diário ou semanal
+
+**Impacto financeiro:**
+- Insignificante: < R$ 10 mil
+- Menor: R$ 10-100 mil
+- Moderado: R$ 100 mil - R$ 1 milhão
+- Grave: R$ 1-10 milhões
+- Catastrófico: > R$ 10 milhões
+
+**Heatmap:** a combinação de probabilidade × impacto posiciona cada risco em um heatmap (matriz 5×5). Riscos no quadrante alto-alto (provável e catastrófico) são críticos e exigem ação imediata.
+
+## Processo de realização do RCSA
+
+O RCSA não é um exercício único — é um processo periódico (geralmente anual, com revisão trimestral):
+
+**1. Mapeamento de processos:** a área de risco, em conjunto com as áreas de negócio, mapeia todos os processos relevantes e suas interdependências.
+
+**2. Workshops de identificação de riscos:** reuniões facilitadas pela área de risco com os gestores operacionais. O objetivo é elicitar riscos que as pessoas que fazem o trabalho conhecem na prática mas raramente documentam.
+
+**3. Avaliação:** cada risco é avaliado quanto à probabilidade e impacto, primeiro sem controles (inerente), depois com controles (residual).
+
+**4. Teste dos controles:** a área de controles internos ou auditoria interna valida se os controles declarados de fato existem e funcionam como descrito. Um controle que existe só no papel não reduz o risco residual.
+
+**5. Plano de ação:** para riscos residuais acima do apetite de risco do banco, é elaborado um plano de ação para mitigar, transferir ou aceitar formalmente o risco.
+
+**6. Aprovação e reporte:** a matriz é aprovada pela diretoria e reportada ao Comitê de Riscos e ao Conselho de Administração.
+
+## Key Risk Indicators (KRIs)
+
+Complementam o RCSA com **monitoramento contínuo** dos riscos identificados. São métricas que sinalizam quando um risco está aumentando, antes que um evento de perda ocorra:
+
+| Risco | KRI | Limiar amarelo | Limiar vermelho |
+|-------|-----|----------------|-----------------|
+| Fraude em abertura de conta | % de contas abertas com documentos contestados | 0,5% | 1,0% |
+| Indisponibilidade de Pix | Tempo médio de resposta da API | > 5s | > 10s |
+| Risco cambial | Posição aberta em USD no final do dia | > USD 50M | > USD 100M |
+| Erro operacional | Número de lançamentos manuais revertidos | > 10/mês | > 25/mês |
+
+Quando um KRI cruza o limiar vermelho, o evento é escalado automaticamente para a gestão de risco e para o gestor responsável pelo processo.

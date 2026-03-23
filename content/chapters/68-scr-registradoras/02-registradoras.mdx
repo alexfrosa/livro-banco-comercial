@@ -1,0 +1,58 @@
+---
+title: "Registradoras de Recebíveis — infraestrutura de garantias"
+order: 2
+description: "Cerc, TAG e B3 Registradora: registro obrigatório de recebíveis como garantia de crédito"
+---
+
+import Ref from '@/components/Ref.astro';
+
+As registradoras de recebíveis são infraestruturas autorizadas pelo BACEN que centralizam o registro de operações de crédito com garantia de recebíveis. Funcionam como cartórios eletrônicos para o mercado de crédito: quando um recebível é registrado como garantia em uma operação, qualquer banco que consultar a registradora saberá que aquele ativo já está comprometido.
+
+O marco regulatório é a <Ref id="resolucao-bcb-88-2021" />, que tornou obrigatório o registro nas infraestruturas autorizadas a partir de 2021.
+
+## Por que as registradoras existem
+
+Antes das registradoras, era possível que uma empresa oferecesse os mesmos recebíveis (duplicatas, notas promissórias, contratos de cartão) como garantia para múltiplos bancos simultaneamente. O banco que recebia a garantia não tinha como verificar se ela já estava onerada — dependia apenas da palavra do cliente.
+
+Isso criava um risco sistêmico real: em caso de insolvência da empresa, vários credores disputariam as mesmas garantias. As registradoras eliminam esse problema através da unicidade do registro: um recebível só pode estar vinculado a uma operação de crédito por vez.
+
+## As três registradoras autorizadas
+
+**Cerc (Central de Recebíveis):** especializada em recebíveis de cartão de crédito (agenda de recebíveis). É a mais relevante para empresas do varejo e prestadores de serviço que vendem parcelado no cartão. O banco pode solicitar a constituição de penhor sobre a agenda de recebíveis do cliente diretamente via Cerc.
+
+**TAG (Câmara Interbancária de Pagamentos — TAG Registradora):** atua principalmente em duplicatas e CCBs (Cédulas de Crédito Bancário). Integrada com o sistema bancário para registro de operações de capital de giro com garantia de recebíveis comerciais.
+
+**B3 Registradora:** parte do ecossistema da B3 (bolsa), especializada em CRIs, CRAs, debentures e instrumentos de capital de mercado, além de CDBs e outros títulos que precisam de registro para negociação no mercado secundário.
+
+## Agenda de recebíveis de cartão
+
+Um caso especialmente relevante é a **agenda de recebíveis de cartão de crédito**. Quando uma empresa aceita pagamentos via cartão de crédito, ela tem um fluxo futuro de recebíveis junto às credenciadoras (Cielo, Rede, Stone, etc.) que serão liquidados nas datas de vencimento dos parcelamentos.
+
+O banco pode conceder crédito tendo esses recebíveis futuros como garantia. O processo:
+
+1. O cliente autoriza o banco a consultar e onerar sua agenda na Cerc
+2. O banco consulta o saldo disponível da agenda (recebíveis livres, não onerados)
+3. O banco registra na Cerc a vinculação de parte da agenda à operação de crédito
+4. Nas datas de liquidação, a credenciadora envia os valores diretamente ao banco credor, não ao cliente — o banco é o beneficiário da agenda onerada
+5. Se o cliente paga normalmente, no vencimento o banco libera os recebíveis da oneração
+
+Esse mecanismo permite que PMEs sem garantias reais (imóveis, veículos) obtenham crédito a taxas menores, usando seu fluxo de caixa futuro como colateral.
+
+## Registro de CCB e outros instrumentos
+
+A CCB (Cédula de Crédito Bancário) é o instrumento mais comum de formalização de empréstimos bancários no Brasil. Com a regulação das registradoras, a CCB registrada em uma infraestrutura autorizada tem força executiva imediata e pode ser negociada no mercado secundário (cedida para FIDCs, por exemplo) com mais segurança jurídica.
+
+O registro confere ao instrumento:
+- **Unicidade:** não pode haver duas CCBs sobre o mesmo ativo subjacente
+- **Publicidade:** qualquer participante do sistema pode verificar a existência da garantia
+- **Executividade:** título extrajudicial com execução direta, sem necessidade de ação de conhecimento
+
+## Impacto operacional para o banco
+
+Para a área de crédito e operações, as registradoras introduzem novos processos:
+
+**No momento da concessão:** o analista deve verificar nas registradoras se os recebíveis oferecidos como garantia estão disponíveis (não onerados). Uma garantia já comprometida invalida a proposta de crédito ou exige substituta.
+
+**Durante a vigência:** o banco deve monitorar se o saldo da agenda de recebíveis se mantém em nível suficiente para cobrir a exposição (covenant de cobertura de garantia).
+
+**No vencimento ou inadimplência:** o banco aciona o direcionamento dos recebíveis via registradora antes de recorrer a medidas judiciais — é uma garantia líquida e de rápida execução.

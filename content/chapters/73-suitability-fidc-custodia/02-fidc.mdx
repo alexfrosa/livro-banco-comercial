@@ -1,0 +1,73 @@
+---
+title: "FIDC — Fundo de Investimento em Direitos Creditórios"
+order: 2
+description: "Estrutura do FIDC, cotas sênior e subordinada, uso para securitização e capital relief"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O FIDC (Fundo de Investimento em Direitos Creditórios) é um dos principais veículos de securitização do mercado brasileiro. Permite que bancos e empresas transformem carteiras de recebíveis em valores mobiliários negociáveis, gerando liquidez e, no caso dos bancos, reduzindo o consumo de capital regulatório.
+
+A regulação básica está na <Ref id="instrucao-cvm-356-2001" />, complementada pela <Ref id="resolucao-cvm-175-2022" /> que modernizou o marco regulatório de fundos.
+
+## O que é um direito creditório
+
+Um **direito creditório** é um crédito que alguém tem a receber no futuro:
+- Duplicatas emitidas por empresas (crédito comercial)
+- Parcelas de cartão de crédito a receber
+- Contratos de empréstimo consignado
+- Contratos de financiamento imobiliário
+- Recebíveis de mensalidades escolares, de planos de saúde, etc.
+
+No FIDC, esses créditos são **cedidos** (vendidos) ao fundo, que emite cotas para captar os recursos necessários para comprá-los.
+
+## Estrutura do FIDC
+
+O FIDC tem uma estrutura tripartite com partes bem definidas:
+
+**Cedente:** quem vende os recebíveis ao fundo. Pode ser o banco originador de crédito, uma empresa (varejista, indústria), ou uma fintech.
+
+**Administrador fiduciário:** responsável pela administração do fundo, prestação de contas aos cotistas e cumprimento das obrigações regulatórias perante a CVM. Geralmente é um banco ou empresa especializada.
+
+**Gestor:** responsável pela política de investimento — define quais créditos serão adquiridos, monitora a qualidade da carteira, e decide desinvestimentos.
+
+**Custodiante:** guarda os documentos originais dos recebíveis (contratos, duplicatas) e realiza a cobrança dos devedores. É quem garante que os documentos existem e são válidos.
+
+**Agência de rating:** avalia e publica o rating das cotas sênior, essencial para que investidores institucionais (fundos de pensão, seguradoras) possam comprar as cotas.
+
+## Cotas sênior e subordinada — o mecanismo de subordinação
+
+A característica mais relevante do FIDC é a **estrutura de subordinação**: diferentes classes de cotas absorvem o risco de inadimplência em ordens distintas.
+
+**Cotas sênior:** têm preferência no recebimento de amortizações e rendimentos. São as primeiras a receber e as últimas a absorver perdas. Por isso, recebem um rating de crédito e são vendidas a investidores externos que buscam renda fixa de qualidade.
+
+**Cotas subordinadas mezanino:** absorvem perdas depois das sênior e antes das subordinadas júnior. Retorno intermediário, risco intermediário.
+
+**Cotas subordinadas júnior:** absorvem as primeiras perdas da carteira. Em geral, são retidas pelo próprio cedente (o banco ou empresa que originou os créditos) como "skin in the game" — sinalização de que o cedente acredita na qualidade dos ativos que cedeu.
+
+**Exemplo:**
+- Fundo tem R$ 100M em recebíveis
+- Estrutura: R$ 75M em cotas sênior (75%), R$ 10M em mezanino (10%), R$ 15M em subordinada júnior (15%)
+- Se a inadimplência da carteira for até 15% do valor, a cota sênior é paga integralmente
+- Se a inadimplência chegar a 20%, a cota mezanino sofre parcialmente
+- A cota júnior só começa a ter retorno após todas as perdas serem absorvidas
+
+Esse mecanismo permite que as cotas sênior recebam ratings elevados (AA, A+) mesmo que os recebíveis subjacentes sejam de média qualidade — desde que a subordinação seja suficiente.
+
+## FIDC como instrumento de capital relief para bancos
+
+Um dos principais usos do FIDC pelos bancos é o **capital relief** (alívio de capital regulatório). A lógica:
+
+1. O banco tem uma carteira de empréstimos que consome capital (exige alocação de RWA)
+2. O banco cede essa carteira para um FIDC (securitização)
+3. O banco retém apenas a cota subordinada júnior (o "risco de primeira perda")
+4. As cotas sênior são vendidas a investidores externos
+5. A carteira sai do balanço do banco (off-balance sheet) — reduz o RWA e, portanto, o consumo de capital
+
+O BACEN monitora de perto essas operações para evitar que os bancos transfiram risco apenas na forma mas não na substância. Se o banco mantiver riscos e benefícios da carteira cedida (por exemplo, comprometendo-se a recomprar inadimplências), o BACEN pode exigir que a carteira permaneça no balanço.
+
+## Perfil de investidor do FIDC
+
+O FIDC é um produto complexo e de baixa liquidez — as cotas normalmente não têm mercado secundário ativo. Por isso, é restrito a **investidores qualificados** (acima de R$ 1M em investimentos, conforme instrução CVM) ou **profissionais** (acima de R$ 10M).
+
+A análise antes de investir num FIDC exige examinar: qualidade dos recebíveis subjacentes, nível de subordinação, covenants, histórico de inadimplência da carteira, qualidade do cedente, e a estrutura jurídica de cessão.

@@ -1,0 +1,94 @@
+---
+title: "DRE Bancária — estrutura e métricas de resultado"
+order: 1
+description: "Como é a demonstração de resultado de um banco: receita de intermediação, NIM e margem financeira"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A demonstração de resultado (DRE) de um banco segue uma lógica completamente diferente da de uma empresa industrial ou comercial. A principal diferença é que o produto do banco é o próprio dinheiro — e sua receita é gerada pela diferença entre o custo de captar e o retorno de emprestar. Compreender a estrutura da DRE bancária é fundamental para qualquer profissional de contabilidade, risco ou gestão.
+
+O COSIF (<Ref id="resolucao-bcb-197" />) define a estrutura das demonstrações financeiras das instituições financeiras no Brasil.
+
+## Estrutura da DRE bancária
+
+```
+(+) Receitas de Intermediação Financeira
+    ├── Operações de crédito (juros recebidos de empréstimos)
+    ├── Operações de arrendamento mercantil
+    ├── Resultado de operações com títulos e valores mobiliários
+    ├── Resultado de instrumentos financeiros derivativos
+    └── Resultado de operações de câmbio
+
+(-) Despesas de Intermediação Financeira
+    ├── Operações de captação no mercado (juros pagos em CDBs, depósitos à vista, etc.)
+    ├── Operações de empréstimos e repasses (BNDES, captações externas)
+    ├── Provisão para devedores duvidosos (PDD)
+    └── Operações de arrendamento mercantil
+
+(=) RESULTADO BRUTO DA INTERMEDIAÇÃO FINANCEIRA
+    (equivale ao "lucro bruto" de uma empresa industrial)
+
+(+/-) Outras Receitas/Despesas Operacionais
+    ├── Receitas de prestação de serviços (tarifas, corretagem, administração de fundos)
+    ├── Rendas de tarifas bancárias
+    ├── Despesas de pessoal
+    ├── Despesas administrativas (tecnologia, aluguel, marketing)
+    ├── Resultado de participações em coligadas
+    └── Outras receitas/despesas operacionais
+
+(=) RESULTADO OPERACIONAL
+
+(-) Imposto de Renda e CSLL
+(+/-) Participações e contribuições estatutárias
+
+(=) LUCRO/PREJUÍZO LÍQUIDO
+```
+
+## Receita de intermediação financeira
+
+A principal fonte de receita de um banco são os **juros e encargos de operações de crédito** — o que o banco recebe de quem tomou emprestado. Mas também inclui:
+
+**Resultado com títulos:** ganhos (ou perdas) em carteiras de títulos públicos e privados, marcados a mercado diariamente. Um banco com posição relevante em NTN-Bs pode ter receita ou despesa significativa nessa linha dependendo do movimento das taxas de juros.
+
+**Resultado com derivativos:** swaps, futuros de DI, opções — usados tanto para hedge quanto para posições proprietárias. A variação de valor desses instrumentos entra na DRE.
+
+**Resultado com câmbio:** diferença entre taxa de compra e venda, resultado de posições em moeda estrangeira.
+
+## Despesa de intermediação financeira
+
+O item mais relevante é o **custo de captação** — juros pagos aos depositantes e a detentores de CDBs, LCIs, LCAs. Em um ambiente de Selic alta, esse custo é elevado e comprime a margem.
+
+A **provisão para devedores duvidosos (PDD)** aparece como despesa de intermediação — não como despesa administrativa. Isso é uma peculiaridade do COSIF: a PDD é tratada como parte integrante do resultado da atividade-fim do banco, não como despesa de suporte.
+
+## NIM — Net Interest Margin (Margem Financeira Líquida)
+
+O **NIM** é o principal indicador de eficiência da atividade de intermediação:
+
+```
+NIM = (Receitas de Intermediação − Despesas de Captação) / Ativos Rentáveis Médios
+```
+
+Expressa como percentual ao ano, o NIM brasileiro é historicamente um dos mais altos do mundo — reflexo do spread bancário elevado, da inadimplência e do custo de funding.
+
+**Margem financeira bruta** = Resultado Bruto da Intermediação / Ativos totais
+
+**Margem financeira líquida (após PDD)** = (Resultado Bruto − PDD) / Ativos totais
+
+A diferença entre as duas margens revela o impacto da inadimplência na rentabilidade real do banco.
+
+## Receitas de serviços — a segunda linha de resultado
+
+Em bancos bem desenvolvidos, as **receitas de serviços** (tarifas, comissões, administração de fundos, corretagem de seguros, emissão de cartão) respondem por 30-40% da receita operacional. Essa linha é mais estável e menos sensível ao ciclo de juros que a intermediação financeira.
+
+Durante períodos de spread comprimido ou alta inadimplência, os bancos buscam aumentar a participação das receitas de serviços para sustentar o ROE (Retorno sobre o Patrimônio Líquido).
+
+## Índice de Eficiência (IE)
+
+```
+IE = Despesas Administrativas + Despesas de Pessoal
+     ─────────────────────────────────────────────────
+     Receita de Intermediação + Receitas de Serviços
+```
+
+Quanto menor o IE, mais eficiente o banco. Bancos digitais com baixa estrutura física alcançam IE abaixo de 40%; bancos tradicionais com rede física densa operam com IE entre 50-65%.

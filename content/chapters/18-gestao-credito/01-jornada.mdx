@@ -4,6 +4,8 @@ order: 1
 description: "O ciclo de vida de um contrato de crédito após a liberação"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Após a liberação do crédito, começa a fase de gestão: gerar as cobranças, processar os pagamentos, tratar a inadimplência. É um processo contínuo que dura toda a vida do contrato.
 
 ## Geração de cobranças
@@ -14,7 +16,7 @@ No vencimento de cada parcela, o sistema gera a cobrança:
 
 **Débito automático:** se o cliente autorizou, o sistema debita automaticamente na data de vencimento.
 
-**Pix Cobrança:** o sistema gera um QR Code Pix com os dados da parcela. O cliente paga escaneando o QR Code.
+**Pix Cobrança:** o sistema gera um QR Code Pix com os dados da parcela (<Ref id="resolucao-bcb-80" />). O cliente paga escaneando o QR Code.
 
 A geração de cobranças é um processo batch que roda diariamente, gerando as cobranças que vencem nos próximos dias.
 
@@ -93,5 +95,5 @@ Quando o contrato é quitado (todas as parcelas pagas ou quitação antecipada):
 1. O sistema verifica que o saldo devedor é zero
 2. Gera o comprovante de quitação
 3. Solicita o cancelamento das garantias (alienação fiduciária, hipoteca)
-4. Atualiza o SCR informando a quitação
+4. Atualiza o SCR informando a quitação (<Ref id="resolucao-bcb-96" />)
 5. Arquiva o contrato (mantido por 5 anos para auditoria)

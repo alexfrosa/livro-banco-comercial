@@ -4,6 +4,8 @@ order: 1
 description: "As etapas de coleta de dados, validação, consulta a bureaus, análise de risco e aprovação"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 A jornada de onboarding é o processo pelo qual um novo cliente é incorporado ao banco. Do ponto de vista do cliente, parece simples: preencher um formulário e pronto. Por baixo dos panos, é um processo complexo com múltiplas validações, consultas externas e decisões de risco.
 
 ## Etapa 1: Coleta de dados
@@ -18,7 +20,7 @@ O processo começa com a coleta das informações do cliente. Em bancos digitais
 - Renda: valor declarado, fonte de renda
 - Finalidade da conta: uso pessoal, recebimento de salário, investimentos
 
-**Consentimento e LGPD:** a coleta de dados pessoais deve ser precedida de consentimento explícito e informado do titular, conforme a Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018). O banco deve informar quais dados são coletados, para qual finalidade, por quanto tempo serão retidos e com quem serão compartilhados. O cliente tem o direito de revogar o consentimento a qualquer momento.
+**Consentimento e LGPD:** a coleta de dados pessoais deve ser precedida de consentimento explícito e informado do titular, conforme a Lei Geral de Proteção de Dados (<Ref id="lei-13709-2018" />). O banco deve informar quais dados são coletados, para qual finalidade, por quanto tempo serão retidos e com quem serão compartilhados. O cliente tem o direito de revogar o consentimento a qualquer momento.
 
 **Dados coletados para PJ:**
 - Dados da empresa: razão social, CNPJ, data de abertura, CNAE
@@ -58,7 +60,7 @@ Com a identidade confirmada, o sistema consulta bases externas para avaliar o pe
 
 **Restrições:** o cliente tem dívidas em aberto? Está negativado? Tem cheques sem fundo?
 
-**SCR (BACEN):** histórico de operações de crédito em todo o sistema financeiro. Quanto o cliente deve em outros bancos?
+**SCR (BACEN):** histórico de operações de crédito em todo o sistema financeiro (<Ref id="resolucao-bcb-96" />). Quanto o cliente deve em outros bancos?
 
 **Listas restritivas:** o cliente está em alguma lista de sanções, PEPs ou suspeitos de lavagem de dinheiro?
 
@@ -94,6 +96,6 @@ O BACEN não define um prazo máximo para abertura de conta, mas a competição 
 
 ## Portabilidade de dados (Open Finance)
 
-Com o Open Finance (fase 2), o cliente pode autorizar o compartilhamento de seus dados cadastrais e transacionais de um banco para outro. Isso significa que um novo banco pode receber, com consentimento, o histórico do cliente em outra instituição — acelerando a análise de risco e personalizando ofertas desde o primeiro dia.
+Com o Open Finance (<Ref id="resolucao-bcb-150" />) (fase 2), o cliente pode autorizar o compartilhamento de seus dados cadastrais e transacionais de um banco para outro. Isso significa que um novo banco pode receber, com consentimento, o histórico do cliente em outra instituição — acelerando a análise de risco e personalizando ofertas desde o primeiro dia.
 
 A portabilidade de dados reduz a fricção do onboarding para clientes que já têm relacionamento com o sistema financeiro, e aumenta a concorrência entre instituições.

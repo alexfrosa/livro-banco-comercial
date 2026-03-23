@@ -4,6 +4,8 @@ order: 1
 description: "Os princípios fundamentais do ledger bancário: partidas dobradas, registros imutáveis e operações idempotentes"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 O ledger (livro-razão) é o coração contábil de um banco. É onde cada centavo movimentado é registrado de forma permanente e auditável. Entender os princípios do ledger é fundamental para qualquer sistema financeiro.
 
 ## Partidas dobradas (double-entry)
@@ -105,7 +107,7 @@ Event Sourcing é diferente de simplesmente logar operações: os eventos são a
 
 **Ledger interno (operacional):** registra os lançamentos nas contas dos clientes e nas contas internas do banco. Usa uma estrutura de contas definida pelo próprio banco, otimizada para operações em tempo real. É o ledger que o cliente vê no extrato.
 
-**COSIF (Plano Contábil das Instituições do Sistema Financeiro Nacional):** é o plano de contas regulatório definido pelo BACEN. Todo banco deve mapear seus lançamentos internos para o COSIF e reportar ao BACEN. O COSIF é padronizado para todo o sistema financeiro, permitindo comparabilidade entre instituições.
+**COSIF (Plano Contábil das Instituições do Sistema Financeiro Nacional):** é o plano de contas regulatório definido pelo BACEN (<Ref id="resolucao-bcb-197" />). Todo banco deve mapear seus lançamentos internos para o COSIF e reportar ao BACEN. O COSIF é padronizado para todo o sistema financeiro, permitindo comparabilidade entre instituições.
 
 O processo de mapear lançamentos do ledger interno para o COSIF é chamado de **contabilização** ou **escrituração contábil**. Geralmente ocorre em batch (diário ou intraday), e o sistema contábil (COSIF) é um sistema separado do ledger operacional.
 

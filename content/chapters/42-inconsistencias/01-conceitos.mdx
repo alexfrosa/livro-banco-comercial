@@ -4,6 +4,8 @@ order: 1
 description: "Como surgem inconsistências de dados e saldos e como corrigi-las"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Inconsistências de dados são um dos problemas mais insidiosos em sistemas bancários. Podem surgir de falhas técnicas, erros humanos, ou condições de corrida em sistemas distribuídos. Detectá-las e corrigi-las é uma das funções mais críticas do backoffice.
 
 ## O que é uma inconsistência
@@ -51,7 +53,7 @@ Durante migrações de sistema, dados podem ser transformados incorretamente ou 
 O sistema compara automaticamente os saldos entre sistemas:
 - Saldo no sistema de contas vs. soma dos lançamentos no ledger
 - Saldo no ledger vs. saldo no COSIF
-- Posição interna vs. posição no BACEN (STR, SPI)
+- Posição interna vs. posição no BACEN (STR (<Ref id="resolucao-bcb-1" />), SPI (<Ref id="resolucao-bcb-277" />))
 
 Divergências são alertadas automaticamente.
 

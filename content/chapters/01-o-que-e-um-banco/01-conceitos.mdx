@@ -4,6 +4,8 @@ order: 1
 description: "O papel dos bancos como intermediários financeiros e os principais produtos que oferecem"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Um banco comercial é, em essência, um **intermediário financeiro**: capta recursos de quem tem dinheiro sobrando e empresta para quem precisa de dinheiro. Essa função parece simples, mas é o que sustenta toda a economia moderna.
 
 ## A lógica da intermediação
@@ -11,6 +13,8 @@ Um banco comercial é, em essência, um **intermediário financeiro**: capta rec
 Imagine que você tem R$ 10.000 guardados e não vai precisar deles por um ano. Ao mesmo tempo, uma empresa precisa de R$ 10.000 para comprar equipamentos. Sem um banco, você teria que encontrar essa empresa, negociar diretamente, avaliar o risco de não receber de volta, e lidar com toda a burocracia.
 
 O banco resolve esse problema. Ele capta seu dinheiro (pagando juros), empresta para a empresa (cobrando juros maiores), e fica com a diferença — o **spread bancário**. Você tem liquidez e segurança; a empresa tem o capital que precisa; o banco tem receita.
+
+Essa atividade de intermediação é regulada pela Lei 4.595/1964 (<Ref id="lei-4595-1964" />), que estrutura o sistema financeiro nacional e define as competências do CMN e do BACEN.
 
 ## Captação: de onde vem o dinheiro
 
@@ -55,7 +59,7 @@ Um conceito fundamental — e frequentemente mal compreendido — é que os banc
 
 Quando você deposita R$ 1.000 em um banco, ele não guarda tudo no cofre. Mantém uma fração como reserva (exigida pelo BACEN) e empresta o restante. Quem recebe o empréstimo deposita em outro banco, que também empresta uma fração, e assim por diante.
 
-O resultado é que um depósito inicial de R$ 1.000 pode gerar muito mais dinheiro em circulação na economia. Esse é o **multiplicador monetário** — um conceito que exploraremos em detalhes nas simulações.
+O resultado é que um depósito inicial de R$ 1.000 pode gerar muito mais dinheiro em circulação na economia. Esse é o **multiplicador monetário** — um conceito que exploraremos em detalhes nas simulações. O compulsório, instrumento pelo qual o BACEN controla essa expansão, é regulado no âmbito do Sistema de Pagamentos Brasileiro (<Ref id="lei-10214-2001" />).
 
 > O multiplicador monetário é calculado como `1 / taxa de reserva`. Com uma taxa de reserva de 10%, um depósito de R$ 1.000 pode gerar **até** R$ 10.000 em dinheiro na economia — esse é o limite teórico máximo, não o valor real.
 

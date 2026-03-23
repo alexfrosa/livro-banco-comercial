@@ -4,6 +4,8 @@ order: 1
 description: "As etapas de processamento de um pagamento, da entrada até a confirmação"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Processar um pagamento parece simples do ponto de vista do usuário: você confirma e o dinheiro vai. Por baixo dos panos, é uma sequência precisa de validações, reservas, débitos e confirmações que precisa funcionar corretamente mesmo quando partes do sistema falham.
 
 ## A anatomia de um pagamento
@@ -57,13 +59,13 @@ A reserva é implementada como um bloqueio temporário no saldo disponível. Se 
 
 Com os fundos reservados, o sistema processa o pagamento:
 
-**Para Pix:**
-1. Consulta ao DICT (obter dados bancários da chave)
-2. Envio da mensagem de pagamento ao SPI
+**Para Pix** (<Ref id="resolucao-bcb-80" />):
+1. Consulta ao DICT (<Ref id="instrucao-normativa-bcb-184" />) (obter dados bancários da chave)
+2. Envio da mensagem de pagamento ao SPI (<Ref id="resolucao-bcb-277" />)
 3. Aguardar confirmação do SPI (liquidação)
 4. Converter reserva em débito definitivo
 
-**Para TED:**
+**Para TED** (<Ref id="resolucao-bcb-1" />):
 1. Validar dados bancários do destinatário (banco, agência, conta)
 2. Enviar instrução ao STR
 3. Aguardar confirmação do STR

@@ -4,6 +4,8 @@ order: 1
 description: "Os processos de reconciliação que garantem a integridade dos dados bancários"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 A reconciliação é o processo de comparar dois conjuntos de dados para garantir que são consistentes. Em bancos, é uma das atividades mais críticas do backoffice — é a principal forma de detectar erros, fraudes e inconsistências antes que causem problemas maiores.
 
 ## Por que reconciliar
@@ -36,9 +38,9 @@ Compara dados entre sistemas internos do banco:
 
 Compara dados internos com dados de sistemas externos:
 
-**Reservas no BACEN (STR):** o saldo na conta de reservas do banco no BACEN bate com o que o banco registrou internamente?
+**Reservas no BACEN (STR):** o saldo na conta de reservas do banco no BACEN (<Ref id="resolucao-bcb-1" />) bate com o que o banco registrou internamente?
 
-**Pix (SPI):** as transações Pix confirmadas pelo SPI batem com os registros internos?
+**Pix (SPI):** as transações Pix confirmadas pelo SPI (<Ref id="resolucao-bcb-277" />) batem com os registros internos?
 
 **Boletos (CIP):** os boletos pagos confirmados pela CIP batem com os registros internos?
 
@@ -88,4 +90,4 @@ A automação reduz o tempo de reconciliação de horas para minutos e permite q
 
 ## Reconciliação e regulação
 
-O BACEN exige que os bancos mantenham controles internos adequados, o que inclui processos de reconciliação documentados. Falhas de reconciliação que resultem em reportes incorretos ao BACEN (ex: posição no STR, dados do SCR) podem gerar penalidades. A Resolução CMN nº 4.968/2021 (controles internos e compliance) e as normas de contabilidade COSIF estabelecem os requisitos mínimos de integridade de dados que os processos de reconciliação devem garantir.
+O BACEN exige que os bancos mantenham controles internos adequados, o que inclui processos de reconciliação documentados. Falhas de reconciliação que resultem em reportes incorretos ao BACEN (ex: posição no STR, dados do SCR (<Ref id="resolucao-bcb-96" />)) podem gerar penalidades. A <Ref id="resolucao-bcb-197" /> (COSIF) estabelece os requisitos mínimos de integridade de dados que os processos de reconciliação devem garantir.

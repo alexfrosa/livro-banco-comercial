@@ -4,6 +4,8 @@ order: 1
 description: "Como um evento financeiro se transforma em lançamentos contábeis consistentes"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Toda operação financeira em um banco gera eventos que precisam ser registrados no ledger. Entender esse fluxo — do evento ao lançamento contábil — é fundamental para construir sistemas financeiros corretos.
 
 ## O modelo de eventos
@@ -42,7 +44,7 @@ Débito:  Conta Corrente Cliente A (passivo)    R$ 500,00
 Crédito: Conta de Liquidação SPI (ativo)       R$ 500,00
 ```
 
-O dinheiro saiu da conta do cliente e foi para a conta de liquidação do banco no SPI.
+O dinheiro saiu da conta do cliente e foi para a conta de liquidação do banco no SPI (<Ref id="resolucao-bcb-277" />).
 
 **Após confirmação do SPI:**
 ```

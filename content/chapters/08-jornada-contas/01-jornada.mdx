@@ -4,6 +4,8 @@ order: 1
 description: "O ciclo completo de vida de uma conta bancária"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Uma conta bancária tem uma vida própria: nasce, opera, pode passar por momentos difíceis (bloqueios), e eventualmente é encerrada. Cada transição de estado envolve processos específicos, validações e registros.
 
 ## Abertura de conta
@@ -23,7 +25,7 @@ O core banking cria um novo registro com:
 A conta é vinculada ao registro do cliente. Um cliente pode ter múltiplas contas (corrente, poupança, conta PJ). Cada conta tem seu próprio número e saldo.
 
 **3. Registro de chave Pix (se solicitado)**
-O banco registra a chave Pix no DICT do BACEN. A chave (CPF, e-mail, telefone ou aleatória) é vinculada à conta e ao banco.
+O banco registra a chave Pix no DICT do BACEN (<Ref id="instrucao-normativa-bcb-184" />). A chave (CPF, e-mail, telefone ou aleatória) é vinculada à conta e ao banco.
 
 **4. Emissão de cartão (se aplicável)**
 Para contas com cartão de débito, o sistema gera o pedido de emissão. O cartão é produzido e enviado ao endereço do cliente.

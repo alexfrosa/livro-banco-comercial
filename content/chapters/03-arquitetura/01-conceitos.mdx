@@ -4,6 +4,8 @@ order: 1
 description: "O núcleo do banco, os sistemas periféricos e as diferenças entre arquiteturas event-driven e batch"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 Um banco moderno é um ecossistema de dezenas (às vezes centenas) de sistemas de software. Entender como esses sistemas se organizam e se comunicam é fundamental para trabalhar com tecnologia bancária.
 
 ## O core banking
@@ -60,7 +62,7 @@ No modelo síncrono, um sistema chama outro diretamente e aguarda a resposta ant
 
 **Desvantagens:** acoplamento temporal — se o sistema chamado estiver lento ou indisponível, o chamador fica bloqueado. Requer circuit breakers e timeouts bem configurados para evitar falhas em cascata.
 
-APIs bancárias seguem geralmente REST/HTTP com JSON, autenticação via OAuth 2.0/mTLS, e versionamento explícito (ex: `/v1/`, `/v2/`). O Open Finance Brasil padronizou esse modelo para todas as instituições participantes.
+APIs bancárias seguem geralmente REST/HTTP com JSON, autenticação via OAuth 2.0/mTLS, e versionamento explícito (ex: `/v1/`, `/v2/`). O Open Finance Brasil (<Ref id="resolucao-bcb-150" />) padronizou esse modelo para todas as instituições participantes.
 
 ### Batch (processamento em lote)
 
@@ -124,13 +126,13 @@ Sagas são amplamente usadas em bancos modernos para operações de pagamento, o
 
 **BaaS (Banking as a Service):** modelo em que um banco licenciado expõe sua infraestrutura via APIs para que fintechs e empresas não-financeiras ofereçam produtos bancários com sua própria marca. O banco cuida da regulação e da infraestrutura; o parceiro cuida da experiência do cliente.
 
-**Open Finance:** iniciativa regulatória do BACEN que obriga instituições financeiras a exporem APIs padronizadas para compartilhamento de dados e iniciação de pagamentos (com consentimento do cliente). Permite que o cliente use seus dados de um banco em outro, e que terceiros (TPPs) iniciem pagamentos em nome do cliente.
+**Open Finance:** iniciativa regulatória do BACEN (<Ref id="resolucao-bcb-150" />) que obriga instituições financeiras a exporem APIs padronizadas para compartilhamento de dados e iniciação de pagamentos (com consentimento do cliente). Permite que o cliente use seus dados de um banco em outro, e que terceiros (TPPs) iniciem pagamentos em nome do cliente.
 
 As APIs do Open Finance seguem especificações técnicas publicadas pelo BACEN e pela estrutura de governança do Open Finance Brasil, incluindo padrões de segurança (FAPI 1.0), consentimento e certificação.
 
 ## Alta disponibilidade e disaster recovery
 
-Os sistemas bancários precisam estar disponíveis praticamente o tempo todo. O BACEN exige disponibilidade mínima para sistemas críticos como o Pix.
+Os sistemas bancários precisam estar disponíveis praticamente o tempo todo. O BACEN exige disponibilidade mínima para sistemas críticos como o Pix (<Ref id="resolucao-bcb-277" />).
 
 As estratégias típicas incluem:
 

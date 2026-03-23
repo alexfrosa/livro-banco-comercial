@@ -4,6 +4,8 @@ order: 1
 description: "Como a tesouraria monitora o caixa ao longo do dia e executa operações interbancárias"
 ---
 
+import Ref from '@/components/Ref.astro';
+
 A tesouraria opera em tempo real, tomando decisões que afetam a liquidez do banco a cada hora. Este capítulo mostra como esse processo funciona na prática.
 
 ## O início do dia
@@ -34,7 +36,7 @@ Ao longo do dia, a tesouraria monitora em tempo real:
 
 Quando a tesouraria precisa ajustar a posição de caixa, tem várias ferramentas:
 
-**Operações compromissadas (repo):** o banco vende títulos públicos com compromisso de recompra no dia seguinte. É a forma mais rápida de obter liquidez — o BACEN aceita títulos como garantia e fornece dinheiro imediatamente.
+**Operações compromissadas (repo):** o banco vende títulos públicos com compromisso de recompra no dia seguinte. É a forma mais rápida de obter liquidez — o BACEN aceita títulos como garantia e fornece dinheiro imediatamente (<Ref id="resolucao-bcb-1" />).
 
 **CDI interbancário:** o banco toma emprestado de outro banco via CDI overnight. O dinheiro é devolvido no dia seguinte com juros.
 

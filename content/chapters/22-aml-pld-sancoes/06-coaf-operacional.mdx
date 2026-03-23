@@ -1,0 +1,74 @@
+---
+title: "COAF Operacional — SISCOAF, ROS e ROF"
+order: 6
+description: "Como funciona o reporte ao COAF na prática: sistemas, formulários, prazos e a proibição de tipping-off"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O COAF (Conselho de Controle de Atividades Financeiras) é a Unidade de Inteligência Financeira (UIF) do Brasil, vinculada ao Banco Central desde 2019. Recebe, analisa e dissemina informações financeiras para combater lavagem de dinheiro e financiamento do terrorismo. Os bancos têm obrigações operacionais específicas de reporte ao COAF, reguladas pela <Ref id="circular-bacen-3978" /> e pela <Ref id="lei-9613-1998" />.
+
+## O SISCOAF
+
+O **SISCOAF** é o sistema eletrônico pelo qual os bancos e demais entidades obrigadas enviam as comunicações ao COAF. O acesso é por credencial institucional — o banco cadastra os usuários autorizados a realizar reportes.
+
+## Tipos de comunicação ao COAF
+
+### ROS — Relatório de Operação Suspeita
+
+O ROS é o principal instrumento de reporte. É enviado quando o analista de PLD conclui que há indícios suficientes de lavagem de dinheiro ou financiamento ao terrorismo.
+
+**O que comunica:**
+- Dados completos do cliente e das pessoas envolvidas
+- Descrição detalhada das operações suspeitas (valores, datas, contrapartes)
+- Indicadores de suspeição (fracionamento, incompatibilidade com perfil, destino de risco)
+- Análise do analista explicando o raciocínio
+
+**Prazo:** o banco deve comunicar ao COAF **assim que concluir que a operação é suspeita** — não há prazo fixo de dias após a transação, mas a regulação exige "prontidão". Na prática, o padrão interno dos bancos é reportar em até **24 horas úteis** após a decisão de comunicar.
+
+**Urgência:** em casos com indícios de financiamento ao terrorismo ou situações de urgência, o reporte deve ocorrer imediatamente (mesmas 24 horas), e o banco pode comunicar também diretamente às autoridades policiais.
+
+### ROF — Relatório de Operação em Espécie (e com cartões pré-pagos)
+
+O ROF é um reporte **automático** (não depende de análise de suspeição) para operações acima de determinados valores em espécie:
+
+- **Depósito, saque ou troca de moeda em espécie acima de R$ 50.000** por uma pessoa física
+- **Para pessoa jurídica:** acima de R$ 50.000 (em espécie)
+- **Compra ou venda de moeda estrangeira em espécie acima de R$ 10.000** (no câmbio turismo)
+- **Operações com cartões pré-pagos internacionais acima de R$ 10.000**
+
+**Prazo:** até o dia útil seguinte à operação.
+
+**Importante:** o ROF não implica suspeição — é uma obrigação de reporte automático por volume. O COAF consolida essas informações para identificar padrões que não seriam visíveis em operações individuais.
+
+## A proibição de tipping-off (comunicação ao investigado)
+
+Esta é uma das regras mais críticas do regime de PLD: o banco é **proibido de comunicar ao cliente** (ou a qualquer terceiro não autorizado) que uma comunicação ao COAF foi feita ou está sendo elaborada.
+
+Essa proibição se estende a:
+- O gerente de relacionamento não pode avisar o cliente
+- O analista de PLD não pode comentar com colegas que não precisam saber
+- O banco não pode mencionar o reporte em nenhuma correspondência com o cliente
+
+**Consequência da violação:** crime tipificado no artigo 11 da Lei 9.613/1998, com pena de reclusão de 1 a 3 anos além de multa.
+
+**Situação prática difícil:** quando o banco decide encerrar a conta de um cliente por motivos de PLD, não pode dizer "estamos encerrando porque você foi reportado ao COAF". A comunicação do encerramento é feita de forma neutra, citando apenas a política interna de gestão de relacionamento.
+
+## O que acontece após o reporte
+
+O COAF analisa os ROS e ROFs recebidos, cruza com informações de outros reportes e bases de dados, e pode compartilhar inteligência financeira com:
+- Polícia Federal, MP Federal
+- Receita Federal
+- Outros órgãos de controle (AGU, CGU)
+- Organizações internacionais via rede EGMONT (rede global de UIFs)
+
+O banco **não é notificado** do resultado de seus reportes — não sabe se o COAF abriu investigação, se compartilhou com o MP, ou se o caso foi arquivado. A relação é unidirecional: banco informa, COAF analisa e age.
+
+## Indicadores de qualidade do programa de PLD
+
+O BACEN avalia a qualidade do programa de PLD do banco com base em:
+- Taxa de ROS por volume de transações (muito baixa indica subdetecção; muito alta pode indicar reportes sem análise)
+- Precisão dos reportes (porcentagem de ROS que efetivamente geraram investigação)
+- Prazo de envio dos ROFs
+- Completude dos dados nos formulários
+- Evidência de treinamento e cultura de PLD

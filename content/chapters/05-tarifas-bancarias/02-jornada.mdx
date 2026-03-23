@@ -1,0 +1,63 @@
+---
+title: "Jornada — Identificação, cálculo e cobrança"
+order: 2
+description: "Como uma tarifa é identificada, calculada e cobrada do cliente"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O processo de tarifação parece simples — o cliente usou um serviço, o banco cobra. Mas a implementação envolve regras complexas de elegibilidade, cálculo e timing.
+
+## Identificação do evento tarifável
+
+O primeiro passo é identificar quando um evento tarifável ocorreu. Isso pode acontecer de duas formas:
+
+**Tarifação em tempo real:** no momento em que o serviço é prestado, o sistema verifica se é tarifável e cobra imediatamente. Exemplo: ao processar uma TED, o sistema verifica se o cliente tem franquia disponível no pacote ou se deve cobrar a tarifa unitária.
+
+**Tarifação em lote:** os eventos são acumulados durante o mês e cobrados de uma vez no fechamento do ciclo. Exemplo: a mensalidade do pacote de serviços é cobrada no mesmo dia todo mês.
+
+## Regras de elegibilidade
+
+Antes de cobrar, o sistema verifica as regras de elegibilidade:
+
+1. **O serviço é tarifável para este cliente?** (pode estar isento por segmento, investimentos, etc.)
+2. **O cliente tem franquia disponível?** (o pacote inclui X operações gratuitas por mês)
+3. **A tarifa está dentro dos limites regulatórios?**
+4. **O cliente foi informado sobre a tarifa?** (transparência regulatória)
+
+## Cálculo da tarifa
+
+Com a elegibilidade confirmada, o sistema calcula o valor:
+
+**Tarifa fixa:** o valor é fixo, independente de qualquer variável.
+
+**Tarifa percentual:** `valor_tarifa = valor_operação × percentual`
+
+**Tarifa com franquia:** se o cliente tem 4 saques gratuitos por mês e já usou 3, o próximo saque é gratuito. O quinto saque é cobrado.
+
+**Tarifa com desconto progressivo:** quanto mais o cliente usa, menor a tarifa por operação (incentivo ao volume).
+
+## Cobrança
+
+A cobrança é feita debitando o valor da tarifa diretamente na conta do cliente:
+
+1. O sistema verifica se há saldo disponível
+2. Debita o valor da tarifa
+3. Gera o lançamento contábil (débito na conta do cliente, crédito na conta de receita de tarifas)
+4. Registra o evento no histórico de tarifas do cliente
+5. Notifica o cliente (extrato, push notification)
+
+**E se não houver saldo?** O banco pode:
+- Cobrar quando houver saldo (tarifa fica pendente)
+- Usar o limite de cheque especial (se disponível)
+- Registrar como inadimplência de tarifa (pode levar ao bloqueio da conta)
+
+**Transparência regulatória:** a <Ref id="resolucao-bcb-6" /> e normativos do BACEN exigem que os bancos informem previamente ao cliente qualquer tarifa antes de cobrá-la, disponibilizem a tabela de tarifas em local de fácil acesso, e enviem extrato de tarifas cobradas. A cobrança de tarifa não prevista no contrato ou não informada ao cliente é vedada.
+
+## Fechamento do ciclo
+
+No final do ciclo de cobrança (geralmente mensal), o sistema:
+1. Consolida todas as tarifas do período
+2. Verifica se o pacote escolhido foi o mais vantajoso para o cliente (alguns bancos fazem isso automaticamente)
+3. Gera o demonstrativo de tarifas do período
+4. Disponibiliza para o cliente no extrato e no app

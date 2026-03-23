@@ -1,0 +1,57 @@
+---
+title: "Recolhimento Compulsório"
+order: 3
+description: "Como funciona o compulsório, alíquotas por tipo de depósito e impacto na liquidez do banco"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O recolhimento compulsório é um dos principais instrumentos de política monetária do BACEN. Obriga os bancos a manterem uma parcela de seus depósitos bloqueada no BACEN, reduzindo o volume de recursos disponíveis para emprestar e, consequentemente, controlando a expansão do crédito e da oferta de moeda na economia.
+
+A base regulatória está na <Ref id="lei-4595-1964" /> (que dá ao CMN a competência para fixar as alíquotas) e na <Ref id="circular-bacen-3569-2011" /> (que consolida as regras operacionais).
+
+## Como funciona
+
+O banco capta depósitos de clientes (à vista, a prazo, poupança). Uma fração desses depósitos deve ser recolhida ao BACEN — o banco não pode usar esse dinheiro para conceder crédito ou aplicar em outros ativos.
+
+**Posição de caixa no BACEN:** todo banco liquidante mantém uma conta de reservas bancárias no BACEN. O compulsório é a exigência de manter um **saldo mínimo** nessa conta (ou em títulos públicos segregados).
+
+**Período de movimentação:** o compulsório não é calculado sobre o saldo do dia, mas sobre a **média dos depósitos em um período de movimentação** (geralmente quinzenal ou semanal, conforme o tipo de depósito). Isso dá alguma flexibilidade operacional ao banco.
+
+## Alíquotas por tipo de depósito
+
+As alíquotas variam por tipo de exigibilidade e são ajustadas pelo CMN como instrumento de política monetária. Os valores abaixo são referência — o BACEN ajusta periodicamente:
+
+| Tipo de depósito | Alíquota indicativa | Forma de recolhimento |
+|-----------------|--------------------|-----------------------|
+| Depósitos à vista | ~21% | Espécie (conta reservas) |
+| Depósitos a prazo (CDB) | ~8% | Títulos federais ou espécie |
+| Poupança | ~25% (parte em espécie, parte em habitação) | Espécie + direcionamento habitacional |
+| Recursos de aceites e emissões | Variável | Títulos |
+
+**Importante:** o compulsório de poupança tem uma peculiaridade — parte é recolhida em espécie ao BACEN e parte deve ser direcionada para financiamento habitacional (SFH) ou rural. Esse direcionamento obrigatório é o que financia parte do crédito imobiliário a taxas subsidiadas no Brasil.
+
+## Formas de recolhimento
+
+**Espécie:** o banco mantém saldo em sua conta de reservas no BACEN igual ou superior ao valor exigido. Esse saldo não rende juros — é recurso parado.
+
+**Títulos federais:** para algumas modalidades, o banco pode cumprir o compulsório com títulos do governo federal (LFT, LTN, NTN-B) em carteira segregada. Esses títulos rendem juros, reduzindo o custo do compulsório.
+
+A diferença entre recolher em espécie (sem rendimento) e em títulos (com rendimento) é um dos motivos pelos quais o CMN ajusta as regras: em momentos de expansão monetária, pode permitir mais recolhimento em títulos para não encarrerar tanto os bancos; em momentos de contração, pode exigir mais em espécie.
+
+## Impacto na gestão da tesouraria
+
+O compulsório é um **custo implícito de captação** para o banco. Se o banco capta R$ 100 em depósitos à vista e precisa recolher R$ 21 ao BACEN sem remuneração, só pode utilizar R$ 79. O custo efetivo da captação sobe proporcionalmente.
+
+**Cálculo do custo do compulsório:**
+Se o CDI está em 10,5% a.a. e o banco capta CDB a 100% do CDI com compulsório de 8%:
+- Para cada R$ 100 captados, apenas R$ 92 ficam disponíveis
+- Custo efetivo = 10,5% / (1 - 0,08) = ~11,4% a.a.
+
+A mesa de tesouraria monitora diariamente a posição de compulsório para evitar **insuficiência** (sujeita a multa pesada do BACEN) e **excesso desnecessário** (custo de oportunidade).
+
+## Compulsório como instrumento anticíclico
+
+Durante crises, o BACEN pode **reduzir as alíquotas** de compulsório para liberar liquidez no sistema, sem precisar reduzir a Selic. Foi o que aconteceu em março de 2020 (início da pandemia): o BACEN reduziu os compulsórios e liberou aproximadamente R$ 1,2 trilhão em liquidez para o sistema bancário em poucas semanas.
+
+Em momentos de aquecimento excessivo do crédito, o BACEN pode **elevar as alíquotas** para restringir a capacidade de empréstimo dos bancos — mesmo que a Selic permaneça estável.

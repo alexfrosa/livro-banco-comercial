@@ -1,0 +1,68 @@
+---
+title: "Conceitos — Intermediação financeira e produtos bancários"
+order: 3
+description: "O papel dos bancos como intermediários financeiros e os principais produtos que oferecem"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Um banco comercial é, em essência, um **intermediário financeiro**: capta recursos de quem tem dinheiro sobrando e empresta para quem precisa de dinheiro. Essa função parece simples, mas é o que sustenta toda a economia moderna.
+
+## A lógica da intermediação
+
+Imagine que você tem R$ 10.000 guardados e não vai precisar deles por um ano. Ao mesmo tempo, uma empresa precisa de R$ 10.000 para comprar equipamentos. Sem um banco, você teria que encontrar essa empresa, negociar diretamente, avaliar o risco de não receber de volta, e lidar com toda a burocracia.
+
+O banco resolve esse problema. Ele capta seu dinheiro (pagando juros), empresta para a empresa (cobrando juros maiores), e fica com a diferença — o **spread bancário**. Você tem liquidez e segurança; a empresa tem o capital que precisa; o banco tem receita.
+
+Essa atividade de intermediação é regulada pela Lei 4.595/1964 (<Ref id="lei-4595-1964" />), que estrutura o sistema financeiro nacional e define as competências do CMN e do BACEN.
+
+## Captação: de onde vem o dinheiro
+
+Os bancos captam recursos de várias formas:
+
+**Depósitos à vista** são as contas correntes. O cliente deposita e pode sacar a qualquer momento. O banco paga pouco ou nada por esse dinheiro, mas precisa manter reservas para honrar os saques.
+
+**Depósitos a prazo** são os CDBs (Certificados de Depósito Bancário). O cliente "empresta" dinheiro ao banco por um prazo definido, recebendo juros em troca. O banco tem mais previsibilidade sobre esse recurso.
+
+**LCI e LCA** (Letras de Crédito Imobiliário e do Agronegócio) são captações com isenção de IR para pessoas físicas, vinculadas a carteiras específicas de crédito.
+
+**Captação interbancária** ocorre quando um banco toma emprestado de outro banco, geralmente via CDI (Certificado de Depósito Interbancário), para cobrir necessidades de caixa de curto prazo.
+
+## Aplicação: para onde vai o dinheiro
+
+Com os recursos captados, os bancos fazem aplicações:
+
+**Crédito** é a principal aplicação: empréstimos pessoais, financiamentos, cartão de crédito, crédito consignado, capital de giro para empresas. É aqui que o banco ganha mais — e também onde assume mais risco.
+
+**Títulos públicos** são compras de dívida do governo federal. São considerados de baixo risco e servem como reserva de liquidez. O banco pode vender esses títulos rapidamente se precisar de caixa.
+
+**Operações interbancárias** incluem empréstimos a outros bancos e operações compromissadas (venda de títulos com compromisso de recompra).
+
+## Os principais produtos bancários
+
+Além da intermediação pura, os bancos oferecem uma série de produtos e serviços:
+
+| Produto | Descrição |
+|---|---|
+| Conta corrente | Depósito à vista com movimentação livre |
+| Conta poupança | Depósito com rendimento mínimo garantido |
+| CDB | Investimento de renda fixa emitido pelo banco |
+| Empréstimo pessoal | Crédito sem destinação específica |
+| Financiamento | Crédito vinculado a um bem (imóvel, veículo) |
+| Cartão de crédito | Limite rotativo com fatura mensal |
+| Câmbio | Compra e venda de moeda estrangeira |
+| Seguros | Produtos de proteção (vida, residencial, etc.) |
+
+## O banco como criador de dinheiro
+
+Um conceito fundamental — e frequentemente mal compreendido — é que os bancos **criam dinheiro** através do sistema de reserva fracionária.
+
+Quando você deposita R$ 1.000 em um banco, ele não guarda tudo no cofre. Mantém uma fração como reserva (exigida pelo BACEN) e empresta o restante. Quem recebe o empréstimo deposita em outro banco, que também empresta uma fração, e assim por diante.
+
+O resultado é que um depósito inicial de R$ 1.000 pode gerar muito mais dinheiro em circulação na economia. Esse é o **multiplicador monetário** — um conceito que exploraremos em detalhes nas simulações. O compulsório, instrumento pelo qual o BACEN controla essa expansão, é regulado no âmbito do Sistema de Pagamentos Brasileiro (<Ref id="lei-10214-2001" />).
+
+> O multiplicador monetário é calculado como `1 / taxa de reserva`. Com uma taxa de reserva de 10%, um depósito de R$ 1.000 pode gerar **até** R$ 10.000 em dinheiro na economia — esse é o limite teórico máximo, não o valor real.
+
+**Limitações do modelo:** na prática, o multiplicador é bem menor. Os bancos mantêm reservas excedentes além do mínimo exigido (especialmente em períodos de incerteza), e o público retém parte do dinheiro em espécie em vez de depositar tudo. Esses dois fatores reduzem significativamente o multiplicador real.
+
+**A visão moderna — dinheiro endógeno:** economistas contemporâneos apontam que a causalidade funciona na direção oposta à do modelo tradicional. O banco não precisa ter depósitos para emprestar — ele **cria o depósito ao conceder o crédito**. Quando um banco aprova um empréstimo de R$ 5.000, ele simultaneamente registra um ativo (crédito a receber) e um passivo (depósito na conta do cliente). O dinheiro surge do nada, lastreado apenas na promessa de pagamento do devedor. Os depósitos que "financiam" os empréstimos chegam depois, como consequência — não como pré-requisito. Essa visão, chamada de **teoria do dinheiro endógeno**, é hoje a descrição mais aceita de como os bancos modernos funcionam.

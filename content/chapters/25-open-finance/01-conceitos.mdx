@@ -1,0 +1,139 @@
+---
+title: "Conceitos — Open Finance e consentimento"
+order: 1
+description: "Quatro fases do Open Finance brasileiro, modelo de consentimento (12 meses, granularidade, revogação) e OAuth 2.0/FAPI"
+---
+
+{/* Req 9.1, 9.2, 9.3, 9.4, 9.5, 9.6 */}
+
+Open Finance é o sistema regulado pelo Banco Central do Brasil que permite ao cliente autorizar o compartilhamento de seus dados financeiros entre instituições — e, mais do que isso, autorizar que terceiros iniciem pagamentos em seu nome. O princípio central é simples: **os dados pertencem ao cliente**, não ao banco. O banco é apenas o custodiante.
+
+## As quatro fases do Open Finance brasileiro
+
+O BACEN implementou o Open Finance em fases progressivas, cada uma ampliando o escopo do que pode ser compartilhado ou executado por terceiros.
+
+### Fase 1 — Dados públicos (fevereiro de 2021)
+
+A primeira fase não envolve dados de clientes. As instituições participantes foram obrigadas a publicar, via APIs padronizadas, informações sobre seus próprios produtos e serviços: canais de atendimento, tarifas, taxas de juros praticadas, produtos de crédito disponíveis.
+
+O objetivo era criar um **catálogo público e comparável** de produtos financeiros — permitindo que qualquer pessoa (ou aplicativo) consultasse e comparasse ofertas de diferentes bancos sem precisar acessar cada site individualmente.
+
+### Fase 2 — Dados cadastrais e transacionais (agosto de 2021)
+
+A segunda fase introduziu o compartilhamento de **dados do cliente** — mas apenas com o consentimento explícito do titular. As instituições passaram a ser obrigadas a disponibilizar, mediante consentimento:
+
+- Dados cadastrais (nome, CPF, endereço, contatos)
+- Dados de contas (saldo, extrato, limites)
+- Dados de cartão de crédito (fatura, limite, transações)
+- Dados de operações de crédito (contratos, parcelas, saldo devedor)
+- Dados de investimentos (posição em custódia, rendimentos)
+
+Essa fase criou a base para os **agregadores financeiros** — aplicativos que consolidam informações de múltiplos bancos em uma única tela.
+
+### Fase 3 — Iniciação de pagamentos (outubro de 2021)
+
+A terceira fase foi a mais transformadora do ponto de vista operacional: ela permitiu que terceiros **iniciem pagamentos** em nome do cliente, sem que o cliente precise acessar o aplicativo do banco.
+
+O mecanismo é o **PISP** (Payment Initiation Service Provider): uma fintech ou outro banco pode, com o consentimento do cliente, enviar uma instrução de Pix diretamente ao banco do cliente. O banco executa o pagamento. O terceiro nunca toca no dinheiro — apenas instrui o banco a movimentá-lo.
+
+### Fase 4 — Dados de câmbio, investimentos, seguros e previdência (dezembro de 2021 em diante)
+
+A quarta fase expandiu o escopo para produtos financeiros mais complexos:
+
+- **Câmbio:** operações de câmbio contratadas, posição em moeda estrangeira
+- **Investimentos:** carteira de renda variável, fundos, títulos públicos e privados
+- **Seguros:** apólices vigentes, coberturas, prêmios pagos
+- **Previdência privada:** planos PGBL e VGBL, saldo acumulado, beneficiários
+
+Com a Fase 4, o Open Finance passou a cobrir praticamente toda a vida financeira do cliente — não apenas conta corrente e crédito, mas também patrimônio e proteção.
+
+## Modelo de consentimento
+
+O consentimento é o coração jurídico e técnico do Open Finance. Sem consentimento válido, nenhum dado pode ser compartilhado e nenhum pagamento pode ser iniciado por terceiros.
+
+### Prazo de 12 meses
+
+O consentimento tem validade máxima de **12 meses**. Após esse prazo, ele expira automaticamente e o compartilhamento cessa. O cliente pode renovar o consentimento se desejar continuar compartilhando dados com aquela instituição receptora.
+
+Esse prazo foi definido pelo BACEN para garantir que o cliente revise periodicamente quais instituições têm acesso aos seus dados — evitando que consentimentos "esquecidos" permaneçam ativos indefinidamente.
+
+### Granularidade — o cliente escolhe o que compartilhar
+
+O consentimento no Open Finance é **granular**: o cliente não precisa autorizar o compartilhamento de tudo ou nada. Ele pode escolher, por exemplo:
+
+- Compartilhar apenas dados de conta corrente, sem dados de cartão de crédito
+- Compartilhar dados de investimentos, mas não de operações de crédito
+- Autorizar iniciação de pagamentos, mas não compartilhamento de extrato
+
+Essa granularidade é implementada tecnicamente por meio de **escopos** (scopes) no protocolo OAuth 2.0. Cada categoria de dado ou ação corresponde a um escopo específico que o cliente aceita ou recusa individualmente na tela de consentimento.
+
+### Revogação a qualquer momento
+
+O cliente pode **revogar o consentimento a qualquer momento**, sem necessidade de justificativa. A revogação pode ser feita:
+
+- No aplicativo ou internet banking do banco transmissor (onde os dados estão)
+- No aplicativo da instituição receptora (que recebe os dados)
+- No portal centralizado do Open Finance Brasil
+
+Após a revogação, a instituição receptora deve cessar imediatamente o acesso aos dados e não pode utilizar informações obtidas anteriormente para finalidades além das já autorizadas.
+
+## Padrões técnicos: OAuth 2.0 e FAPI
+
+O Open Finance brasileiro adota padrões internacionais de segurança para garantir que o fluxo de autorização seja robusto e resistente a ataques.
+
+### OAuth 2.0 — o protocolo de autorização
+
+**OAuth 2.0** é o protocolo padrão para autorização delegada na web. No contexto do Open Finance, ele funciona assim:
+
+1. O cliente acessa o aplicativo da instituição receptora (ex: um agregador financeiro)
+2. O agregador redireciona o cliente para o aplicativo do banco transmissor
+3. O cliente se autentica no banco (com sua senha, biometria ou token)
+4. O banco exibe a tela de consentimento com os escopos solicitados
+5. O cliente aprova o consentimento
+6. O banco emite um **token de acesso** (access token) para o agregador
+7. O agregador usa o token para consultar os dados via API — sem nunca ter acesso às credenciais do cliente
+
+O token tem prazo de validade e pode ser revogado. O banco nunca compartilha a senha do cliente com o agregador.
+
+### FAPI — Financial-grade API
+
+O **FAPI** (Financial-grade API) é um perfil de segurança construído sobre o OAuth 2.0, desenvolvido pela OpenID Foundation especificamente para o setor financeiro. Ele adiciona requisitos mais rigorosos:
+
+- **mTLS** (mutual TLS): tanto o cliente quanto o servidor se autenticam mutuamente via certificados digitais — não apenas o servidor
+- **PKCE** (Proof Key for Code Exchange): proteção adicional contra interceptação do código de autorização
+- **Signed requests:** as requisições de autorização são assinadas digitalmente, impedindo adulteração
+- **Token binding:** os tokens são vinculados ao certificado do cliente, impedindo reutilização por terceiros
+
+O FAPI garante que mesmo que um token seja interceptado, ele não possa ser usado por outra instituição — pois está criptograficamente vinculado ao certificado da instituição receptora legítima.
+
+## Participantes do ecossistema
+
+O Open Finance define papéis claros para cada tipo de instituição participante.
+
+### Instituições transmissoras de dados
+
+São as **instituições que detêm os dados do cliente** — tipicamente os bancos onde o cliente tem conta, cartão ou investimentos. Elas são obrigadas a:
+
+- Disponibilizar APIs padronizadas para compartilhamento de dados
+- Implementar a tela de consentimento no seu aplicativo
+- Garantir disponibilidade mínima de 99,5% para as APIs
+- Processar instruções de pagamento recebidas via PISP
+
+Os grandes bancos (Itaú, Bradesco, Caixa, BB, Santander) foram os primeiros a ser obrigados a participar, por terem maior base de clientes.
+
+### Instituições receptoras de dados
+
+São as **instituições que recebem os dados** — fintechs, outros bancos, plataformas de investimento, seguradoras. Elas precisam:
+
+- Ser autorizadas pelo BACEN para participar do Open Finance
+- Solicitar apenas os dados necessários para o serviço oferecido (princípio da minimização)
+- Informar claramente ao cliente para qual finalidade os dados serão usados
+- Não compartilhar os dados recebidos com terceiros sem novo consentimento
+
+Uma mesma instituição pode ser simultaneamente transmissora e receptora — um banco médio pode transmitir dados de seus clientes e receber dados de clientes de outros bancos para oferecer melhores condições de crédito.
+
+## Por que o Open Finance importa
+
+O Open Finance quebra o **lock-in bancário**: historicamente, o cliente que tinha conta no banco A precisava aceitar as condições do banco A para crédito, investimentos e seguros — porque o banco A era o único que conhecia seu histórico financeiro completo.
+
+Com o Open Finance, o cliente pode autorizar que o banco B acesse seu histórico no banco A para oferecer uma proposta de crédito mais competitiva. O banco B vê o mesmo histórico que o banco A vê — e pode precificar o risco com mais precisão, potencialmente oferecendo taxas menores.

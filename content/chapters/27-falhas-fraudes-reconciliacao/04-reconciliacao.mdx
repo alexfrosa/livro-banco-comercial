@@ -1,0 +1,93 @@
+---
+title: "Reconciliação — Interna e externa"
+order: 4
+description: "Os processos de reconciliação que garantem a integridade dos dados bancários"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A reconciliação é o processo de comparar dois conjuntos de dados para garantir que são consistentes. Em bancos, é uma das atividades mais críticas do backoffice — é a principal forma de detectar erros, fraudes e inconsistências antes que causem problemas maiores.
+
+## Por que reconciliar
+
+Um banco processa milhões de transações por dia. Cada transação envolve múltiplos sistemas, múltiplos registros, e múltiplas contrapartes. A probabilidade de que algo dê errado em algum ponto é alta.
+
+A reconciliação é a rede de segurança: mesmo que um erro passe pelos controles preventivos, a reconciliação vai detectá-lo.
+
+**Sem reconciliação:**
+- Erros se acumulam silenciosamente
+- Fraudes passam despercebidas
+- Relatórios regulatórios ficam incorretos
+- O banco não sabe exatamente quanto dinheiro tem
+
+## Tipos de reconciliação
+
+### Reconciliação interna
+
+Compara dados entre sistemas internos do banco:
+
+**Ledger vs. sistema de contas:** a soma dos lançamentos no ledger para cada conta bate com o saldo no sistema de contas?
+
+**COSIF vs. ledger:** os saldos nas contas COSIF batem com os lançamentos no ledger?
+
+**Sistema de crédito vs. COSIF:** o saldo total de contratos de crédito bate com a conta COSIF de operações de crédito?
+
+**Sistema de investimentos vs. COSIF:** o saldo total de CDBs emitidos bate com a conta COSIF de depósitos a prazo?
+
+### Reconciliação externa
+
+Compara dados internos com dados de sistemas externos:
+
+**Reservas no BACEN (STR):** o saldo na conta de reservas do banco no BACEN (<Ref id="resolucao-bcb-1" />) bate com o que o banco registrou internamente?
+
+**Pix (SPI):** as transações Pix confirmadas pelo SPI (<Ref id="resolucao-bcb-277" />) batem com os registros internos?
+
+**Boletos (CIP):** os boletos pagos confirmados pela CIP batem com os registros internos?
+
+**Câmbio (BACEN):** as operações de câmbio registradas no BACEN batem com os registros internos?
+
+**Custódia (CETIP/B3):** os títulos registrados na CETIP/B3 batem com os registros internos de custódia?
+
+## O processo de reconciliação
+
+**1. Extração de dados:** extrair os dados de ambos os sistemas para o período de reconciliação.
+
+**2. Normalização:** garantir que os dados estão no mesmo formato (datas, valores, identificadores).
+
+**3. Matching:** comparar os registros dos dois sistemas, identificando os que batem e os que não batem.
+
+**4. Análise de itens não reconciliados:** para cada item que não bateu, investigar o motivo.
+
+**5. Classificação:** classificar os itens não reconciliados por tipo (timing, erro, fraude, etc.).
+
+**6. Correção:** corrigir os erros encontrados.
+
+**7. Documentação:** documentar os itens não reconciliados e as ações tomadas.
+
+## Itens de reconciliação comuns
+
+**Itens de timing:** uma operação foi registrada em um sistema em D+0 e no outro em D+1. Não é um erro — é uma diferença de timing. Vai se resolver no próximo ciclo.
+
+**Itens em aberto:** uma operação foi registrada em um sistema mas ainda não no outro. Pode ser timing ou pode ser um erro. Precisa de acompanhamento.
+
+**Itens com diferença de valor:** os dois sistemas têm a mesma operação, mas com valores diferentes. Geralmente indica um erro de processamento.
+
+**Itens sem correspondente:** uma operação existe em um sistema mas não no outro. Pode indicar uma operação não processada ou um registro duplicado.
+
+## Automação da reconciliação
+
+Reconciliações manuais são lentas, caras e propensas a erros. Os bancos modernos automatizam ao máximo:
+
+**Matching automático:** o sistema compara automaticamente os registros e identifica os que batem. Apenas os itens não reconciliados precisam de análise humana.
+
+**Regras de matching:** regras que definem como os registros devem ser comparados (por ID de transação, por valor + data, etc.).
+
+**Alertas automáticos:** quando o número de itens não reconciliados excede um limite, o sistema alerta automaticamente.
+
+**Relatórios automáticos:** relatórios de reconciliação são gerados automaticamente e distribuídos para as áreas responsáveis.
+
+A automação reduz o tempo de reconciliação de horas para minutos e permite que os analistas foquem nos casos que realmente precisam de atenção.
+
+## Reconciliação e regulação
+
+O BACEN exige que os bancos mantenham controles internos adequados, o que inclui processos de reconciliação documentados. Falhas de reconciliação que resultem em reportes incorretos ao BACEN (ex: posição no STR, dados do SCR (<Ref id="resolucao-bcb-96" />)) podem gerar penalidades. A <Ref id="resolucao-bcb-197" /> (COSIF) estabelece os requisitos mínimos de integridade de dados que os processos de reconciliação devem garantir.

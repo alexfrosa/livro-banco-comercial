@@ -1,0 +1,94 @@
+---
+title: "Operação real — Sistemas operacionais vs contábeis"
+order: 4
+description: "A separação entre os sistemas que processam operações e os que registram contabilmente"
+---
+
+Uma das distinções mais importantes na arquitetura bancária é a separação entre **sistemas operacionais** e **sistemas contábeis**. Entender essa diferença é essencial para projetar sistemas corretos e para depurar problemas quando eles aparecem.
+
+## Sistemas operacionais: o mundo das operações
+
+Os sistemas operacionais são os que processam as transações do dia a dia. Eles respondem perguntas como:
+
+- Qual é o saldo disponível desta conta agora?
+- Este Pix pode ser processado?
+- Qual é o limite de crédito disponível deste cliente?
+
+Esses sistemas precisam ser **rápidos** (milissegundos) e **consistentes** (o saldo que você vê é o saldo real). Eles trabalham com dados em tempo real.
+
+**Exemplos de sistemas operacionais:**
+- Sistema de contas (saldos, movimentações)
+- Sistema de pagamentos (processamento de Pix, TED)
+- Sistema de crédito (contratos, parcelas, limites)
+- Sistema antifraude (análise em tempo real)
+
+## Sistemas contábeis: o mundo dos registros
+
+Os sistemas contábeis registram os mesmos eventos, mas sob uma perspectiva diferente: a **perspectiva contábil**. Eles respondem perguntas como:
+
+- Qual é o saldo da conta COSIF 1.1.1.00.10-0 hoje?
+- Qual é o resultado do banco no mês?
+- Qual é o patrimônio líquido?
+
+Esses sistemas precisam ser **precisos** (cada centavo precisa estar no lugar certo) e **auditáveis** (cada lançamento precisa ter uma origem rastreável). Eles trabalham com o conceito de **partidas dobradas**: cada operação gera pelo menos dois lançamentos (débito e crédito) que se equilibram.
+
+**Exemplos de sistemas contábeis:**
+- Ledger (registro de lançamentos)
+- COSIF (plano contábil regulatório)
+- Sistema de balancete
+- Sistema de resultado
+
+## A mesma operação, duas perspectivas
+
+Quando você faz um depósito de R$ 1.000 em sua conta corrente, o que acontece nos dois mundos?
+
+**No sistema operacional:**
+```
+Conta 12345: saldo anterior R$ 500 → saldo novo R$ 1.500
+Evento: DEPOSITO | valor: 1000 | timestamp: 2024-01-15T10:30:00
+```
+
+**No sistema contábil (COSIF):**
+```
+Débito:  1.1.1.00.10-0 (Disponibilidades - Caixa)     R$ 1.000
+Crédito: 8.1.1.10.00-0 (Depósitos à Vista - Clientes) R$ 1.000
+```
+
+Os dois registros representam a mesma operação, mas em linguagens diferentes. O sistema operacional fala em "conta do cliente" e "saldo". O sistema contábil fala em "contas COSIF" e "partidas dobradas".
+
+## O problema da sincronização
+
+Manter os dois mundos sincronizados é um dos maiores desafios técnicos em sistemas bancários.
+
+**Cenário problemático:** o sistema operacional processa um Pix e atualiza o saldo da conta. Mas antes de gerar o lançamento contábil, o sistema cai. Quando volta, o saldo operacional está correto, mas o registro contábil está faltando.
+
+Esse tipo de inconsistência é chamado de **divergência operacional-contábil** e é um dos problemas mais sérios que um backoffice pode enfrentar. A reconciliação diária existe exatamente para detectar e corrigir essas divergências.
+
+**Soluções técnicas:**
+- **Transações distribuídas (2PC):** garante que ambos os sistemas são atualizados atomicamente. Complexo e com impacto na performance.
+- **Outbox pattern:** o sistema operacional grava o evento em uma tabela "outbox" na mesma transação. Um processo separado lê essa tabela e publica os eventos contábeis. Mais resiliente.
+- **Event sourcing:** o ledger é a fonte da verdade. O saldo operacional é derivado dos lançamentos contábeis. Elimina a divergência por design, mas exige uma mudança de paradigma.
+
+## Fechamento do dia: a reconciliação obrigatória
+
+Todo dia útil, os bancos executam um processo de **fechamento do dia** que inclui:
+
+1. **Corte de movimentações:** a partir de um horário, as operações do dia são "congeladas" para processamento
+2. **Reconciliação operacional-contábil:** verificar que cada operação tem um lançamento contábil correspondente
+3. **Geração do balancete:** consolidar todos os lançamentos do dia no COSIF
+4. **Verificação de consistência:** somas de débitos = somas de créditos? Saldos batem?
+5. **Envio ao BACEN:** o balancete é enviado ao BACEN dentro do prazo regulatório
+
+Esse processo pode levar horas em bancos grandes. Durante o fechamento, algumas operações ficam suspensas ou em fila. É por isso que algumas transferências bancárias "caem" apenas no próximo dia útil.
+
+## APIs e integração entre sistemas
+
+Como os sistemas operacionais e contábeis se comunicam? Existem alguns padrões comuns:
+
+**Chamadas síncronas (REST/gRPC):** o sistema operacional chama o sistema contábil diretamente e aguarda confirmação. Simples, mas cria acoplamento e pode causar lentidão se o sistema contábil estiver sobrecarregado.
+
+**Mensageria assíncrona (Kafka, RabbitMQ):** o sistema operacional publica um evento. O sistema contábil consome e processa de forma independente. Mais resiliente, mas exige tratamento de eventual consistency.
+
+**Dual write com reconciliação:** o sistema operacional grava nos dois sistemas. Uma rotina periódica verifica e corrige divergências. Simples de implementar, mas com janela de inconsistência.
+
+A escolha da estratégia depende dos requisitos de consistência, latência e complexidade que o banco está disposto a aceitar.

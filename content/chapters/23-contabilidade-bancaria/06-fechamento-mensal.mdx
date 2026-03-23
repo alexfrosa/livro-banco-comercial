@@ -1,0 +1,84 @@
+---
+title: "Fechamento Contábil Mensal — do D1 ao D10 útil"
+order: 6
+description: "Sequência do processo de fechamento, conciliações críticas e remessa de informações ao BACEN"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O fechamento contábil mensal é o processo de consolidar todas as transações do período, apurar o resultado e produzir as demonstrações financeiras regulatórias. Para um banco, esse processo é mais complexo e regulado que em empresas de outros setores — o BACEN tem prazos rígidos para receber as informações e publica parte delas no IF.data (portal de transparência).
+
+## Cronograma típico de fechamento
+
+### Dia 1 útil após o fim do mês
+
+**Fechamento dos sistemas transacionais:** todos os sistemas operacionais (core banking, tesouraria, câmbio, operações de crédito) fecham o processamento do mês. Transações pendentes são classificadas como do mês seguinte.
+
+**Accruals de juros:** o sistema de crédito calcula os juros a apropriar (pro rata temporis) de todos os contratos ativos, creditando a receita de juros do período — mesmo que o cliente só pague no próximo mês.
+
+**Marcação a mercado:** o sistema de tesouraria processa as cotações de fechamento do último dia útil do mês para represar a carteira de títulos e derivativos.
+
+### Dias 2-3 úteis
+
+**Conciliação de contas transitórias:** são contas que ficam com saldo temporariamente durante o processamento. As mais críticas:
+- Conta de liquidação de Pix (débitos e créditos do dia devem zerar)
+- Contas de compensação de cheques
+- Transitória de câmbio (operações fechadas mas não liquidadas)
+- Contas de reserva e compulsório no BACEN
+
+**Provisão de crédito (PDD):** o sistema de crédito recalcula a classificação de risco de toda a carteira conforme a <Ref id="resolucao-cmn-2682" /> e a <Ref id="resolucao-cmn-4966" />, apurando o saldo de provisão necessário e o delta em relação ao mês anterior. O delta vai para a DRE como despesa (aumento de provisão) ou reversão de provisão (redução).
+
+**Baixas como prejuízo (write-off):** operações que atingiram o prazo máximo regulatório são baixadas, com lançamentos de débito na PDD e crédito nas operações de crédito.
+
+### Dias 4-5 úteis
+
+**Apuração de IR e CSLL:** o departamento fiscal calcula o imposto sobre o resultado do período, considerando adições (PDD não dedutível), exclusões (dividendos recebidos) e compensações de prejuízo fiscal.
+
+**Conciliação com a custódia:** a área de investimentos reconcilia a posição de títulos no SELIC e na B3 com os registros contábeis. Qualquer divergência precisa ser investigada antes do fechamento.
+
+**Consolidação de subsidiárias:** bancos com subsidiárias (seguradoras, distribuidoras, gestoras de recursos) precisam consolidar os balanços, eliminando transações intercompany.
+
+### Dias 6-8 úteis
+
+**Revisão e aprovação da diretoria:** o balancete de verificação é apresentado à diretoria de contabilidade e ao CFO para aprovação. Em alguns bancos, passa também pela auditoria interna antes da remessa ao BACEN.
+
+**Notas explicativas:** preparação dos comentários que acompanham as demonstrações financeiras, detalhando as principais variações do período, políticas contábeis e eventos subsequentes relevantes.
+
+### Até o 10º dia útil
+
+**Remessa ao BACEN (COSIF):** o banco envia o balancete contábil consolidado ao BACEN no formato COSIF via o sistema de remessa eletrônica. O BACEN disponibiliza esses dados no IF.data com prazo de alguns dias após o recebimento.
+
+**Remessa de informações prudenciais:** além do balancete COSIF, o banco envia informações sobre capital (Patrimônio de Referência, RWA, Índice de Basileia) e liquidez (LCR, NSFR) nos formulários regulatórios específicos.
+
+## Índice de Basileia — apuração operacional
+
+O **Índice de Basileia** é o principal indicador de solidez patrimonial de um banco. O cálculo é parte do fechamento mensal:
+
+```
+Índice de Basileia = Patrimônio de Referência (PR)
+                     ─────────────────────────────── × 100
+                     Ativos Ponderados pelo Risco (RWA)
+```
+
+O mínimo regulatório no Brasil é **8% + buffers** (buffer de conservação de 2,5%, mais buffers adicionais para bancos sistêmicos). Na prática, os grandes bancos brasileiros operam com Basileia entre 13% e 17% para ter margem de segurança.
+
+**Patrimônio de Referência (PR):**
+- Capital de Nível I = Capital Principal (ações ordinárias + lucros retidos) + Capital Adicional de Nível I (instrumentos híbridos)
+- Capital de Nível II (dívida subordinada elegível)
+- Deduções: goodwill, ativos intangíveis, créditos tributários com prazo acima do limite, investimentos em outras IFs
+
+**RWA (Risk-Weighted Assets):**
+- Cada categoria de ativo recebe um peso de risco: títulos do governo federal = 0%, empréstimo a empresa = 100%, derivativo = % variável conforme exposição
+- A soma ponderada é o denominador do Índice de Basileia
+
+**O monitoramento é dinâmico:** uma grande concessão de crédito ou uma perda não prevista pode mudar o Índice de Basileia do banco. Qualquer banco abaixo do mínimo é imediatamente comunicado ao BACEN e precisa apresentar plano de capitalização.
+
+## Conciliações críticas no fechamento
+
+**Conciliação caixa/reservas BACEN:** o saldo da conta de reservas bancárias no BACEN deve bater com o sistema interno de tesouraria. Diferenças indicam transação não processada ou erro de lançamento.
+
+**Conciliação de custódia (SELIC/B3):** posição de títulos nos sistemas externos deve igualar o registro contábil. Divergências são raras mas graves — podem indicar problema de segurança ou erro sistemático.
+
+**Conciliação de carteira de crédito:** saldo contábil das operações de crédito deve bater com o sistema de crédito contrato a contrato. A diferença costuma revelar lançamentos manuais não sistemáticos.
+
+**Conciliação cambial:** posição cambial do sistema de câmbio vs. registros contábeis. Diferenças podem gerar exposição cambial não gerenciada.

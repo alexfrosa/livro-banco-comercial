@@ -1,0 +1,101 @@
+---
+title: "Jornada — Coleta, validação e aprovação"
+order: 2
+description: "As etapas de coleta de dados, validação, consulta a bureaus, análise de risco e aprovação"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A jornada de onboarding é o processo pelo qual um novo cliente é incorporado ao banco. Do ponto de vista do cliente, parece simples: preencher um formulário e pronto. Por baixo dos panos, é um processo complexo com múltiplas validações, consultas externas e decisões de risco.
+
+## Etapa 1: Coleta de dados
+
+O processo começa com a coleta das informações do cliente. Em bancos digitais, isso acontece via app ou web. Em bancos tradicionais, pode envolver formulários físicos ou atendimento em agência.
+
+**Dados coletados para PF:**
+- Dados pessoais: nome, CPF, data de nascimento, nome da mãe
+- Documento de identidade: foto do documento + selfie para validação biométrica
+- Endereço: CEP, logradouro, número, complemento
+- Contato: e-mail, telefone celular
+- Renda: valor declarado, fonte de renda
+- Finalidade da conta: uso pessoal, recebimento de salário, investimentos
+
+**Consentimento e LGPD:** a coleta de dados pessoais deve ser precedida de consentimento explícito e informado do titular, conforme a Lei Geral de Proteção de Dados (<Ref id="lei-13709-2018" />). O banco deve informar quais dados são coletados, para qual finalidade, por quanto tempo serão retidos e com quem serão compartilhados. O cliente tem o direito de revogar o consentimento a qualquer momento.
+
+**Dados coletados para PJ:**
+- Dados da empresa: razão social, CNPJ, data de abertura, CNAE
+- Endereço da sede
+- Faturamento anual declarado
+- Quadro societário: dados de cada sócio (CPF, participação)
+- Beneficiários finais: quem controla efetivamente a empresa
+- Documentos: contrato social, comprovante de endereço, documentos dos sócios
+
+## Etapa 2: Validação de formato e completude
+
+Antes de qualquer consulta externa, o sistema valida se os dados fornecidos são válidos:
+
+- CPF tem 11 dígitos e passa na validação do dígito verificador?
+- CNPJ tem 14 dígitos e é válido?
+- CEP existe e corresponde ao endereço informado?
+- E-mail tem formato válido?
+- Telefone tem DDD e número corretos?
+
+Erros de formato são retornados imediatamente ao cliente para correção. Isso evita consultas desnecessárias a bureaus externos (que têm custo).
+
+## Etapa 3: Validação de identidade
+
+Com os dados básicos validados, o sistema verifica se a pessoa é quem diz ser:
+
+**Validação de CPF na Receita Federal:** confirma que o CPF existe, está ativo e os dados básicos (nome, data de nascimento) batem.
+
+**Validação biométrica:** a selfie tirada pelo cliente é comparada com a foto do documento e, quando disponível, com bases biométricas governamentais (ex: Denatran para CNH). Isso garante que a pessoa que está abrindo a conta é a mesma do documento.
+
+**Validação de documento:** OCR (reconhecimento óptico de caracteres) extrai os dados do documento e verifica se batem com o que foi digitado. Verificações de autenticidade detectam documentos falsificados.
+
+## Etapa 4: Consultas a bureaus
+
+Com a identidade confirmada, o sistema consulta bases externas para avaliar o perfil do cliente:
+
+**Score de crédito (Serasa/SPC):** indica a probabilidade de inadimplência. Influencia os limites de crédito que serão oferecidos.
+
+**Restrições:** o cliente tem dívidas em aberto? Está negativado? Tem cheques sem fundo?
+
+**SCR (BACEN):** histórico de operações de crédito em todo o sistema financeiro (<Ref id="resolucao-bcb-96" />). Quanto o cliente deve em outros bancos?
+
+**Listas restritivas:** o cliente está em alguma lista de sanções, PEPs ou suspeitos de lavagem de dinheiro?
+
+Essas consultas são feitas em paralelo para minimizar o tempo de resposta. O resultado é consolidado em um perfil de risco.
+
+## Etapa 5: Análise de risco e decisão
+
+Com todos os dados coletados e validados, o sistema de decisão avalia se o cliente deve ser aprovado, reprovado ou encaminhado para análise manual.
+
+**Aprovação automática:** o cliente atende todos os critérios mínimos, não tem restrições relevantes, e o perfil de risco é baixo ou médio. A conta é aberta imediatamente.
+
+**Reprovação automática:** o cliente está em lista restritiva, o CPF está cancelado, a validação biométrica falhou, ou há indícios claros de fraude. A conta não é aberta e o cliente é informado (com o nível de detalhe permitido pela regulação).
+
+**Fila para análise manual:** casos ambíguos — score de crédito baixo mas sem restrições, inconsistências menores nos dados, cliente PEP, empresa com estrutura societária complexa. Um analista humano revisa e toma a decisão.
+
+## Etapa 6: Abertura da conta
+
+Se aprovado, o sistema cria os registros necessários:
+
+1. **Registro de cliente** no core banking: ID único, dados cadastrais, classificação de risco
+2. **Conta bancária:** número de conta, agência, tipo de conta
+3. **Chave Pix** (se solicitada): vinculação do CPF/CNPJ ou e-mail/telefone ao DICT (Diretório de Identificadores de Contas Transacionais) do BACEN
+4. **Limites iniciais:** limite de Pix, limite de TED, limite de crédito (se aplicável)
+5. **Notificação ao cliente:** e-mail e/ou SMS confirmando a abertura
+
+## Tempo de resposta
+
+Em bancos digitais modernos, o processo completo (para PF sem pendências) leva de 2 a 10 minutos. A maior parte do tempo é gasta nas consultas externas.
+
+Para PJ ou casos que vão para análise manual, o prazo pode ser de horas a dias.
+
+O BACEN não define um prazo máximo para abertura de conta, mas a competição entre bancos digitais criou uma expectativa de mercado de abertura quase instantânea para casos simples.
+
+## Portabilidade de dados (Open Finance)
+
+Com o Open Finance (<Ref id="resolucao-bcb-150" />) (fase 2), o cliente pode autorizar o compartilhamento de seus dados cadastrais e transacionais de um banco para outro. Isso significa que um novo banco pode receber, com consentimento, o histórico do cliente em outra instituição — acelerando a análise de risco e personalizando ofertas desde o primeiro dia.
+
+A portabilidade de dados reduz a fricção do onboarding para clientes que já têm relacionamento com o sistema financeiro, e aumenta a concorrência entre instituições.

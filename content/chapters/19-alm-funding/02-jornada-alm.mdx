@@ -1,0 +1,69 @@
+---
+title: "Jornada — Análise de descasamento e estratégias de equilíbrio"
+order: 2
+description: "Como o ALM identifica descasamentos e define estratégias para equilibrar o balanço"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O ALM é um processo contínuo de análise, decisão e execução. Este capítulo mostra como o ciclo de gestão de ativos e passivos funciona na prática.
+
+## O ciclo de ALM
+
+O processo de ALM segue um ciclo regular:
+
+**1. Coleta de dados:** o sistema de ALM consolida dados de todos os sistemas do banco — carteira de crédito, captações, títulos, derivativos. Cada posição é mapeada com seu prazo, taxa e moeda.
+
+**2. Análise de risco:** com os dados consolidados, o sistema calcula os indicadores de risco: gap de reprecificação, duration do balanço, LCR, NSFR, sensibilidade a variações de taxa.
+
+**3. Identificação de descasamentos:** quais são os principais descasamentos? Onde estão os maiores riscos?
+
+**4. Definição de estratégia:** o Comitê de ALM (ALCO) decide como gerenciar os descasamentos identificados.
+
+**5. Execução:** a tesouraria executa as operações definidas pelo ALCO.
+
+**6. Monitoramento:** o backoffice de ALM monitora se as estratégias estão sendo executadas e se os riscos estão dentro dos limites.
+
+## Estratégias de equilíbrio
+
+Quando o ALM identifica um descasamento relevante, existem várias estratégias para corrigi-lo:
+
+**Ajuste de captação:** se o banco tem muitos ativos de longo prazo e poucos passivos de longo prazo, pode emitir CDBs de prazo mais longo para equilibrar.
+
+**Ajuste de crédito:** se o banco tem muito crédito a taxa fixa e captação a taxa variável, pode direcionar novas concessões para crédito a taxa variável.
+
+**Derivativos (swaps):** o banco pode usar swaps de taxa de juros para converter exposição de taxa fixa em variável (ou vice-versa) sem alterar as posições originais. É a forma mais rápida e flexível de ajustar o risco.
+
+**Securitização:** o banco pode vender parte da carteira de crédito (transformando ativos ilíquidos em dinheiro), reduzindo o descasamento de prazo.
+
+## O papel dos derivativos no ALM
+
+Os derivativos são ferramentas essenciais para o ALM. Os mais usados são:
+
+**Swap de taxa de juros (IRS):** troca fluxos de taxa fixa por taxa variável (ou vice-versa). Permite ajustar a exposição a taxa de juros sem alterar as posições originais.
+
+**Swap de moeda (CCS):** troca fluxos em uma moeda por outra. Usado para gerenciar o risco cambial.
+
+**Opções de taxa de juros (caps e floors):** limitam a exposição a variações extremas de taxa. Um cap garante que o custo de captação não ultrapasse um limite máximo.
+
+Os derivativos são registrados na B3 ou na CETIP e precisam ser marcados a mercado diariamente.
+
+## Stress testing
+
+O ALM também realiza testes de estresse: o que acontece com o balanço do banco em cenários adversos?
+
+**Cenário de alta de juros:** se a Selic subir 3 pontos percentuais, qual é o impacto no resultado do banco? Quais posições perdem valor?
+
+**Cenário de crise de liquidez:** se os depositantes sacarem 20% dos depósitos em 30 dias, o banco consegue honrar os saques?
+
+**Cenário de recessão:** se a inadimplência dobrar, qual é o impacto no capital do banco?
+
+Os resultados dos stress tests são usados para definir limites de risco e para garantir que o banco tem capital suficiente para sobreviver a cenários adversos.
+
+## O ALCO
+
+O **ALCO (Asset-Liability Committee)** é o comitê responsável pelas decisões de ALM. Reúne periodicamente (geralmente semanal ou quinzenal) os principais executivos do banco: CFO, tesoureiro, diretor de risco, diretor comercial.
+
+O ALCO revisa os indicadores de risco (NII, EVE, LCR, NSFR, gap de reprecificação), aprova os limites de risco, e define as estratégias de equilíbrio do balanço. As decisões do ALCO são documentadas em ata e acompanhadas pelo backoffice de ALM.
+
+O BACEN avalia a qualidade do processo de ALM nas inspeções de supervisão — um ALCO bem estruturado, com dados confiáveis e decisões documentadas, é um indicador positivo de governança (<Ref id="resolucao-cmn-4557" />).

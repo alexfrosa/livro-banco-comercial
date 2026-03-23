@@ -1,0 +1,96 @@
+---
+title: "Fraudes — Tipos, prevenção e detecção"
+order: 2
+description: "Os principais tipos de fraude bancária e os mecanismos de prevenção e detecção"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A fraude é um dos maiores desafios do sistema financeiro. Com a digitalização dos serviços bancários, os golpes evoluíram e se tornaram mais sofisticados. Entender os tipos de fraude e como combatê-los é essencial para qualquer profissional de backoffice.
+
+## Fraude interna vs. externa
+
+**Fraude interna:** cometida por funcionários do banco. Pode envolver desvio de recursos, manipulação de registros, vazamento de dados de clientes, ou conluio com fraudadores externos.
+
+**Fraude externa:** cometida por pessoas de fora do banco, geralmente contra clientes ou contra o próprio banco.
+
+## Principais tipos de fraude externa
+
+### Engenharia social
+
+O fraudador manipula psicologicamente a vítima para obter informações ou autorizar operações.
+
+**Golpe do falso funcionário:** o fraudador se passa por funcionário do banco e convence o cliente a fornecer senha, token, ou a fazer uma transferência "para proteger a conta".
+
+**Phishing:** e-mails, SMS ou sites falsos que imitam o banco para capturar credenciais.
+
+**Vishing:** ligações telefônicas fraudulentas. O fraudador pode ter dados reais do cliente (obtidos em vazamentos) para parecer legítimo.
+
+### Fraude de identidade
+
+O fraudador usa os dados de outra pessoa para abrir contas, contrair crédito ou fazer operações.
+
+**Abertura de conta fraudulenta:** usando documentos falsificados ou dados roubados para abrir uma conta e usá-la para lavagem de dinheiro ou golpes.
+
+**Fraude no crédito:** contrair empréstimos usando a identidade de outra pessoa.
+
+### Fraude em pagamentos
+
+**Clonagem de cartão:** captura dos dados do cartão (físico ou virtual) para fazer compras não autorizadas.
+
+**Fraude no Pix:** o cliente é enganado para fazer um Pix para o fraudador (golpe do falso leilão, falso vendedor, etc.).
+
+**Boleto falso:** o fraudador substitui o boleto legítimo por um falso com seus dados bancários.
+
+### Fraude em crédito
+
+**Fraude no financiamento:** documentos falsos para obter financiamento de veículo ou imóvel.
+
+**Fraude no consignado:** funcionários de RH que incluem empréstimos consignados sem autorização dos funcionários.
+
+## Mecanismos de prevenção
+
+### Autenticação forte
+
+**Múltiplos fatores:** senha + token + biometria. Quanto mais fatores, mais difícil para o fraudador.
+
+**Análise comportamental:** o sistema aprende o comportamento normal do cliente (horário de acesso, dispositivos usados, padrão de digitação) e alerta quando há desvios.
+
+**Biometria:** reconhecimento facial, digital, ou de voz. Difícil de falsificar.
+
+**Deepfakes e ameaças à biometria facial:** a evolução das técnicas de inteligência artificial generativa criou uma ameaça emergente: os *deepfakes* — vídeos e imagens sintéticas que imitam o rosto e a voz de uma pessoa real com alta fidelidade. Sistemas de validação biométrica que dependem de "prova de vida" (*liveness detection*) baseada em vídeo estão vulneráveis a ataques com deepfakes gerados em tempo real.
+
+Os bancos precisam evoluir seus sistemas de liveness detection para além da análise de movimento facial passivo, incorporando:
+- **Desafios ativos:** solicitar ações imprevisíveis (piscar, virar a cabeça, repetir uma frase aleatória)
+- **Detecção de artefatos de IA:** análise de inconsistências nos pixels, bordas e iluminação típicas de vídeos sintéticos
+- **Verificação cruzada:** combinar biometria facial com outros fatores (dispositivo conhecido, geolocalização, comportamento de digitação)
+
+A ameaça é especialmente crítica no onboarding digital, onde a biometria é o principal mecanismo de validação de identidade sem presença física.
+
+### Limites e controles
+
+**Limites por canal:** limites diferentes para app, internet banking, agência.
+
+**Período de carência:** aumentos de limite têm um período de espera (24-48 horas) para prevenir fraudes.
+
+**Limite noturno:** limites reduzidos entre 20h e 6h, quando a maioria das fraudes ocorre.
+
+### Monitoramento em tempo real
+
+**Modelos de machine learning:** analisam cada transação em milissegundos, comparando com o perfil do cliente e padrões de fraude conhecidos.
+
+**Regras de negócio:** alertas para padrões específicos (ex: Pix para conta recém-criada, valor próximo do limite diário).
+
+**Análise de dispositivo:** verificação do dispositivo usado (é um dispositivo conhecido? Está com VPN? Tem sinais de root/jailbreak?).
+
+## Tratamento de fraudes confirmadas
+
+Quando uma fraude é confirmada:
+
+1. **Bloqueio imediato:** bloquear a conta ou o canal comprometido
+2. **Investigação:** entender como a fraude ocorreu
+3. **Ressarcimento:** avaliar se o cliente tem direito a ressarcimento (depende do tipo de fraude e da responsabilidade do cliente)
+4. **Comunicação:** notificar o cliente e, se necessário, o BACEN e a polícia
+5. **Prevenção:** implementar controles para evitar recorrência
+
+O ressarcimento é uma área sensível: o banco não é obrigado a ressarcir em todos os casos (ex: se o cliente forneceu a senha voluntariamente), mas a jurisprudência tem sido favorável aos clientes em muitos casos.

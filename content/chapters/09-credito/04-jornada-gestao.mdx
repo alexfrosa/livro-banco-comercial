@@ -1,0 +1,99 @@
+---
+title: "Jornada — Geração de parcelas, cobrança e baixa"
+order: 4
+description: "O ciclo de vida de um contrato de crédito após a liberação"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Após a liberação do crédito, começa a fase de gestão: gerar as cobranças, processar os pagamentos, tratar a inadimplência. É um processo contínuo que dura toda a vida do contrato.
+
+## Geração de cobranças
+
+No vencimento de cada parcela, o sistema gera a cobrança:
+
+**Boleto bancário:** o sistema gera um boleto com o valor da parcela, data de vencimento e dados do contrato. O boleto é enviado ao cliente por e-mail ou disponibilizado no app.
+
+**Débito automático:** se o cliente autorizou, o sistema debita automaticamente na data de vencimento.
+
+**Pix Cobrança:** o sistema gera um QR Code Pix com os dados da parcela (<Ref id="resolucao-bcb-80" />). O cliente paga escaneando o QR Code.
+
+A geração de cobranças é um processo batch que roda diariamente, gerando as cobranças que vencem nos próximos dias.
+
+## Processamento de pagamentos
+
+Quando o cliente paga:
+
+1. O sistema identifica o pagamento (pelo código do boleto, chave Pix, ou débito automático)
+2. Verifica se o valor está correto (pode haver juros de mora se pago após o vencimento)
+3. Aplica o pagamento ao contrato: amortiza o principal, quita os juros
+4. Atualiza o saldo devedor
+5. Gera o lançamento contábil
+6. Notifica o cliente
+
+**Pagamento parcial:** se o cliente paga menos que o valor da parcela, o sistema aplica o valor recebido (geralmente primeiro nos juros, depois no principal) e registra a diferença como inadimplência.
+
+**Pagamento antecipado:** o cliente pode pagar parcelas futuras antecipadamente. O sistema recalcula o saldo devedor com desconto dos juros futuros (conforme o Código de Defesa do Consumidor).
+
+## Inadimplência e cobrança
+
+Se a parcela não for paga até o vencimento:
+
+**D+1 a D+3:** o sistema envia lembretes automáticos (SMS, push, e-mail).
+
+**D+5 a D+15:** cobrança mais ativa: ligações automáticas, mensagens mais diretas.
+
+**D+15 a D+30:** transferência para a equipe de cobrança humana. Negociação de acordo.
+
+**D+30 a D+90:** negativação no Serasa/SPC. O cliente fica com restrições de crédito.
+
+**D+90+:** o contrato é classificado como "em atraso grave". A provisão para devedores duvidosos aumenta. Pode ser transferido para empresa de cobrança terceirizada.
+
+**D+180+:** o banco pode iniciar processo judicial de cobrança ou execução da garantia (se houver).
+
+## Write-off e recuperação de crédito
+
+Quando a perspectiva de recebimento é remota, o banco realiza o **write-off** (baixa contábil): o contrato é removido da carteira ativa e lançado como prejuízo. Isso não significa que a dívida foi perdoada — o banco continua com o direito de cobrar, mas reconhece contabilmente que a probabilidade de recebimento é muito baixa.
+
+Após o write-off, o contrato pode ser:
+- **Mantido internamente** para cobrança continuada
+- **Cedido a empresas de recuperação de crédito** (factoring, fundos de FIDC) por um percentual do valor de face — geralmente entre 1% e 15%, dependendo da antiguidade e do perfil da dívida
+- **Negociado diretamente com o cliente** via plataformas como o Serasa Limpa Nome
+
+A recuperação de crédito baixado a prejuízo é contabilizada como receita quando ocorre.
+
+## Renegociação
+
+Quando o cliente não consegue pagar, a renegociação é muitas vezes a melhor saída para ambos:
+
+**Parcelamento do atraso:** o valor em atraso é parcelado e adicionado às parcelas futuras.
+
+**Redução de taxa:** o banco pode reduzir a taxa de juros para facilitar o pagamento.
+
+**Extensão do prazo:** o prazo do contrato é estendido, reduzindo o valor das parcelas.
+
+**Desconto para quitação:** o banco oferece desconto nos juros e multas para quitação à vista.
+
+A renegociação precisa ser registrada como um novo contrato ou aditivo contratual, com novas condições e nova assinatura do cliente.
+
+## Cessão de carteira e securitização
+
+O banco pode **ceder** contratos de crédito para terceiros — vender a carteira antes do vencimento. Isso libera capital, transfere o risco de crédito e melhora os índices de capital regulatório.
+
+**Cessão para FIDC (Fundo de Investimento em Direitos Creditórios):** o banco vende os recebíveis para um fundo, que emite cotas para investidores. É a forma mais comum de securitização no Brasil.
+
+**Cessão para outro banco:** bancos menores frequentemente cedem carteiras para bancos maiores que têm mais apetite de risco ou capital disponível.
+
+A cessão pode ser:
+- **Com coobrigação:** o banco cedente continua responsável se o devedor não pagar (risco permanece no balanço para fins regulatórios)
+- **Sem coobrigação:** o risco é transferido integralmente ao cessionário
+
+## Baixa do contrato
+
+Quando o contrato é quitado (todas as parcelas pagas ou quitação antecipada):
+
+1. O sistema verifica que o saldo devedor é zero
+2. Gera o comprovante de quitação
+3. Solicita o cancelamento das garantias (alienação fiduciária, hipoteca)
+4. Atualiza o SCR informando a quitação (<Ref id="resolucao-bcb-96" />)
+5. Arquiva o contrato (mantido por 5 anos para auditoria)

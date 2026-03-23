@@ -1,0 +1,103 @@
+---
+title: "Caso 2 — Detecção e Reporte de Operação Suspeita de PLD"
+order: 4
+description: "Da transação suspeita ao reporte ao COAF: o fluxo completo de uma investigação de PLD"
+---
+
+import Ref from '@/components/Ref.astro';
+
+## O cenário
+
+O sistema de monitoramento de PLD do **Banco Gama** gera um alerta de nível 3 (crítico) para a conta corrente de **Construtora Delta Ltda.**, empresa de construção civil com faturamento declarado de R$ 3 milhões por mês. O alerta foi gerado por:
+
+- **Volume:** R$ 4,8 milhões em depósitos recebidos em 15 dias — 60% acima do padrão histórico
+- **Fracionamento:** 23 depósitos entre R$ 180 mil e R$ 210 mil de 7 CPFs diferentes, em 3 bancos distintos
+- **Contrapartes sem relacionamento aparente:** os CPFs dos depositantes não têm nenhum histórico de transação com a Delta
+
+---
+
+## Fase 1 — Triagem Inicial (Dia 1)
+
+O analista júnior de PLD recebe o alerta e realiza a triagem:
+
+**Verificações imediatas:**
+1. Consulta o cadastro da Delta: CNPJ ativo, 12 anos de funcionamento, código CNAE de construção civil, sócios sem restrições no sistema
+2. Consulta o histórico de transações: movimentação mensal média dos últimos 12 meses foi de R$ 2,9 milhões — o pico atual de R$ 4,8M em 15 dias é anômalo
+3. Verifica se há alguma nota de relacionamento explicando operação especial: nenhuma
+
+**Hipóteses iniciais:**
+- A) A empresa recebeu pagamento de grandes contratos de obra de pessoa física (plausível na construção civil)
+- B) Fracionamento deliberado para evitar limites de monitoramento (structuring — tipologia conhecida de lavagem)
+
+O analista júnior **não consegue descartar a hipótese B** apenas com os dados disponíveis e escala para o analista sênior.
+
+---
+
+## Fase 2 — Investigação Aprofundada (Dias 2-5)
+
+O analista sênior conduz a investigação:
+
+**Pesquisa dos CPFs depositantes:**
+- Consulta o SCR dos 7 CPFs: todos têm renda declarada compatível com classe média (entre R$ 8 mil e R$ 15 mil/mês). A soma de todos os depósitos de cada CPF é de R$ 680 mil no mês — incompatível com a renda
+- Pesquisa pública: nenhum dos CPFs tem registros como sócios de construtoras ou empresas de construção
+- Verificação de relacionamento com a Delta no sistema do banco: nunca houve transação anterior entre esses CPFs e a Delta
+
+**Contato com o gerente de relacionamento:**
+O analista de PLD (sem revelar que é uma investigação) pergunta ao gerente se há explicação para o aumento no volume. O gerente consulta o gestor financeiro da Delta, que responde: "Estamos recebendo pagamentos de adiantamentos de contratos particulares."
+
+O analista registra a explicação mas avalia que é insuficiente — não há documentação dos contratos, e o perfil dos depositantes não é compatível com contratantes de obra.
+
+**Pesquisa em bases externas:**
+- Cartório de Protesto: Delta tem 2 protestos por cheques sem fundo — sinaliza dificuldade financeira recente, inconsistente com "contratos relevantes"
+- SERASA PJ: negativações em fornecedores
+- Imprensa: nada negativo encontrado
+
+**Tipologia identificada:** o padrão — múltiplas pessoas físicas com renda incompatível fazendo depósitos fracionados em conta de pessoa jurídica — é clássico de **smurfing** (fracionamento por laranjas), uma das principais tipologias de lavagem de dinheiro na fase de colocação.
+
+---
+
+## Fase 3 — Decisão de Reportar (Dia 6)
+
+O analista sênior apresenta o caso ao Diretor de PLD/Compliance. A decisão é:
+
+1. **Reportar ao COAF via ROS** (Relatório de Operação Suspeita)
+2. **Não encerrar a conta imediatamente** — aguardar orientação do COAF/autoridades para não destruir evidências ou alertar os investigados
+3. **Não comunicar ao cliente ou ao gerente** (proibição de tipping-off)
+4. **Bloquear preventivamente** transações acima de R$ 500 mil até resolução
+
+O gerente de relacionamento **não é informado** do motivo do monitoramento intensificado. Do ponto de vista do gerente, a conta continua normalmente.
+
+---
+
+## Fase 4 — Elaboração e Envio do ROS (Dia 6-7)
+
+O analista elabora o ROS no SISCOAF com:
+
+**Dados do suspeito principal:** Construtora Delta Ltda., CNPJ, endereço, sócios, dados da conta
+
+**Dados das contrapartes:** os 7 CPFs com seus dados cadastrais completos
+
+**Descrição das operações:** tabela com todas as 23 transações (data, valor, CPF depositante, banco de origem)
+
+**Análise do analista:**
+> "A movimentação apresenta padrões típicos de smurfing (Tipologia GAFI 4): múltiplas pessoas físicas com renda incompatível realizando depósitos fracionados em conta de pessoa jurídica. A justificativa apresentada pela empresa (pagamentos de contratos) não é suportada pelo perfil dos depositantes, pelo histórico da empresa ou por documentação apresentada. Os protestos e negativações recentes indicam dificuldade financeira que contradiz o volume de receitas reportado. Sugere-se investigação da origem dos valores depositados pelos CPFs."
+
+O ROS é enviado ao COAF. O banco recebe o número de protocolo — única confirmação recebida.
+
+---
+
+## Fase 5 — Monitoramento Pós-Reporte (Semanas seguintes)
+
+O banco **não é informado** do andamento da investigação do COAF. A conta da Delta continua ativa com monitoramento intensificado.
+
+Dois meses depois, o banco recebe um **ofício judicial** com ordem de bloqueio da conta da Construtora Delta e das contas dos 7 CPFs. O banco cumpre imediatamente, bloqueia os saldos e informa ao juízo. A investigação da Polícia Federal apurou que a Delta era usada para lavar recursos de jogos ilegais.
+
+---
+
+## Lições do caso
+
+1. **O sistema automático detecta padrões, o analista decide** — o alerta foi do sistema, mas a investigação e a decisão de reportar são humanas
+2. **Tipping-off é proibição absoluta** — o gerente de relacionamento não pode saber que o cliente foi reportado
+3. **A investigação usa fontes abertas e bases internas** — o analista não tem poderes investigativos de polícia, mas tem acesso a informações relevantes
+4. **A decisão de não encerrar a conta é estratégica** — às vezes manter a conta ativa preserva evidências e permite que as autoridades acompanhem o dinheiro
+5. **O banco não é o árbitro da culpa** — sua obrigação é reportar indícios; a investigação é do Estado

@@ -1,0 +1,69 @@
+---
+title: "Jornada — Home Broker e envio de ordens"
+order: 5
+description: "Interface de negociação, tipos de ordem (mercado, limitada, stop) e controles de risco para day trade"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O Home Broker é a interface pela qual o investidor acessa o mercado de renda variável. Por trás da tela simples de compra e venda, existe uma cadeia de sistemas que conecta o investidor à B3 em milissegundos.
+
+## Abertura de conta na corretora
+
+Antes de operar, o investidor precisa abrir conta na corretora (ou no banco com função de corretora):
+
+1. **Cadastro e KYC:** dados pessoais, documentos, comprovante de renda e residência
+2. **Suitability:** perfil do investidor — renda variável só é adequada para perfis moderado ou arrojado
+3. **Assinatura do contrato:** termos de uso do Home Broker, autorização para custódia na B3
+4. **Habilitação na B3:** a corretora registra o investidor na B3 e abre a conta de custódia
+
+## Tipos de ordem
+
+O investidor envia ordens de compra ou venda pelo Home Broker. Os principais tipos:
+
+**Ordem a mercado:** executada imediatamente pelo melhor preço disponível no livro de ofertas. Garantia de execução, sem garantia de preço. Usada quando o investidor quer entrar ou sair rapidamente.
+
+**Ordem limitada:** o investidor define o preço máximo de compra (ou mínimo de venda). A ordem só é executada se o mercado atingir esse preço. Pode ficar pendente por horas ou dias. Usada quando o investidor quer controlar o preço de entrada/saída.
+
+**Ordem stop:** ativada automaticamente quando o preço atinge um gatilho (stop price). Usada para limitar perdas (stop loss) ou proteger lucros (stop gain).
+- **Stop loss:** "se a ação cair para R$ 45, venda automaticamente" — limita a perda máxima
+- **Stop gain:** "se a ação subir para R$ 60, venda automaticamente" — garante o lucro
+
+**Ordem stop limitada:** combina stop e limite — quando o gatilho é atingido, envia uma ordem limitada (não a mercado). Evita execução a preços muito ruins em mercados voláteis, mas pode não ser executada.
+
+**Validade das ordens:**
+- **Day:** válida apenas no pregão do dia
+- **Until date:** válida até uma data específica
+- **Until cancel (UNC):** válida até ser cancelada pelo investidor
+
+## Fluxo de execução de uma ordem
+
+1. Investidor envia ordem pelo Home Broker
+2. Sistema da corretora valida a ordem (saldo disponível, limites de risco)
+3. Ordem é enviada ao sistema de negociação da B3 (PUMA Trading System)
+4. B3 registra a ordem no livro de ofertas
+5. Quando há contraparte compatível, a negociação é fechada (trade)
+6. B3 confirma o trade para a corretora
+7. Corretora atualiza a posição do investidor em tempo real
+8. Liquidação financeira em D+2
+
+## Controles de risco para day trade
+
+Day trade é a compra e venda do mesmo ativo no mesmo pregão. O risco é maior porque o investidor pode operar com alavancagem — comprar mais do que tem em conta, usando crédito intradiário da corretora.
+
+**Limite de crédito intradiário:** a corretora define quanto o investidor pode operar além do saldo disponível. Esse limite é baseado no perfil de risco e no histórico do investidor.
+
+**Margem de garantia:** para operar com alavancagem, o investidor precisa depositar garantias (dinheiro, títulos públicos, ações de alta liquidez). A B3 define os percentuais de margem por ativo.
+
+**Chamada de margem:** se a posição do investidor se deteriorar e as garantias ficarem abaixo do mínimo exigido, a corretora faz uma chamada de margem — o investidor precisa depositar mais garantias ou reduzir a posição. Se não o fizer, a corretora pode encerrar a posição compulsoriamente.
+
+**Controles automáticos:** o sistema da corretora monitora as posições em tempo real e pode bloquear novas ordens se o investidor atingir o limite de risco.
+
+## Horário de negociação
+
+O pregão regular da B3 funciona das 10h às 17h (horário de Brasília). Há também:
+- **Pré-abertura:** 9h45 às 10h — formação do preço de abertura
+- **After-market:** 17h30 às 18h — negociação com variação limitada a 2% do preço de fechamento
+- **Leilão:** mecanismo especial para abertura, fechamento e situações de volatilidade extrema
+
+Para os conceitos de ações, BDRs, ETFs e tributação, consulte o cap. 15 (seção 04).

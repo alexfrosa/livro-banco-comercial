@@ -1,0 +1,52 @@
+---
+title: "Simulação — Gerar balancete e identificar divergências"
+order: 4
+description: "Pratique a geração de um balancete e a identificação de divergências contábeis"
+simulation: "AccountingClose"
+---
+
+Nesta simulação, você vai executar o fechamento contábil de um dia, identificar divergências e corrigi-las antes de aprovar o balancete.
+
+## O que você vai praticar
+
+- Processar os lançamentos do dia de múltiplos sistemas
+- Executar as reconciliações e identificar divergências
+- Investigar e corrigir lançamentos incorretos
+- Calcular e lançar provisões
+- Gerar e aprovar o balancete final
+
+## O dia simulado
+
+Você vai fechar um dia com as seguintes operações:
+- 150 Pix processados (entradas e saídas)
+- 30 parcelas de crédito pagas
+- 5 CDBs emitidos
+- 10 tarifas cobradas
+- 2 lançamentos com erro (que você precisará encontrar)
+
+## Verificações de consistência
+
+O sistema vai executar automaticamente as verificações. Você precisa investigar as que falharem:
+
+| Verificação | Status |
+|---|---|
+| Equilíbrio do balanço | ✓ ou ✗ |
+| Reconciliação contas correntes | ✓ ou ✗ |
+| Reconciliação crédito | ✓ ou ✗ |
+| Reconciliação reservas BACEN | ✓ ou ✗ |
+
+## Cenários disponíveis
+
+### Cenário 1: Fechamento limpo
+Todas as verificações passam. Aprove o balancete e gere o relatório de fechamento.
+
+### Cenário 2: Lançamento duplicado
+Um Pix foi lançado duas vezes. Identifique o lançamento duplicado, faça o estorno e reprocesse o fechamento.
+
+### Cenário 3: Conta errada
+Uma tarifa foi lançada na conta COSIF errada. Identifique o erro, faça o estorno e o relançamento correto.
+
+### Cenário 4: Lançamento faltando
+Um CDB foi emitido mas o lançamento contábil não foi gerado. Identifique a divergência na reconciliação e crie o lançamento faltante.
+
+> **Dica:** use o relatório de variação de saldos para identificar contas com variações inesperadas. Isso geralmente aponta para onde está o problema.

@@ -1,0 +1,45 @@
+---
+title: "Simulação — Executar transferência e simular falhas"
+order: 4
+description: "Pratique o fluxo de pagamento e veja o que acontece quando algo dá errado"
+simulation: "PaymentFlow"
+---
+
+Nesta simulação, você vai processar pagamentos e explorar o que acontece em cenários de falha. O objetivo é entender como o sistema se comporta quando as coisas não saem como esperado.
+
+## O que você vai praticar
+
+- Executar um Pix bem-sucedido e acompanhar cada etapa
+- Simular um timeout no SPI e ver como o sistema se recupera
+- Tentar um pagamento com saldo insuficiente
+- Processar um Pix duplicado e ver a proteção por idempotência
+- Solicitar uma devolução via MED
+
+## Estados do pagamento
+
+Acompanhe o estado do pagamento em tempo real:
+
+```
+RECEBIDO → VALIDANDO → RESERVADO → LIQUIDANDO → CONFIRMADO
+```
+
+Cada transição de estado é registrada com timestamp. Em caso de falha, você verá o estado de erro e a ação tomada.
+
+## Cenários disponíveis
+
+### Cenário 1: Pix bem-sucedido
+Faça um Pix de R$ 200 para uma chave válida. Acompanhe cada etapa: consulta ao DICT, instrução ao SPI, liquidação, crédito no destino.
+
+### Cenário 2: Chave Pix inválida
+Tente fazer um Pix para uma chave que não existe no DICT. O sistema deve rejeitar antes de chegar ao SPI.
+
+### Cenário 3: Saldo insuficiente
+Tente fazer um Pix de R$ 1.000 com saldo de R$ 500. O sistema deve rejeitar na fase de reserva.
+
+### Cenário 4: Timeout no SPI
+Simule um timeout na comunicação com o SPI. Observe como o sistema aguarda, retenta, e eventualmente libera a reserva se não receber confirmação.
+
+### Cenário 5: Pix duplicado
+Envie o mesmo Pix duas vezes com o mesmo ID de idempotência. O segundo deve ser ignorado e retornar o resultado do primeiro.
+
+> **Dica:** ative o modo "mostrar logs" para ver as mensagens trocadas entre os sistemas em tempo real. Isso ajuda a entender o protocolo de comunicação do Pix.

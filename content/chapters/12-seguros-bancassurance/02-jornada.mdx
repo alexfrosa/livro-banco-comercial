@@ -1,0 +1,87 @@
+---
+title: "Jornada — Contratação de seguro"
+order: 2
+description: "Do pedido à emissão da apólice: análise de risco, aceitação e cobrança do prêmio"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A contratação de um seguro pelo banco envolve três partes: o cliente (segurado), o banco (canal de distribuição) e a seguradora parceira (responsável pelo risco). O banco não assume o risco — ele intermedia a venda e recebe comissão.
+
+## Do pedido à emissão da apólice
+
+### Etapa 1: Pedido e coleta de informações
+
+O cliente manifesta interesse no produto — seja por iniciativa própria ou por oferta do banco durante a contratação de um crédito (seguro prestamista) ou abertura de conta. O banco coleta as informações necessárias para a análise de risco:
+
+- **Seguro de vida:** idade, profissão, histórico de saúde (declaração de saúde), hábitos (fumante, prática de esportes de risco)
+- **Seguro residencial:** endereço, tipo de imóvel (casa ou apartamento), valor do bem, localização (CEP para análise de risco de enchente, furto etc.)
+- **Seguro auto:** dados do veículo (placa, chassi, ano, modelo), perfil do condutor principal, CEP de pernoite
+
+Essas informações são transmitidas à seguradora para análise.
+
+### Etapa 2: Análise de risco (underwriting)
+
+A seguradora realiza o **underwriting** — processo de avaliação do risco para decidir se aceita o seguro e em quais condições. O underwriting considera:
+
+- **Perfil do segurado:** histórico de sinistros anteriores, idade, localização
+- **Características do bem segurado:** valor, estado de conservação, exposição ao risco
+- **Modelos atuariais:** tabelas de mortalidade (seguro de vida), estatísticas de sinistros por CEP (auto e residencial), histórico de inadimplência do produto
+
+O resultado do underwriting pode ser:
+
+| Decisão | Significado |
+|---|---|
+| **Aceitação padrão** | Risco dentro do perfil esperado; prêmio calculado pela tabela normal |
+| **Aceitação com sobreprêmio** | Risco elevado; seguradora aceita, mas cobra prêmio maior |
+| **Aceitação com exclusão** | Seguradora aceita, mas exclui coberturas específicas (ex: doenças preexistentes) |
+| **Recusa** | Risco fora dos parâmetros aceitos pela seguradora |
+
+Em seguros massificados (vida, residencial básico), o underwriting é automatizado — a decisão é tomada em segundos com base em regras e modelos preditivos. Em seguros de alto valor ou perfis atípicos, pode haver análise manual por um subscritor.
+
+### Etapa 3: Apresentação da proposta e aceite do cliente
+
+Após o underwriting, o banco apresenta ao cliente:
+- Coberturas incluídas e excluídas
+- Valor do prêmio (mensal ou anual)
+- Franquia (valor que o segurado paga em caso de sinistro antes de a seguradora cobrir o restante)
+- Vigência da apólice (geralmente 12 meses, com renovação automática)
+
+O cliente assina a proposta — fisicamente ou via assinatura eletrônica no app. A partir desse momento, a cobertura pode entrar em vigor imediatamente ou após um período de carência (ex: 30 dias para seguro de vida).
+
+### Etapa 4: Cobrança do prêmio
+
+O prêmio é o valor pago pelo segurado em troca da cobertura. A cobrança pode ser:
+
+- **Débito automático em conta corrente:** modalidade mais comum em bancassurance; o banco debita o prêmio na data de vencimento
+- **Boleto bancário:** menos comum, usado quando o cliente não tem conta no banco distribuidor
+- **Inclusão na fatura do cartão de crédito:** frequente em seguros de viagem e seguros de vida simplificados
+
+O banco repassa o prêmio à seguradora, retendo sua comissão.
+
+### Etapa 5: Emissão da apólice e entrega ao cliente
+
+Após a confirmação do pagamento do primeiro prêmio, a seguradora emite a **apólice** — o documento contratual que formaliza a cobertura. A apólice contém:
+
+- Número único de identificação
+- Dados do segurado e do bem segurado
+- Coberturas contratadas, limites e exclusões
+- Vigência (data de início e término)
+- Valor do prêmio e forma de pagamento
+- Dados da seguradora e do banco distribuidor
+
+A apólice é entregue ao cliente por e-mail (PDF) e fica disponível no app do banco. O banco mantém cópia no sistema para fins de comprovação e eventual sinistro.
+
+## Período de carência e início da cobertura
+
+Alguns produtos têm **carência** — período após a contratação em que determinadas coberturas ainda não estão ativas:
+
+- **Seguro de vida:** carência de 30 dias para morte natural (morte acidental geralmente não tem carência)
+- **Seguro saúde:** carências variáveis por procedimento (ex: 180 dias para parto, 24 horas para urgência)
+- **Seguro residencial:** geralmente sem carência para incêndio; pode ter carência para roubo
+
+O cliente deve ser informado claramente sobre as carências antes de assinar a proposta — é uma exigência da <Ref id="resolucao-cnsp-382" /> e do Código de Defesa do Consumidor.
+
+## Renovação automática
+
+A maioria dos seguros bancários tem renovação automática ao final da vigência. O banco notifica o cliente com antecedência (geralmente 30 dias) sobre o novo prêmio — que pode ser reajustado por índice de inflação ou por mudança no perfil de risco. O cliente pode cancelar antes da renovação sem multa.

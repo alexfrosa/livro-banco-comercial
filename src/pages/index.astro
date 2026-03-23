@@ -51,6 +51,7 @@ for (const [path, loadFn] of Object.entries(indexModules)) {
         description: typeof fm['description'] === 'string' ? fm['description'] : '',
         slug: chapterSlug,
         part: typeof fm['part'] === 'string' && fm['part'].trim() ? fm['part'] : undefined, // Req 1.1
+        partOrder: typeof fm['partOrder'] === 'number' ? fm['partOrder'] : undefined, // Req 10.1
       },
       sections: [],
     });

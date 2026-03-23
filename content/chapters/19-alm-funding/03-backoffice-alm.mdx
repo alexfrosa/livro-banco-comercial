@@ -1,0 +1,60 @@
+---
+title: "Backoffice — Relatórios de risco estrutural"
+order: 3
+description: "Os relatórios que o backoffice de ALM produz para monitorar o risco estrutural do banco"
+---
+
+O backoffice de ALM é responsável por produzir os relatórios que permitem à gestão e ao regulador entender o risco estrutural do banco. É um trabalho intensivo em dados e em precisão.
+
+## Relatórios regulatórios
+
+**LCR (Liquidity Coverage Ratio):**
+Calculado diariamente. Mede se o banco tem ativos líquidos suficientes para cobrir saídas de caixa por 30 dias em um cenário de estresse.
+
+```
+LCR = Ativos Líquidos de Alta Qualidade / Saídas Líquidas de Caixa em 30 dias ≥ 100%
+```
+
+**NSFR (Net Stable Funding Ratio):**
+Calculado mensalmente. Mede se o banco tem funding estável suficiente para financiar seus ativos de longo prazo.
+
+```
+NSFR = Funding Estável Disponível / Funding Estável Necessário ≥ 100%
+```
+
+**Relatório de Risco de Taxa de Juros (IRRBB):**
+Mede a sensibilidade do valor econômico do banco e da sua margem financeira a variações nas taxas de juros. Enviado ao BACEN periodicamente.
+
+## Relatórios gerenciais
+
+**Gap report:** mostra o descasamento entre ativos e passivos por faixa de prazo. Permite identificar onde estão os maiores riscos de reprecificação.
+
+**Duration report:** duration dos ativos, dos passivos e do patrimônio líquido. Indica a sensibilidade do balanço a variações de taxa.
+
+**Concentração de funding:** quais são as principais fontes de captação? Qual é a concentração por tipo de produto, por prazo, por contraparte?
+
+**Projeção de vencimentos:** quando vencem os principais ativos e passivos? Há concentração de vencimentos em algum período?
+
+## Processo de produção dos relatórios
+
+A produção dos relatórios de ALM é um processo complexo:
+
+**1. Extração de dados:** dados de múltiplos sistemas (crédito, captações, tesouraria, derivativos) são extraídos e consolidados.
+
+**2. Validação:** os dados são validados para garantir completude e consistência. Divergências são investigadas antes de prosseguir.
+
+**3. Cálculo:** os indicadores são calculados conforme as metodologias regulatórias e internas.
+
+**4. Revisão:** os resultados são revisados por analistas sênior antes de serem publicados.
+
+**5. Distribuição:** os relatórios são distribuídos para a gestão, o ALCO e, quando aplicável, enviados ao BACEN.
+
+## Desafios do backoffice de ALM
+
+**Qualidade de dados:** o ALM depende de dados precisos de múltiplos sistemas. Dados incorretos ou incompletos levam a análises erradas e decisões equivocadas.
+
+**Complexidade dos produtos:** produtos estruturados, derivativos e operações com opções embutidas (como CDBs com resgate antecipado) são difíceis de modelar corretamente.
+
+**Velocidade:** os relatórios precisam estar disponíveis rapidamente para que a gestão possa tomar decisões em tempo hábil.
+
+**Regulação em evolução:** as exigências regulatórias de ALM estão em constante evolução. O backoffice precisa se adaptar rapidamente a novas regras.

@@ -1,0 +1,69 @@
+---
+title: "Reportes regulatórios — SCR, CCS e outros"
+order: 3
+description: "Obrigações de reporte ao BACEN além do COAF: SCR, CCS, e-Financeira e outros sistemas"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Além do reporte ao COAF, os bancos têm obrigações de reporte a outros sistemas regulatórios do BACEN. Esses reportes não são sobre suspeitas de lavagem — são obrigações automáticas de transparência que alimentam a supervisão do sistema financeiro.
+
+## SCR — Sistema de Informações de Crédito
+
+O SCR é o banco de dados centralizado do BACEN com informações sobre operações de crédito. Todo banco deve reportar mensalmente:
+
+- Saldo devedor de cada contrato de crédito por cliente
+- Classificação de risco de cada operação (AA a H)
+- Limites de crédito disponíveis (cartão, cheque especial, conta garantida)
+- Coobrigações e garantias prestadas
+
+**Prazo:** até o 5º dia útil do mês seguinte.
+
+**Importância:** o SCR é a principal ferramenta de análise de crédito no Brasil. Qualquer banco que consultar o SCR de um cliente verá o endividamento total no sistema financeiro — não apenas no banco consultante.
+
+## CCS — Cadastro de Clientes do Sistema Financeiro
+
+O CCS registra os relacionamentos entre clientes e instituições financeiras — quais bancos cada CPF/CNPJ tem conta, investimentos ou operações de crédito.
+
+**O que é reportado:** abertura e encerramento de contas, início e término de relacionamentos de crédito e investimento.
+
+**Quem pode consultar:** o CCS não é público. Pode ser consultado por autoridades judiciais (com ordem judicial) e pelo próprio cliente via Registrato.
+
+**Uso prático:** em investigações de lavagem de dinheiro ou evasão fiscal, o MP ou a Receita Federal obtém ordem judicial para consultar o CCS e identificar todos os relacionamentos bancários do investigado.
+
+## e-Financeira
+
+A e-Financeira é a declaração automática de movimentações financeiras enviada pelos bancos à Receita Federal. Criada para combater a evasão fiscal, ela informa:
+
+- Saldos de contas acima de R$ 140 (pessoa física) ou R$ 140 (pessoa jurídica) ao final do ano
+- Movimentações mensais acima de R$ 5.000 (pessoa física) ou R$ 10.000 (pessoa jurídica)
+- Rendimentos de aplicações financeiras
+- Operações de câmbio acima de determinados valores
+
+**Periodicidade:** semestral (referente ao 1º e 2º semestres do ano).
+
+**Base legal:** <Ref id="lei-complementar-105-2001" /> autoriza o compartilhamento com a Receita Federal sem configurar quebra de sigilo bancário.
+
+## ROF — Relatório de Operação em Espécie
+
+O ROF é um reporte **automático** ao COAF para operações acima de determinados valores em espécie — independente de suspeição:
+
+- Depósito, saque ou troca de moeda em espécie acima de **R$ 50.000** (pessoa física ou jurídica)
+- Compra ou venda de moeda estrangeira em espécie acima de **R$ 10.000**
+- Operações com cartões pré-pagos internacionais acima de **R$ 10.000**
+
+**Prazo:** até o dia útil seguinte à operação.
+
+**Importante:** o ROF não implica suspeição — é uma obrigação de reporte automático por volume. O COAF consolida essas informações para identificar padrões que não seriam visíveis em operações individuais.
+
+## Integração entre os sistemas
+
+Os diferentes sistemas de reporte se complementam:
+
+- O **SCR** mostra o endividamento total de um cliente no sistema
+- O **CCS** mostra todos os relacionamentos bancários
+- A **e-Financeira** informa a Receita Federal sobre movimentações
+- O **ROF** alerta o COAF sobre operações em espécie de alto valor
+- O **ROS** reporta suspeitas específicas de lavagem
+
+Juntos, esses sistemas criam uma visão abrangente da vida financeira de cada cliente — disponível para as autoridades competentes com os instrumentos legais adequados.

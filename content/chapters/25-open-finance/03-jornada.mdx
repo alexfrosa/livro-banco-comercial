@@ -1,0 +1,163 @@
+---
+title: "Jornada — Consentimento e compartilhamento"
+order: 3
+description: "Do pedido de consentimento à entrega de dados: fluxo do cliente e do banco receptor"
+---
+
+{/* Req 9.3, 9.4 */}
+
+A jornada de Open Finance envolve dois protagonistas com perspectivas distintas: o **cliente**, que autoriza o compartilhamento e experimenta o fluxo no aplicativo; e o **banco receptor**, que consome os dados via API para oferecer um serviço. Para os conceitos de consentimento, OAuth 2.0/FAPI e os papéis de transmissor e receptor, consulte a seção anterior.
+
+## 1. Fluxo de consentimento — passo a passo
+
+O fluxo de consentimento é o momento em que o cliente autoriza formalmente o compartilhamento. Ele ocorre inteiramente nos aplicativos das instituições envolvidas, sem intervenção humana do banco.
+
+### Passo 1 — Cliente no app do receptor
+
+O cliente está no aplicativo da instituição receptora (um agregador financeiro, uma fintech de crédito, outro banco). Ele decide usar um serviço que requer acesso aos seus dados em outro banco — por exemplo, uma análise de crédito que considera o histórico completo.
+
+O receptor exibe uma tela explicando:
+
+- Quais dados serão solicitados (ex: dados cadastrais, extrato dos últimos 12 meses, operações de crédito)
+- Para qual finalidade (ex: "para oferecer uma proposta de crédito personalizada")
+- Por quanto tempo o consentimento ficará ativo (máximo 12 meses)
+
+O cliente clica em **"Autorizar"** para iniciar o fluxo.
+
+### Passo 2 — Redirecionamento ao banco transmissor
+
+O aplicativo do receptor redireciona o cliente para o aplicativo do **banco transmissor** — o banco onde os dados estão. Esse redirecionamento usa o protocolo OAuth 2.0/FAPI: o receptor envia ao banco transmissor uma requisição de autorização assinada digitalmente, contendo os escopos solicitados.
+
+O cliente percebe o redirecionamento como uma troca de aplicativo: ele sai do app do receptor e entra no app do seu banco. Em dispositivos móveis, isso geralmente ocorre via deep link — o sistema operacional abre automaticamente o app do banco correto.
+
+### Passo 3 — Autenticação no banco transmissor
+
+No app do banco transmissor, o cliente precisa se autenticar normalmente — com a mesma senha, biometria ou token que usa para acessar sua conta. Essa etapa é fundamental: o banco precisa ter certeza de que é o titular da conta quem está autorizando o compartilhamento, não um terceiro.
+
+O banco transmissor **não compartilha as credenciais do cliente** com o receptor. A autenticação ocorre exclusivamente no ambiente do banco transmissor.
+
+### Passo 4 — Tela de consentimento granular
+
+Após a autenticação, o banco transmissor exibe a **tela de consentimento**. Essa tela é regulada pelo BACEN: deve ser clara, objetiva e apresentar cada categoria de dado separadamente.
+
+O cliente vê algo como:
+
+| Categoria de dado | Solicitado pelo receptor | Ação do cliente |
+|---|---|---|
+| Dados cadastrais (nome, CPF, endereço) | Sim | ✅ Autorizar / ❌ Recusar |
+| Dados de conta corrente (saldo, extrato) | Sim | ✅ Autorizar / ❌ Recusar |
+| Operações de crédito (contratos, parcelas) | Sim | ✅ Autorizar / ❌ Recusar |
+| Dados de investimentos | Não solicitado | — |
+
+O cliente pode autorizar todas as categorias, apenas algumas, ou recusar tudo. O receptor só receberá os dados das categorias que o cliente autorizou individualmente — essa é a **granularidade** do consentimento.
+
+### Passo 5 — Aprovação e geração do token
+
+O cliente confirma o consentimento (geralmente com uma segunda autenticação — biometria ou senha). O banco transmissor:
+
+1. Registra o consentimento no seu sistema interno com um identificador único
+2. Gera um **access token** OAuth 2.0 vinculado ao certificado digital do receptor (mTLS)
+3. Redireciona o cliente de volta ao aplicativo do receptor, entregando o token
+
+O token tem prazo de validade curto (tipicamente 15 minutos para uso imediato) e pode ser renovado via **refresh token** enquanto o consentimento estiver ativo.
+
+### Passo 6 — Retorno ao receptor com o token
+
+O cliente retorna ao aplicativo do receptor. Do ponto de vista do cliente, o fluxo foi simples: ele saiu do app do receptor, autenticou no banco, aprovou uma tela, e voltou. O tempo total típico é de **30 a 90 segundos**.
+
+O receptor agora possui o token e pode consultar os dados autorizados.
+
+---
+
+## 2. Fluxo de consulta de dados
+
+Com o token em mãos, o banco receptor consulta as APIs do banco transmissor para obter os dados autorizados.
+
+### Chamada às APIs do transmissor
+
+O receptor faz requisições HTTP às APIs padronizadas do transmissor, incluindo o token no cabeçalho de autorização:
+
+```
+GET /open-banking/accounts/v2/accounts
+Authorization: Bearer <access_token>
+x-fapi-auth-date: ...
+x-fapi-customer-ip-address: ...
+```
+
+As APIs seguem a especificação OpenAPI publicada pelo Open Finance Brasil — todos os transmissores implementam os mesmos endpoints, com os mesmos campos e formatos. Isso é o que torna o ecossistema interoperável.
+
+### Resposta em JSON estruturado
+
+O transmissor retorna os dados em JSON padronizado. Por exemplo, para dados de conta corrente:
+
+```json
+{
+  "data": {
+    "brandName": "Banco Transmissor",
+    "companyCnpj": "00.000.000/0001-00",
+    "accounts": [
+      {
+        "accountId": "abc123",
+        "currency": "BRL",
+        "accountType": "CACC",
+        "accountSubType": "INDIVIDUAL",
+        "availableAmount": 4250.00,
+        "availableAmountCurrency": "BRL"
+      }
+    ]
+  },
+  "meta": {
+    "totalRecords": 1,
+    "totalPages": 1,
+    "requestDateTime": "2024-01-15T10:30:00Z"
+  }
+}
+```
+
+O receptor processa esses dados e os exibe ao cliente no seu próprio aplicativo — consolidados com dados de outros bancos, se o cliente tiver múltiplos consentimentos ativos.
+
+### Consultas periódicas
+
+O consentimento ativo permite que o receptor consulte os dados periodicamente, sem que o cliente precise reautorizar a cada consulta. O receptor pode, por exemplo, atualizar os saldos do cliente uma vez por dia automaticamente.
+
+O transmissor pode limitar a frequência de consultas para proteger seus sistemas — a especificação do Open Finance Brasil define limites de rate limiting que os transmissores podem aplicar.
+
+---
+
+## 3. Fluxo de iniciação de pagamento (PISP)
+
+O fluxo de iniciação de pagamento é semelhante ao de compartilhamento de dados, mas com diferenças importantes — pois envolve movimentação financeira, não apenas leitura de dados.
+
+### Diferenças em relação ao fluxo de dados
+
+| Aspecto | Compartilhamento de dados | Iniciação de pagamento (PISP) |
+|---|---|---|
+| O que é autorizado | Leitura de dados por período | Uma transação específica |
+| Prazo do consentimento | Até 12 meses | Único uso (ou agendamento específico) |
+| Reversibilidade | Revogação cancela acessos futuros | Após execução, o Pix não é reversível |
+| Risco para o cliente | Exposição de dados | Movimentação financeira real |
+| Segunda autenticação | Opcional (depende do banco) | Obrigatória |
+
+### Fluxo específico do PISP
+
+O fluxo segue os mesmos passos do consentimento de dados, com três diferenças:
+
+**Na tela de consentimento:** o cliente vê os detalhes exatos da transação — valor, destinatário (nome e chave Pix), data de execução. Não há granularidade: o cliente aprova ou recusa a transação inteira.
+
+**Na confirmação:** o banco transmissor exige uma **segunda autenticação forte** (senha ou biometria) especificamente para confirmar a transação — mesmo que o cliente já tenha se autenticado para acessar o app. Isso é um requisito regulatório para pagamentos.
+
+**Após a aprovação:** o token gerado é um **token de pagamento** — válido apenas para aquela instrução específica. O receptor usa o token para enviar a instrução de pagamento à API do transmissor, que executa o Pix imediatamente (ou na data agendada).
+
+---
+
+## 4. Como revogar o consentimento
+
+O cliente pode revogar qualquer consentimento ativo a qualquer momento, por três caminhos:
+
+**1. No app do banco transmissor:** na seção "Open Finance" ou "Privacidade e dados compartilhados", o cliente vê todos os consentimentos ativos e pode revogar individualmente.
+
+**2. No app do receptor:** o receptor é obrigado a oferecer uma opção de revogação no próprio aplicativo. O receptor notifica o transmissor, que invalida o token.
+
+**3. No portal centralizado do Open Finance Brasil:** em `openbankingbrasil.org.br`, o cliente pode ver e revogar todos os consentimentos de todas as instituições em um único lugar.
+
+Após a revogação, o receptor perde acesso imediatamente. Dados já consultados e armazenados pelo receptor devem ser tratados conforme a finalidade declarada no consentimento — a LGPD se aplica integralmente.

@@ -1,0 +1,63 @@
+---
+title: "Backoffice — Liquidação, posição e regulação"
+order: 4
+description: "Liquidação pronto vs. futuro, posição cambial do banco, SISBACEN e RDE"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O backoffice de câmbio opera na intersecção entre o relacionamento com o cliente, a tesouraria do banco e o regulador. Cada operação gera obrigações de registro, liquidação e controle de risco que precisam ser gerenciadas com precisão.
+
+## Posição cambial do banco
+
+Quando o banco realiza operações de câmbio com clientes, acumula uma **posição cambial** — a diferença entre os ativos e passivos em moeda estrangeira.
+
+**Posição comprada (long):** o banco tem mais ativos em moeda estrangeira do que passivos. Se o dólar subir, o banco ganha; se cair, perde.
+
+**Posição vendida (short):** o banco tem mais passivos em moeda estrangeira do que ativos. Se o dólar cair, o banco ganha; se subir, perde.
+
+**Posição nivelada (square):** ativos e passivos em moeda estrangeira estão equilibrados. O banco não tem exposição ao risco cambial.
+
+**Gestão da posição:**
+O banco não quer acumular posição cambial excessiva — isso seria especulação, não serviço ao cliente. A tesouraria monitora a posição em tempo real e realiza operações no mercado interbancário para nivelar a posição quando necessário.
+
+**Limites regulatórios:** o BACEN define limites para a posição cambial dos bancos, tanto para posições compradas quanto vendidas. Exceder esses limites resulta em penalidades.
+
+## Liquidação das operações
+
+**Liquidação pronto (D+2):**
+1. No dia da contratação (D+0): contrato de câmbio assinado, registro no SISBACEN
+2. D+1: banco envia instrução de pagamento ao correspondente no exterior (via SWIFT MT103)
+3. D+2: correspondente debita a conta nostro do banco e credita o banco do beneficiário; banco debita/credita o cliente em reais
+
+**Liquidação futura:**
+O contrato é fechado hoje com taxa travada, mas a liquidação ocorre na data futura acordada. O banco registra o contrato como um derivativo cambial no balanço. Na data de liquidação, o processo segue o mesmo fluxo do pronto.
+
+**Falha de liquidação:** se o cliente não tiver saldo suficiente na data de liquidação, o banco pode:
+- Cobrar multa contratual
+- Cancelar o contrato (com possível perda para o cliente se a taxa mudou)
+- Renegociar a data de liquidação (com nova taxa)
+
+## Controles de compliance cambial
+
+O backoffice de câmbio tem responsabilidades específicas de compliance:
+
+**Verificação de sanções:** antes de processar qualquer remessa internacional, o banco verifica se o beneficiário ou o país de destino está em listas de sanções internacionais (OFAC dos EUA, listas da ONU, listas da UE). Operações com entidades sancionadas são bloqueadas automaticamente.
+
+**Monitoramento de evasão de divisas:** o BACEN e a Receita Federal monitoram operações que possam indicar evasão de divisas — envio de recursos ao exterior sem declaração ou com declaração falsa de finalidade. O banco é obrigado a reportar operações suspeitas ao COAF.
+
+**Declaração de capitais brasileiros no exterior (DCBE):** pessoas físicas e jurídicas com ativos no exterior acima de USD 1 milhão são obrigadas a declarar ao BACEN anualmente (e trimestralmente acima de USD 100 milhões). O banco auxilia clientes nessa obrigação.
+
+## Regulação BACEN do mercado de câmbio
+
+O BACEN é o regulador e supervisor do mercado de câmbio brasileiro. Suas principais atribuições:
+
+**Autorização:** apenas instituições autorizadas pelo BACEN podem realizar operações de câmbio. A autorização é específica por tipo de operação (câmbio turismo, câmbio comercial, operações de maior complexidade).
+
+**SISBACEN:** sistema onde todas as operações são registradas. O BACEN usa esses dados para monitorar o mercado, calcular as reservas internacionais e produzir estatísticas do balanço de pagamentos.
+
+**Intervenção no mercado:** quando o real se desvaloriza ou valoriza excessivamente, o BACEN pode intervir comprando ou vendendo dólares no mercado interbancário para suavizar a volatilidade. Não fixa a taxa de câmbio (o Brasil tem câmbio flutuante), mas atua para evitar movimentos bruscos.
+
+**Reservas internacionais:** o BACEN mantém reservas em moeda estrangeira (principalmente dólares e euros) para garantir a capacidade do país de honrar compromissos externos e defender o real em crises. As reservas são gerenciadas pela área de gestão de reservas do BACEN, separada da área de regulação cambial.
+
+Para os conceitos de câmbio turismo, câmbio comercial e SWIFT, consulte o cap. 20 (seção 01).

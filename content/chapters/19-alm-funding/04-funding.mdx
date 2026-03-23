@@ -1,0 +1,99 @@
+---
+title: "Conceitos — Depósitos, CDB e custo de funding"
+order: 4
+description: "As principais fontes de captação de um banco e como o custo de funding é calculado"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Para emprestar dinheiro, o banco precisa primeiro captar dinheiro. O **funding** é o conjunto de recursos que o banco capta para financiar suas operações. Entender as fontes de funding e seus custos é essencial para a gestão financeira de um banco.
+
+## Fontes de funding
+
+### Depósitos à vista
+
+Os depósitos em contas correntes são a fonte de funding mais barata — o banco paga pouco ou nada por eles. Mas são também os mais instáveis: o cliente pode sacar a qualquer momento.
+
+**Custo:** próximo de zero (o banco pode pagar algum rendimento, mas geralmente não paga)
+**Estabilidade:** baixa (saques imprevisíveis)
+**Volume:** alto (é o produto mais comum)
+
+### Depósitos a prazo (CDB)
+
+Os CDBs são a principal fonte de funding de médio prazo. O cliente "empresta" dinheiro ao banco por um prazo definido, recebendo juros em troca.
+
+**Custo:** geralmente entre 90% e 120% do CDI, dependendo do prazo e do banco
+**Estabilidade:** média (o cliente pode resgatar antecipadamente, mas perde parte dos juros)
+**Volume:** alto
+
+**Tipos de CDB:**
+- **CDB pré-fixado:** taxa definida no momento da aplicação (ex: 12% ao ano)
+- **CDB pós-fixado:** taxa atrelada ao CDI (ex: 100% do CDI)
+- **CDB IPCA+:** taxa real + inflação (ex: IPCA + 5% ao ano)
+
+### LCI e LCA
+
+Letras de Crédito Imobiliário (LCI) e do Agronegócio (LCA) são captações com isenção de IR para pessoas físicas. Isso permite que o banco ofereça taxas menores que o CDB e ainda seja atrativo para o investidor.
+
+**Custo:** geralmente entre 85% e 95% do CDI (menor que CDB por causa da isenção de IR)
+**Restrição:** os recursos captados precisam ser direcionados para crédito imobiliário (LCI) ou agronegócio (LCA)
+
+### Captação interbancária (CDI)
+
+Bancos emprestam entre si via CDI overnight. É uma fonte de funding de curtíssimo prazo, usada para ajustes de liquidez.
+
+**Custo:** taxa CDI (definida pelo mercado, próxima à Selic)
+**Prazo:** geralmente overnight (1 dia)
+
+### DPGE — Depósito a Prazo com Garantia Especial
+
+O **DPGE** é um instrumento de captação criado pelo FGC (Fundo Garantidor de Créditos) para bancos de médio porte. Oferece cobertura do FGC de até R$ 40 milhões por CPF/CNPJ por instituição — muito acima do limite padrão de R$ 250 mil.
+
+Essa garantia ampliada permite que bancos médios captem de investidores institucionais (fundos, seguradoras) que normalmente exigem maior segurança. É uma fonte de funding relevante para instituições que não têm o porte para emitir no mercado de capitais.
+
+### Emissão de títulos no mercado de capitais
+
+Bancos maiores podem emitir debêntures, letras financeiras (LF) e outros títulos no mercado de capitais para captar recursos de longo prazo.
+
+**Custo:** variável, dependendo do rating do banco e das condições de mercado
+**Prazo:** geralmente 2-5 anos
+**Vantagem:** funding de longo prazo, que permite financiar ativos de longo prazo
+
+## Custo de funding
+
+O **custo de funding** é a taxa média que o banco paga pelos recursos captados. É calculado como a média ponderada dos custos de cada fonte:
+
+```
+Custo de funding = Σ (volume_fonte × custo_fonte) / volume_total
+```
+
+**Exemplo:**
+| Fonte | Volume | Custo | Contribuição |
+|---|---|---|---|
+| Depósitos à vista | R$ 500M | 0% | 0% |
+| CDB | R$ 300M | 100% CDI | 30% CDI |
+| LCI/LCA | R$ 100M | 90% CDI | 9% CDI |
+| CDI interbancário | R$ 100M | 100% CDI | 10% CDI |
+| **Total** | **R$ 1B** | | **49% CDI** |
+
+Neste exemplo, o custo médio de funding é 49% do CDI — bem abaixo do CDI porque os depósitos à vista (que não pagam juros) representam metade do funding.
+
+## Spread bancário
+
+O **spread bancário** é a diferença entre a taxa cobrada nos empréstimos e o custo de funding. É a principal fonte de receita de um banco.
+
+```
+Spread = Taxa de crédito - Custo de funding
+```
+
+Se o banco empresta a 15% ao ano e seu custo de funding é 10% ao ano, o spread é 5% ao ano. Mas desse spread, o banco ainda precisa cobrir: inadimplência, custos operacionais, impostos e lucro.
+
+O spread bancário no Brasil é um dos mais altos do mundo — reflexo da inadimplência elevada, dos custos operacionais altos, da concentração bancária e da carga tributária.
+
+## Risco de concentração de funding
+
+Um risco frequentemente subestimado é a **concentração de funding**: quando uma parcela significativa dos recursos captados vem de poucos clientes ou de uma única fonte.
+
+Se um grande depositante (ex: um fundo de investimento com R$ 500M em CDB) decide resgatar, o banco pode ter dificuldade de substituir esse funding rapidamente. Quanto mais concentrado o passivo, maior a vulnerabilidade a saídas abruptas.
+
+O ALM monitora a concentração de funding por tipo de instrumento, por prazo e por contraparte. Regulatoriamente, o BACEN avalia a concentração de funding como parte da supervisão de risco de liquidez.

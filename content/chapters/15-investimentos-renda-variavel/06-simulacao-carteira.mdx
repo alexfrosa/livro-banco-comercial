@@ -1,0 +1,48 @@
+---
+title: "Simulação — Carteira de ações"
+order: 6
+description: "Monte uma carteira, simule compra/venda, calcule ganho de capital e IR via DARF"
+simulation: true
+---
+
+Nesta simulação, você vai gerenciar uma carteira de ações do início ao fim: compras, vendas, eventos corporativos e cálculo do IR mensal via DARF.
+
+## O que você vai praticar
+
+- Comprar e vender ações a preços simulados
+- Calcular o preço médio de aquisição após múltiplas compras
+- Aplicar a isenção de R$ 20.000 para vendas mensais de ações
+- Calcular o IR de 15% sobre o ganho de capital (ou 20% para day trade)
+- Processar um evento de split e recalcular o preço médio
+- Receber dividendos e verificar a isenção de IR
+
+## Regras de tributação aplicadas
+
+| Situação | Alíquota | Isenção |
+|---|---|---|
+| Venda de ações (swing trade) | 15% sobre o lucro | Sim — vendas ≤ R$ 20.000/mês |
+| Day trade | 20% sobre o lucro diário | Não |
+| Dividendos | Isento | — |
+| JCP | 15% retido na fonte | — |
+| ETFs | 15% sobre o lucro | Não |
+
+## Cenários disponíveis
+
+### Cenário 1: Compras parceladas e preço médio
+Compre a mesma ação em três momentos diferentes (preços diferentes). Observe como o preço médio de aquisição é calculado a cada compra. Depois venda parte da posição e calcule o ganho de capital.
+
+### Cenário 2: Isenção mensal de R$ 20.000
+Monte uma carteira e realize vendas em dois meses diferentes: no primeiro mês, venda R$ 18.000 (abaixo do limite de isenção); no segundo, venda R$ 25.000. Observe como o IR é calculado em cada caso.
+
+### Cenário 3: Compensação de prejuízo
+Venda uma ação com prejuízo em janeiro. No mês seguinte, venda outra com lucro. Observe como o prejuízo anterior reduz a base de cálculo do IR.
+
+### Cenário 4: Split e recálculo de preço médio
+Compre 100 ações a R$ 60. A empresa anuncia um split de 1 para 3. Observe como a posição muda (300 ações a R$ 20) e como o preço médio é ajustado para fins de IR.
+
+### Cenário 5: Day trade
+Compre e venda a mesma ação no mesmo dia. Observe a alíquota de 20% (sem isenção) e o IR retido na fonte de 1% sobre o lucro do day trade.
+
+> **Dica:** o IR de renda variável é responsabilidade do investidor — a corretora não recolhe automaticamente. Use o simulador para praticar o cálculo antes de precisar preencher o DARF de verdade.
+
+Para os conceitos de tributação e eventos corporativos, consulte o cap. 15 (seção 04). Para o processo de Home Broker e custódia, consulte o cap. 15 (seção 05).

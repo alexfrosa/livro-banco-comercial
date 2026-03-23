@@ -1,0 +1,80 @@
+---
+title: "Jornada — Aplicação, custódia e resgate"
+order: 2
+description: "O ciclo completo de um investimento: da aplicação ao resgate, passando pela custódia"
+---
+
+O ciclo de vida de um investimento bancário envolve três fases principais: aplicação (o cliente investe), custódia (o investimento fica guardado e rendendo) e resgate (o cliente recebe de volta com rendimento).
+
+## Aplicação
+
+O cliente decide investir e escolhe o produto:
+
+**1. Seleção do produto:** o cliente escolhe o produto (CDB, LCI, LCA), o prazo e o valor. O sistema mostra as taxas disponíveis para cada combinação.
+
+**2. Simulação:** o sistema calcula o rendimento esperado, o IR a ser retido e o valor líquido no vencimento.
+
+**3. Confirmação:** o cliente confirma a aplicação. O sistema verifica:
+- O cliente tem saldo disponível?
+- O valor está dentro dos limites mínimos e máximos do produto?
+- O cliente está elegível para o produto? (LCI/LCA exigem que o banco tenha carteira correspondente)
+
+**4. Emissão do título:** o sistema emite o título (CDB, LCI, LCA) com os dados da operação: valor, taxa, prazo, vencimento.
+
+**5. Débito na conta:** o valor é debitado da conta corrente do cliente.
+
+**6. Registro:** a operação é registrada no sistema de custódia e no ledger.
+
+**7. Confirmação ao cliente:** o cliente recebe o comprovante da aplicação com todos os dados do título.
+
+## Custódia
+
+Durante o prazo do investimento, o sistema de custódia:
+
+**Controle de posições:** mantém o registro de todos os títulos emitidos, com valor, taxa, prazo e titular.
+
+**Cálculo de rendimento:** diariamente, o sistema calcula o rendimento acumulado de cada título. Para CDB pós-fixado, o rendimento é calculado com base no CDI do dia.
+
+**Marcação a mercado:** para títulos que podem ser negociados antes do vencimento, o sistema calcula o valor de mercado atual.
+
+**Atualização de saldo:** o saldo de investimentos do cliente é atualizado diariamente com o rendimento acumulado.
+
+**Controle de vencimentos:** o sistema monitora os vencimentos e alerta o cliente com antecedência para que ele decida se quer renovar ou resgatar.
+
+## Resgate
+
+No vencimento (ou antes, se o produto permitir):
+
+**1. Solicitação de resgate:** o cliente solicita o resgate via app ou agência.
+
+**2. Cálculo do valor de resgate:**
+```
+Valor bruto = Principal + Rendimento acumulado
+IR = Valor bruto × alíquota (conforme prazo)
+IOF = Valor bruto × alíquota (se prazo < 30 dias)
+Valor líquido = Valor bruto - IR - IOF
+```
+
+**3. Retenção de IR na fonte:** o banco retém o IR e recolhe à Receita Federal.
+
+**4. Crédito na conta:** o valor líquido é creditado na conta corrente do cliente.
+
+**5. Emissão do informe:** o sistema registra a operação para o informe de rendimentos anual (necessário para a declaração de IR do cliente).
+
+**6. Baixa do título:** o título é baixado do sistema de custódia.
+
+## Resgate antecipado
+
+Para produtos com liquidez antes do vencimento:
+
+- O banco pode cobrar uma penalidade (redução da taxa)
+- O IR é calculado sobre o prazo efetivo (não o prazo original)
+- O IOF pode ser cobrado se o prazo for menor que 30 dias
+
+Para produtos sem liquidez antes do vencimento (LCI/LCA com prazo mínimo), o resgate antecipado não é permitido.
+
+## Renovação automática
+
+Muitos bancos oferecem renovação automática: no vencimento, o título é automaticamente renovado nas condições vigentes, a menos que o cliente solicite o resgate.
+
+O backoffice precisa garantir que as renovações automáticas sejam processadas corretamente e que o cliente seja notificado das novas condições.

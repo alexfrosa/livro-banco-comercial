@@ -1,0 +1,80 @@
+---
+title: "ICAAP, Stress Testing e os Pilares 2 e 3 de Basileia"
+order: 3
+description: "Avaliação interna de adequação de capital, cenários de estresse e transparência regulatória"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O ICAAP (Internal Capital Adequacy Assessment Process) é o processo pelo qual o banco avalia se seu capital é suficiente para cobrir todos os riscos relevantes — não apenas aqueles exigidos no Pilar 1 do Basileia III. É o coração do Pilar 2 e é regulado pela <Ref id="resolucao-cmn-4557" /> e pelo <Ref id="basileia-iii" />.
+
+## Os três pilares de Basileia III na prática
+
+### Pilar 1 — Requisitos mínimos de capital
+
+Já discutido no capítulo de risco. Define os requerimentos mínimos para risco de crédito, mercado e operacional usando metodologias padronizadas ou modelos internos aprovados. O capital mínimo é calculado quantitativamente.
+
+**No Brasil:** a <Ref id="resolucao-cmn-5081-2023" /> consolida os requisitos de capital, incluindo os buffers (conservação de 2,5%, contracíclico de 0-2,5%, sistêmico de 1-3,5% para G-SIBs brasileiros).
+
+### Pilar 2 — Processo de Revisão Supervisória (SREP)
+
+O Pilar 2 reconhece que os modelos padronizados do Pilar 1 não capturam todos os riscos de todos os bancos. Cada banco deve ter seu próprio processo (ICAAP) para avaliar se precisa de capital adicional além do Pilar 1.
+
+O BACEN, por sua vez, revisa o ICAAP de cada banco e pode exigir capital adicional se considerar que o processo interno é inadequado ou que os riscos não estão devidamente cobertos — é o **SREP (Supervisory Review and Evaluation Process)**.
+
+### Pilar 3 — Transparência e Disciplina de Mercado
+
+Os bancos são obrigados a divulgar publicamente informações sobre:
+- Composição do Patrimônio de Referência (Capital Principal, Adicional de Nível I, Nível II)
+- Valor do RWA e de cada componente
+- Índice de Basileia atual e evolução histórica
+- Exposições relevantes por categoria de risco
+- Descrição do processo de gestão de riscos
+
+Essa transparência permite que investidores, analistas e credores avaliem a solidez do banco sem depender apenas das informações reportadas ao regulador. A publicação é obrigatória no site do banco, geralmente trimestral.
+
+## ICAAP — o processo na prática
+
+O ICAAP é um documento interno que integra todos os riscos do banco em uma avaliação consolidada de adequação de capital:
+
+**1. Identificação e avaliação de todos os riscos materiais:**
+Além dos riscos do Pilar 1 (crédito, mercado, operacional), o ICAAP considera:
+- **Risco de concentração:** exposição excessiva a um setor, região ou cliente
+- **Risco de taxa de juros no banking book (IRRBB):** impacto de variações de juros nos ativos e passivos não marcados a mercado
+- **Risco de liquidez:** já coberto pelo LCR/NSFR, mas com análise adicional de stress
+- **Risco de reputação e estratégico:** mais difíceis de quantificar, avaliados qualitativamente
+
+**2. Quantificação do capital econômico:**
+Para cada risco, o banco estima o **capital econômico** necessário: o quanto de capital seria necessário para absorver perdas em um cenário de estresse severo (geralmente nível de confiança de 99,9% para um horizonte de 1 ano).
+
+**3. Stress testing:**
+O ICAAP inclui cenários de estresse macroeconômicos — o que aconteceria com o capital e os riscos do banco em uma recessão severa? Alta abrupta de juros? Desvalorização cambial de 30%?
+
+O BACEN publica periodicamente **cenários de estresse de referência** para que os bancos testem sua resiliência usando pressupostos comparáveis.
+
+**4. Planejamento de capital:**
+O ICAAP inclui uma projeção de capital para os próximos 3-5 anos, considerando crescimento da carteira, resultado esperado, distribuição de dividendos e emissões de capital potenciais.
+
+## Stress Testing — além do VaR
+
+O stress testing complementa o VaR com análises de cenários extremos mas plausíveis que o VaR (baseado em distribuições históricas) não captura bem:
+
+**Cenários históricos:** reproduzir o impacto da crise de 2008, da crise fiscal de 2015, da pandemia de 2020 sobre a carteira atual do banco.
+
+**Cenários hipotéticos:** projetar cenários que ainda não ocorreram mas são plausíveis — alta do dólar para R$ 8, Selic a 20%, desemprego a 15%.
+
+**Reverse stress testing:** em vez de definir o cenário e calcular o impacto, define-se o resultado indesejado (ex: banco fica abaixo do capital mínimo) e identifica quais combinações de choques poderiam causar isso. É uma ferramenta poderosa para identificar vulnerabilidades que análises convencionais não revelariam.
+
+**Back-testing do VaR:** verificação periódica de se o modelo VaR está calibrado corretamente — em um modelo VaR 99%, as perdas reais diárias deveriam superar o VaR estimado em aproximadamente 1% dos dias (2-3 dias por ano). Se as exceções forem mais frequentes, o modelo está subestimando o risco e precisa de recalibração.
+
+## Apetite de Risco e RAS
+
+O ICAAP está ligado ao **RAS (Risk Appetite Statement)** — a declaração formal do Conselho de Administração sobre o nível de risco que o banco aceita assumir para atingir seus objetivos estratégicos.
+
+O RAS define limites em métricas como:
+- "O Índice de Basileia não deve cair abaixo de 12%"
+- "O NPL não deve superar 4% da carteira total"
+- "A posição cambial aberta não deve superar USD 200M"
+- "O LCR deve ser mantido acima de 120%"
+
+Quando os limites do RAS são atingidos, disparam-se alertas automáticos e o processo de escalada para a alta gestão.

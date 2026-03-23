@@ -1,0 +1,65 @@
+---
+title: "Custódia Centralizada — B3, SELIC e CETIP"
+order: 3
+description: "Como funcionam os sistemas de custódia e liquidação de ativos financeiros no Brasil"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A custódia centralizada é a infraestrutura que garante que os ativos financeiros existem, pertencem a quem diz pertencer, e são transferidos corretamente quando comprados ou vendidos. No Brasil, três sistemas concentram a custódia da quase totalidade dos ativos financeiros.
+
+## SELIC — Sistema Especial de Liquidação e Custódia
+
+O **SELIC** é operado pelo BACEN e custódia os **títulos públicos federais** (LFT, LTN, NTN-B, NTN-F). É também o sistema pelo qual o BACEN opera a política monetária via open market.
+
+**Como o banco acessa o SELIC:**
+O banco precisa ser **participante direto** do SELIC (credenciamento junto ao BACEN) para manter títulos em seu próprio nome. Bancos menores ou que não são participantes diretos acessam via participante custodiante (banco maior que presta o serviço de custódia).
+
+**Registro e liquidação:**
+Cada operação com títulos públicos é registrada no SELIC em tempo real. A liquidação segue o princípio **DvP (Delivery vs. Payment)** — a entrega do título e o pagamento ocorrem simultaneamente, eliminando o risco de liquidação (não há risco de pagar sem receber o título, ou receber o título sem o pagamento).
+
+**O que o banco vê no SELIC:**
+A posição de cada título (quantidade, valor nominal, acréscimo de rendimento), as operações em aberto (compromissadas, no mercado a termo), e o extrato de movimentações.
+
+**Custo de oportunidade dos títulos em garantia:**
+Títulos em garantia de operações compromissadas ou como colateral estão bloqueados e não podem ser negociados livremente. O banco precisa gerenciar sua carteira para ter títulos livres disponíveis para as necessidades de liquidez do dia.
+
+## B3 — Custódia de Renda Variável e Renda Fixa Privada
+
+A **B3 (Brasil, Bolsa, Balcão)** custódia ações, BDRs, ETFs, debêntures, CRIs, CRAs, FIIs, fundos, CDBs registrados, e outros instrumentos.
+
+**Central Depositária da B3:**
+É a entidade dentro da B3 responsável pela custódia. Funciona em dois níveis:
+- **Conta própria:** posição de cada participante (banco, corretora) em seu próprio nome
+- **Conta de clientes:** posição dos clientes de cada participante, segregada da conta própria
+
+Essa segregação é fundamental: em caso de falência de uma corretora, os ativos dos clientes na custódia da B3 não fazem parte da massa falida — são propriedade dos investidores.
+
+**DvP na B3:**
+Operações de bolsa liquidam em D+2 (dois dias úteis após o negócio). A liquidação financeira ocorre via STR (reservas bancárias), e a liquidação do ativo ocorre simultaneamente no sistema da B3 — DvP garantido pela própria B3 que atua como contraparte central (CCP).
+
+**Banco Agente de Custódia:**
+Para que os clientes PF e PJ possam ter ativos na B3, precisam de um banco ou corretora habilitado como **Agente de Custódia** junto à B3. O banco abre uma subconta para cada cliente na B3 e é o intermediário entre o cliente e a Central Depositária.
+
+## CETIP (integrada à B3)
+
+O **CETIP** era um sistema separado que foi incorporado à B3 em 2017. Hoje opera como segmento OTC (over-the-counter) da B3, custodiando principalmente:
+- CDBs, LCIs, LCAs, LFs
+- Debêntures (mercado primário e secundário OTC)
+- CDBs de bancos menores (não listados em bolsa)
+- Derivativos de balcão (swaps, NDFs)
+
+**Diferença entre B3 bolsa e B3/CETIP OTC:**
+- Bolsa: negociação em mercado transparente, preços visíveis, liquidação garantida pela CCP
+- CETIP/OTC: negociação direta entre partes, preços negociados bilateralmente, liquidação com risco de contraparte (mas registrada no sistema para verificação)
+
+## Reconciliação de custódia — rotina do backoffice
+
+Diariamente (ou no fechamento mensal), o banco reconcilia sua posição contábil com o extrato da B3/SELIC:
+
+1. O backoffice de investimentos extrai a posição do sistema interno de gestão de ativos
+2. Extrai o extrato de custódia da B3/SELIC via arquivo eletrônico
+3. Compara as duas posições ativo a ativo
+4. Qualquer divergência é investigada: pode ser uma transação processada num sistema mas não no outro, um erro de lançamento, ou (raramente) um problema sistêmico
+
+A reconciliação de custódia é uma das principais verificações de auditoria interna e externa. Uma posição não reconciliada por mais de alguns dias é um sinal vermelho grave.

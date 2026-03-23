@@ -1,0 +1,42 @@
+---
+title: "Simulação — Criar cliente, validar dados, aprovar/reprovar"
+order: 4
+description: "Pratique o fluxo completo de onboarding: criação, validação e decisão de aprovação"
+simulation: "KYCOnboarding"
+---
+
+Nesta simulação, você vai percorrer o fluxo completo de onboarding de um novo cliente, tomando as mesmas decisões que um sistema bancário real tomaria.
+
+## O que você vai praticar
+
+- Preencher os dados de um novo cliente (PF ou PJ)
+- Ver as validações automáticas sendo executadas em tempo real
+- Consultar os resultados simulados de bureaus externos
+- Tomar a decisão de aprovação, reprovação ou encaminhamento para análise manual
+- Entender o impacto de cada dado no perfil de risco
+
+## Cenários disponíveis
+
+### Cenário 1: Cliente PF sem pendências
+Um cliente com CPF válido, sem restrições, com renda compatível com o perfil. O fluxo automático deve aprovar.
+
+### Cenário 2: Cliente PF com restrições
+Um cliente com histórico de inadimplência no Serasa. O sistema deve reprovar automaticamente ou encaminhar para análise.
+
+### Cenário 3: Cliente PEP
+Um cliente que é familiar de um político. Requer due diligence reforçada e aprovação manual de nível superior.
+
+### Cenário 4: Empresa com estrutura complexa
+Uma holding com múltiplos sócios. O sistema precisa identificar o beneficiário final e solicitar documentação adicional.
+
+## Como interpretar os resultados
+
+Cada validação retorna um status:
+
+- **✓ Aprovado:** a validação passou sem problemas
+- **⚠ Atenção:** há uma inconsistência menor que pode ser resolvida
+- **✗ Reprovado:** a validação falhou e impede a aprovação automática
+
+O resultado final é a combinação de todas as validações. Um único "Reprovado" em validações críticas (identidade, listas restritivas) bloqueia a aprovação automática.
+
+> **Dica:** experimente alterar os dados do cliente e observe como o perfil de risco muda. Tente criar um cliente PEP e veja quais etapas adicionais são acionadas.

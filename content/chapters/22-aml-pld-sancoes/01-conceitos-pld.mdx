@@ -1,0 +1,66 @@
+---
+title: "Conceitos — PLD/AML e monitoramento de transações"
+order: 1
+description: "Prevenção à lavagem de dinheiro: obrigações legais, sistemas de monitoramento, tipologias e criptoativos"
+---
+
+import Ref from '@/components/Ref.astro';
+
+A Prevenção à Lavagem de Dinheiro (PLD) — ou Anti-Money Laundering (AML) em inglês — é um conjunto de obrigações legais e processos internos que os bancos devem manter para detectar, investigar e reportar operações suspeitas de lavagem de dinheiro e financiamento ao terrorismo.
+
+A base legal no Brasil é a <Ref id="lei-9613-1998" /> (Lei de Lavagem de Dinheiro), regulamentada pela <Ref id="circular-bacen-3978" /> para instituições financeiras.
+
+## As três fases da lavagem de dinheiro
+
+**Colocação (placement):** o dinheiro ilícito entra no sistema financeiro. Exemplos: depósitos em espécie fracionados, compra de ativos físicos com dinheiro vivo.
+
+**Ocultação (layering):** o dinheiro é movimentado para dificultar o rastreamento. Exemplos: transferências entre contas em múltiplos países, conversão em criptoativos, compra e venda de imóveis.
+
+**Integração (integration):** o dinheiro retorna à economia como recurso aparentemente legítimo. Exemplos: investimentos em empresas, compra de imóveis de luxo, distribuição de lucros fictícios.
+
+## Obrigações do banco
+
+**Política de PLD:** o banco deve ter uma política formal aprovada pela diretoria, com procedimentos para identificação de clientes, monitoramento de transações e reporte de suspeitas.
+
+**KYC aprofundado:** além do KYC padrão, o banco deve entender a origem dos recursos dos clientes, especialmente para clientes de alto risco (PEPs, empresas de setores sensíveis, clientes com movimentação atípica).
+
+**Monitoramento contínuo:** todas as transações são monitoradas por sistemas automatizados que identificam padrões suspeitos.
+
+**Reporte ao COAF:** operações suspeitas devem ser reportadas ao COAF (Conselho de Controle de Atividades Financeiras), a Unidade de Inteligência Financeira do Brasil.
+
+**Treinamento:** todos os funcionários devem ser treinados em PLD anualmente.
+
+## Sistemas de monitoramento de transações
+
+Os sistemas de monitoramento (Transaction Monitoring Systems — TMS) analisam automaticamente todas as transações em busca de padrões suspeitos.
+
+**Como funcionam:**
+
+1. **Regras de negócio:** alertas para padrões específicos conhecidos (ex: depósitos em espécie acima de R$ 50.000, transferências para países de alto risco, fracionamento de valores).
+
+2. **Modelos de machine learning:** identificam desvios do comportamento histórico do cliente. Uma empresa que sempre movimenta R$ 500 mil/mês e de repente movimenta R$ 5 milhões gera alerta.
+
+3. **Análise de rede:** identificam conexões entre clientes que individualmente parecem normais, mas em conjunto formam um padrão suspeito.
+
+**Tipologias monitoradas:**
+
+- **Smurfing:** múltiplas pessoas físicas fazendo depósitos fracionados em uma conta
+- **Structuring:** fracionamento deliberado para ficar abaixo dos limites de reporte
+- **Round-tripping:** dinheiro que sai e volta ao mesmo cliente via rotas complexas
+- **Shell companies:** empresas sem atividade real usadas para movimentar recursos
+- **Trade-based money laundering:** superfaturamento ou subfaturamento de operações de comércio exterior
+
+## Criptoativos e PLD
+
+A ascensão dos criptoativos criou novos desafios para a PLD. O BACEN e a CVM regulam as exchanges de criptoativos no Brasil, exigindo que apliquem as mesmas obrigações de PLD dos bancos tradicionais.
+
+**Riscos específicos dos criptoativos:**
+
+- **Pseudoanonimato:** transações em blockchain são públicas, mas os endereços não são diretamente vinculados a identidades
+- **Mixers e tumblers:** serviços que misturam criptoativos de múltiplas origens para dificultar o rastreamento
+- **DeFi (finanças descentralizadas):** protocolos sem intermediário identificável, dificultando a aplicação de KYC
+- **Stablecoins:** criptoativos atrelados a moedas fiduciárias, usados para mover valor rapidamente entre jurisdições
+
+**Ferramentas de análise de blockchain:** empresas como Chainalysis e Elliptic oferecem ferramentas que rastreiam o histórico de transações de endereços de criptoativos, identificando conexões com endereços conhecidos de atividades ilícitas (darknet markets, ransomware, exchanges não reguladas).
+
+Os bancos que oferecem serviços relacionados a criptoativos devem integrar essas ferramentas ao seu processo de KYC e monitoramento.

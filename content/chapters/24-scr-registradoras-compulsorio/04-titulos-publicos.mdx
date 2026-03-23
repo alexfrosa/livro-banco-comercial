@@ -1,0 +1,90 @@
+---
+title: "Títulos Públicos Federais e CDI Overnight"
+order: 4
+description: "LFT, LTN, NTN-B e NTN-F: características, precificação e uso na gestão de tesouraria"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Os títulos públicos federais são os principais instrumentos de renda fixa do mercado brasileiro. Emitidos pelo Tesouro Nacional e custodiados no SELIC (Sistema Especial de Liquidação e Custódia), formam a base da carteira de tesouraria de qualquer banco e são utilizados como colateral em operações de repo, cumprimento de compulsório e gestão de liquidez.
+
+## O mercado SELIC e o CDI overnight
+
+O **SELIC** tem dois papéis que frequentemente são confundidos:
+
+1. **Taxa SELIC:** a meta da taxa básica de juros definida pelo COPOM. É o alvo de política monetária.
+2. **Sistema SELIC:** a infraestrutura de custódia e liquidação dos títulos públicos federais, operada pelo BACEN.
+
+O **CDI (Certificado de Depósito Interbancário)** é a taxa do mercado interbancário overnight — o custo que os bancos cobram uns dos outros em empréstimos de curtíssimo prazo (D+0, com liquidação no mesmo dia no STR). O CDI é calculado pela B3 como a média ponderada das operações de DI registradas entre instituições financeiras.
+
+Na prática, a **taxa CDI flutua muito próxima à taxa SELIC** (geralmente entre 0 e 5 basis points abaixo), pois o BACEN usa operações de open market (compra e venda de títulos) para manter a taxa de mercado próxima à meta.
+
+O CDI é a taxa de referência de:
+- CDBs (ex: "CDB a 100% do CDI")
+- Fundos DI
+- Contratos de swap e DI futuro
+- Custo de captação interbancária
+
+## Os quatro títulos públicos principais
+
+### LFT — Letras Financeiras do Tesouro
+
+**Remuneração:** pós-fixado, corrigido pela taxa SELIC over acumulada no período.
+
+**Características:** é o título de menor risco de mercado — como a remuneração acompanha a Selic diariamente, o preço da LFT é praticamente imune a variações de juros. Não há marcação a mercado relevante.
+
+**Uso:** carteira de liquidez, cumprir compulsório em títulos, posições de curto prazo que precisam de previsibilidade. Em ambientes de alta Selic, é muito atrativo — foi o título preferido dos investidores brasileiros por décadas.
+
+**Duration:** baixa, independente do prazo. Uma LFT de 5 anos tem duration próxima de zero porque o cupom se ajusta diariamente.
+
+### LTN — Letras do Tesouro Nacional
+
+**Remuneração:** prefixado, sem cupons. Emitida com deságio e resgatada pelo valor de face (R$ 1.000).
+
+**Características:** o investidor sabe exatamente quanto receberá no vencimento. O preço atual é o valor presente do R$ 1.000 descontado pela taxa de juros do mercado — se as taxas sobem, o preço cai (marcação a mercado negativa).
+
+**Uso:** posições de carry (ganhar a diferença entre a taxa prefixada e o custo de funding), hedge de ativos prefixados na carteira de crédito, especulação direcional em juros.
+
+**Duration:** igual ao prazo até o vencimento (por não ter cupons intermediários). Uma LTN de 2 anos tem duration de 2 anos — alta sensibilidade a juros.
+
+### NTN-B — Notas do Tesouro Nacional Série B
+
+**Remuneração:** IPCA + taxa de juros real prefixada (ex: IPCA + 6% a.a.). Paga cupons semestrais de 6% a.a. (3% por semestre) sobre o valor nominal atualizado.
+
+**Características:** protege contra a inflação. O valor de face é corrigido diariamente pelo IPCA. É o benchmark dos fundos de previdência e seguradoras por casar com passivos de longo prazo.
+
+**Uso:** hedge de inflação, ALM (casar com captações indexadas ao IPCA), investimento de longo prazo. O Tesouro IPCA+ do Tesouro Direto é a versão varejista da NTN-B.
+
+**Duration:** menor que o prazo, por causa dos cupons semestrais. Uma NTN-B de 10 anos com IPCA+6% tem duration de aproximadamente 7-8 anos.
+
+### NTN-F — Notas do Tesouro Nacional Série F
+
+**Remuneração:** prefixado com cupons semestrais de 10% a.a. (5% por semestre).
+
+**Características:** similar à LTN, mas com pagamentos intermediários. A combinação de taxa prefixada + cupons a torna adequada para estratégias de renda.
+
+**Uso:** posições de médio/longo prazo em taxa prefixada, carteiras que precisam de fluxo de caixa regular. Menos comum que LTN e NTN-B no portfólio bancário.
+
+## Precificação e marcação a mercado
+
+Os títulos públicos (exceto LFT) são **marcados a mercado diariamente** nas carteiras bancárias. A ANBIMA publica curvas de juros de referência (curva pré, curva IPCA, etc.) que são usadas para precificar cada título.
+
+**Fórmula geral de precificação:**
+```
+Preço = Σ (Fluxo de Caixa_i / (1 + taxa)^(t_i/252))
+```
+
+Onde os fluxos são os cupons e o principal, e a taxa é a curva de mercado para o vencimento correspondente.
+
+**Impacto na carteira:** um banco com grande posição em NTN-B longas que vê as taxas de juros reais subirem de 6% para 7% sofre uma perda significativa de marcação a mercado — cada 100bps de alta na curva longa pode causar queda de 7-10% no preço de NTN-Bs de 10 anos.
+
+É por isso que a gestão de duration (ver capítulo de ALM) é crítica: o banco precisa equilibrar o risco de taxa na carteira de títulos com o risco oposto em sua carteira de crédito e passivos.
+
+## Operações de open market
+
+O BACEN usa o mercado de títulos públicos para operar a política monetária via **operações compromissadas (repos)**:
+
+- **Repo com o BACEN (vendedor):** o banco vende títulos ao BACEN com compromisso de recompra. O banco toma dinheiro emprestado do BACEN — usado quando há excesso de liquidez no sistema que o BACEN quer drenar.
+- **Reverse repo (BACEN compra):** o BACEN compra títulos dos bancos com compromisso de revenda. O banco recebe dinheiro — usado quando há escassez de liquidez.
+
+A taxa dessas operações é ajustada para manter o CDI próximo da meta Selic. É o principal mecanismo de transmissão da política monetária para o mercado de curto prazo.

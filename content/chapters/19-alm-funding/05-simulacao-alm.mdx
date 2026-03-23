@@ -1,0 +1,48 @@
+---
+title: "Simulação — Descasamento de carteira e impacto de juros"
+order: 5
+description: "Simule o descasamento entre ativos e passivos e o impacto de variações de taxa de juros"
+simulation: "ALMSimulation"
+---
+
+Nesta simulação, você vai montar o balanço de um banco e ver como variações nas taxas de juros afetam o resultado e o valor econômico da instituição.
+
+## O que você vai praticar
+
+- Montar uma carteira de ativos e passivos com diferentes prazos e taxas
+- Calcular o gap de reprecificação
+- Simular variações na taxa de juros e ver o impacto no resultado
+- Usar derivativos (swaps) para reduzir o risco de taxa
+- Calcular o LCR e o NSFR
+
+## O balanço simplificado
+
+Você vai trabalhar com um banco simplificado:
+
+**Ativos:**
+- Crédito imobiliário (taxa fixa, 20 anos): R$ 400M
+- Crédito pessoal (taxa fixa, 2 anos): R$ 200M
+- Títulos públicos (LFT, taxa variável): R$ 200M
+- Caixa: R$ 200M
+
+**Passivos:**
+- Depósitos à vista: R$ 300M
+- CDB 1 ano (100% CDI): R$ 400M
+- CDB 3 anos (pré-fixado 12%): R$ 200M
+- Patrimônio líquido: R$ 100M
+
+## Cenários para explorar
+
+### Cenário 1: Alta de juros (+3%)
+A Selic sobe 3 pontos percentuais. Quais ativos e passivos são reprecificados? Qual é o impacto no resultado do banco?
+
+### Cenário 2: Queda de juros (-2%)
+A Selic cai 2 pontos percentuais. O banco com muito crédito a taxa fixa se beneficia ou perde?
+
+### Cenário 3: Hedge com swap
+Adicione um swap de taxa de juros para converter parte do crédito imobiliário (taxa fixa) em taxa variável. Como isso muda a sensibilidade do balanço?
+
+### Cenário 4: Crise de funding
+Os CDBs de 1 ano vencem e os clientes não renovam. O banco precisa captar R$ 400M em condições adversas. Qual é o impacto no custo de funding?
+
+> **Dica:** observe o gap report antes e depois de cada cenário. Ele mostra claramente onde estão os descasamentos e como as operações de hedge os reduzem.

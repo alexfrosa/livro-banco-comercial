@@ -16,7 +16,8 @@ export interface ChapterMeta {
   order: number;
   description: string;
   slug: string;
-  part?: string; // Req 1.1, 1.3 — valor exato do frontmatter, sem transformação
+  part?: string;      // Req 1.1, 1.3 — valor exato do frontmatter, sem transformação
+  partOrder?: number; // Req 10.1 — usado para ordenar grupos de Partes
 }
 
 export interface NavItem {
@@ -120,8 +121,8 @@ export function generateCategoryNavItems(
     sections: Array<{ slug: string; frontmatter: SectionFrontmatter }>;
   }>
 ): CategoryNavItem[] {
-  // Map from part title → { minOrder, navItems }
-  const groups = new Map<string, { minOrder: number; children: NavItem[] }>();
+  // Map from part title → { minOrder, partOrder, navItems }
+  const groups = new Map<string, { minOrder: number; partOrder?: number; children: NavItem[] }>();
   const uncategorized: NavItem[] = [];
   let uncategorizedMinOrder = Infinity;
 
@@ -152,7 +153,7 @@ export function generateCategoryNavItems(
       }
     } else {
       if (!groups.has(part)) {
-        groups.set(part, { minOrder: chapter.meta.order, children: [] });
+        groups.set(part, { minOrder: chapter.meta.order, partOrder: chapter.meta.partOrder, children: [] });
       }
       const group = groups.get(part)!;
       group.children.push(chapterNavItem);
@@ -162,9 +163,14 @@ export function generateCategoryNavItems(
     }
   }
 
-  // Build result sorted by minOrder of each group (Req 2.3)
+  // Build result sorted by partOrder (when available) then minOrder of each group (Req 10.1, 2.3)
   const result: CategoryNavItem[] = Array.from(groups.entries())
-    .sort((a, b) => a[1].minOrder - b[1].minOrder)
+    .sort((a, b) => {
+      const aPartOrder = a[1].partOrder ?? Infinity;
+      const bPartOrder = b[1].partOrder ?? Infinity;
+      if (aPartOrder !== bPartOrder) return aPartOrder - bPartOrder;
+      return a[1].minOrder - b[1].minOrder;
+    })
     .map(([title, { children }]) => ({
       title,
       slug: toCategorySlug(title),

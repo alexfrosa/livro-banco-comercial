@@ -1,0 +1,57 @@
+---
+title: "Backoffice — Ajustes manuais e revisões"
+order: 3
+description: "Como o backoffice trata contestações, aplica ajustes e revisa cobranças"
+---
+
+O backoffice de tarifas trata as exceções: contestações de clientes, ajustes manuais, revisões de cobrança e manutenção das tabelas de tarifas.
+
+## Tratamento de contestações
+
+Quando um cliente contesta uma tarifa, o backoffice segue um processo estruturado:
+
+**1. Recebimento da contestação:** via app, call center ou agência. O sistema registra a contestação com data, hora e motivo alegado pelo cliente.
+
+**2. Análise:** o analista verifica:
+- A tarifa foi cobrada corretamente conforme as regras vigentes?
+- O cliente foi informado sobre a tarifa antes da cobrança?
+- Há alguma isenção que deveria ter sido aplicada?
+- É um erro sistêmico (a mesma tarifa foi cobrada incorretamente de outros clientes)?
+
+**3. Decisão:**
+- **Estorno:** a tarifa foi cobrada incorretamente. O valor é estornado na conta do cliente.
+- **Manutenção:** a tarifa foi cobrada corretamente. O analista explica ao cliente por que a cobrança é válida.
+- **Gesto comercial:** a tarifa foi cobrada corretamente, mas o banco decide estornar como gesto de relacionamento (geralmente para clientes de alto valor).
+
+**4. Registro:** a decisão é registrada com justificativa. Isso é importante para auditoria e para identificar padrões de contestação.
+
+## Ajustes manuais
+
+Em situações específicas, o backoffice pode fazer ajustes manuais nas tarifas:
+
+**Isenção retroativa:** um cliente que deveria estar isento foi cobrado. O backoffice estorna as tarifas cobradas indevidamente.
+
+**Aplicação de desconto:** um gerente de relacionamento negocia um desconto especial para um cliente. O backoffice aplica o desconto e registra a autorização.
+
+**Correção de erro sistêmico:** um bug no sistema cobrou a tarifa errada para um grupo de clientes. O backoffice processa o estorno em lote para todos os afetados.
+
+Todos os ajustes manuais requerem autorização e documentação. Ajustes acima de um valor limite exigem aprovação de nível superior.
+
+## Manutenção da tabela de tarifas
+
+O backoffice também é responsável por manter a tabela de tarifas atualizada:
+
+**Alteração de tarifas:** quando o banco decide alterar uma tarifa, o backoffice atualiza o sistema e garante que os clientes sejam notificados com antecedência mínima (regulatória: 30 dias para alterações desfavoráveis ao cliente).
+
+**Criação de novos produtos:** quando um novo produto é lançado, o backoffice configura as tarifas correspondentes no sistema.
+
+**Revisão de isenções:** periodicamente, o backoffice revisa as isenções ativas para garantir que os critérios ainda são atendidos.
+
+## Indicadores de qualidade
+
+| Indicador | Referência |
+|---|---|
+| Taxa de contestação | < 0,5% das cobranças |
+| Tempo de resposta a contestações | ≤ 5 dias úteis |
+| Taxa de estorno por erro sistêmico | < 0,1% |
+| Satisfação do cliente com tarifas | Monitorado via NPS |

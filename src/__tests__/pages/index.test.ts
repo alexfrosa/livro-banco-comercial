@@ -291,7 +291,7 @@ describe('Property 21: Landing page lista todos os capítulos disponíveis', () 
           fc.record({
             slug: fc.string({ minLength: 1, maxLength: 30 }).filter((s) => /^[a-z0-9-]+$/.test(s)),
             title: fc.string({ minLength: 1, maxLength: 80 }).filter((s) => s.trim().length > 0 && !s.includes('<') && !s.includes('>') && !s.includes('&')),
-            description: fc.string({ maxLength: 200 }),
+            description: fc.string({ maxLength: 200 }).filter((s) => !s.includes('<') && !s.includes('>') && !s.includes('&')),
             order: fc.integer({ min: 1, max: 100 }),
           }),
           { minLength: 1, maxLength: 20 }

@@ -162,3 +162,59 @@ describe('Property — ThemeToggle is present for any title prop (Req 3.3)', () 
     );
   });
 });
+
+// ── 7. Content preservation — slug map integrity (Req 11.1, 11.5) ────────────
+
+import { readdirSync, existsSync } from 'fs';
+import { join } from 'path';
+import { CHAPTER_SLUG_MAP } from '../utils/chapterSlugMap';
+
+const CHAPTERS_DIR = resolve(process.cwd(), 'content/chapters');
+
+describe('Preservation 7 — Integridade do CHAPTER_SLUG_MAP (Req 11.1, 11.5)', () => {
+  it('cada entrada do CHAPTER_SLUG_MAP aponta para um arquivo .mdx existente', () => {
+    for (const [oldSlug, newSlug] of Object.entries(CHAPTER_SLUG_MAP)) {
+      const [chapterDir, sectionFile] = newSlug.split('/');
+      const filePath = join(CHAPTERS_DIR, chapterDir, `${sectionFile}.mdx`);
+      expect(
+        existsSync(filePath),
+        `arquivo ausente para mapeamento ${oldSlug} → ${newSlug} (esperado: ${filePath})`
+      ).toBe(true);
+    }
+  });
+
+  it('CHAPTER_SLUG_MAP tem pelo menos 100 entradas (cobertura mínima)', () => {
+    expect(Object.keys(CHAPTER_SLUG_MAP).length).toBeGreaterThanOrEqual(100);
+  });
+});
+
+// ── 8. Content preservation — total de arquivos .mdx (Req 1.3) ───────────────
+
+describe('Preservation 8 — Total de Content_Files preservados (Req 1.3)', () => {
+  function countMdxFiles(): number {
+    let count = 0;
+    const dirs = readdirSync(CHAPTERS_DIR, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name);
+    for (const dir of dirs) {
+      const files = readdirSync(join(CHAPTERS_DIR, dir)).filter((f) => f.endsWith('.mdx'));
+      count += files.length;
+    }
+    return count;
+  }
+
+  it('existem pelo menos 60 arquivos .mdx nos 29 capítulos consolidados', () => {
+    // Original content had ~78 sections; consolidated + cap 13 new content
+    expect(countMdxFiles()).toBeGreaterThanOrEqual(60);
+  });
+
+  it('todos os 29 capítulos têm pelo menos 1 arquivo .mdx', () => {
+    const dirs = readdirSync(CHAPTERS_DIR, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name);
+    for (const dir of dirs) {
+      const files = readdirSync(join(CHAPTERS_DIR, dir)).filter((f) => f.endsWith('.mdx'));
+      expect(files.length, `capítulo ${dir} não tem arquivos .mdx`).toBeGreaterThan(0);
+    }
+  });
+});

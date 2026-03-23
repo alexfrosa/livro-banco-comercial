@@ -1,0 +1,85 @@
+---
+title: "Jornada — Detecção, investigação e reporte ao COAF"
+order: 2
+description: "Do alerta automático ao ROS: o fluxo completo de uma investigação de PLD"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O processo de PLD em um banco segue um fluxo estruturado: detecção automatizada, triagem, investigação aprofundada e, quando necessário, reporte ao COAF. Cada etapa tem responsáveis, prazos e critérios definidos.
+
+## Etapa 1 — Detecção automatizada
+
+O sistema de monitoramento de transações (TMS) gera alertas continuamente. Um alerta não significa que há lavagem de dinheiro — significa que há um padrão que merece análise humana.
+
+**Níveis de alerta:**
+- **Nível 1 (baixo):** desvio leve do padrão histórico. Triagem rápida pelo analista júnior.
+- **Nível 2 (médio):** padrão suspeito identificado. Investigação pelo analista sênior.
+- **Nível 3 (crítico):** múltiplos indicadores de suspeição. Escalado imediatamente para o Diretor de PLD.
+
+## Etapa 2 — Triagem inicial
+
+O analista júnior realiza a triagem:
+
+1. Verifica se há explicação óbvia para o padrão (ex: empresa recebeu pagamento de grande contrato — há nota no sistema?)
+2. Consulta o cadastro do cliente e o histórico de relacionamento
+3. Verifica se o cliente é PEP ou tem relacionamento com PEPs
+4. Decide: **fechar o alerta** (explicação satisfatória) ou **escalar** para investigação
+
+A triagem deve ser concluída em até **48 horas** do alerta.
+
+## Etapa 3 — Investigação aprofundada
+
+O analista sênior conduz a investigação usando múltiplas fontes:
+
+**Fontes internas:**
+- Histórico completo de transações do cliente
+- Cadastro e documentação de KYC
+- Notas de relacionamento do gerente
+- Outros clientes com transações relacionadas
+
+**Fontes externas:**
+- SCR (Sistema de Informações de Crédito do BACEN)
+- Pesquisa em imprensa e fontes abertas
+- Listas de sanções (OFAC, ONU, COAF)
+- Bases de dados de PEPs
+- Cartório de protestos e SERASA
+
+**Contato com o gerente de relacionamento:** o analista pode consultar o gerente sobre o contexto do cliente, mas **sem revelar que há uma investigação de PLD em andamento** (proibição de tipping-off).
+
+## Etapa 4 — Decisão
+
+Após a investigação, o analista sênior decide:
+
+**Fechar o alerta:** a investigação encontrou explicação satisfatória para o padrão. O caso é documentado e arquivado.
+
+**Monitoramento intensificado:** há suspeita, mas insuficiente para reportar. O cliente é colocado em lista de monitoramento com alertas mais sensíveis.
+
+**Reportar ao COAF (ROS):** há indícios suficientes de lavagem de dinheiro ou financiamento ao terrorismo. A decisão de reportar deve ser aprovada pelo Diretor de PLD.
+
+## Etapa 5 — Elaboração do ROS
+
+O Relatório de Operação Suspeita (ROS) é enviado ao COAF via SISCOAF. Deve conter:
+
+- Dados completos do suspeito e das contrapartes
+- Descrição detalhada das operações suspeitas
+- Indicadores de suspeição identificados
+- Análise do analista explicando o raciocínio
+
+**Prazo:** o banco deve reportar assim que concluir que a operação é suspeita. O padrão interno é **24 horas úteis** após a decisão de reportar.
+
+## A proibição de tipping-off
+
+Esta é uma das regras mais críticas do regime de PLD: o banco é **proibido de comunicar ao cliente** que uma comunicação ao COAF foi feita ou está sendo elaborada.
+
+A proibição se estende a todos os funcionários — o gerente de relacionamento não pode avisar o cliente, mesmo que tenha boa intenção.
+
+**Consequência da violação:** crime tipificado no artigo 11 da <Ref id="lei-9613-1998" />, com pena de reclusão de 1 a 3 anos além de multa.
+
+**Situação prática:** quando o banco decide encerrar a conta de um cliente por motivos de PLD, não pode dizer o motivo real. A comunicação do encerramento é feita de forma neutra, citando apenas a política interna de gestão de relacionamento.
+
+## O que acontece após o reporte
+
+O COAF analisa os ROS recebidos, cruza com informações de outros reportes e bases de dados, e pode compartilhar inteligência financeira com Polícia Federal, MP Federal, Receita Federal e organizações internacionais via rede EGMONT.
+
+O banco **não é notificado** do resultado de seus reportes — não sabe se o COAF abriu investigação ou se o caso foi arquivado. A relação é unidirecional.

@@ -1,0 +1,65 @@
+---
+title: "Eventos corporativos e tributação"
+order: 2
+description: "Dividendos, JCP, bonificações, splits, grupamentos e IR sobre ganho de capital"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Eventos corporativos são ações da empresa emissora que afetam as ações em circulação — seja distribuindo recursos aos acionistas, seja alterando a quantidade ou o preço das ações. O backoffice do banco precisa processar cada evento corretamente para garantir que o investidor receba o que tem direito.
+
+## Dividendos
+
+Dividendos são a distribuição de parte do lucro da empresa aos acionistas. No Brasil, a lei das S.A. exige que as empresas distribuam no mínimo 25% do lucro líquido ajustado como dividendos (salvo exceções previstas no estatuto).
+
+**Datas relevantes:**
+- **Data de declaração:** a empresa anuncia o dividendo (valor por ação e datas)
+- **Data ex-dividendo (data ex):** a partir dessa data, quem comprar a ação não tem direito ao dividendo. Quem detinha a ação no dia anterior à data ex recebe o dividendo.
+- **Data de pagamento:** quando o dividendo é efetivamente creditado na conta do acionista
+
+**Tributação:** dividendos são **isentos de IR** para pessoas físicas no Brasil (diferentemente de outros países). Essa isenção é uma característica do sistema tributário brasileiro — a empresa já pagou IR sobre o lucro antes de distribuir.
+
+**Impacto no preço:** na data ex, o preço da ação cai teoricamente pelo valor do dividendo por ação — o mercado ajusta o preço para refletir que a empresa "saiu" com aquele dinheiro.
+
+## JCP — Juros sobre Capital Próprio
+
+O JCP é uma forma alternativa de distribuição de resultados, com tratamento fiscal diferente dos dividendos.
+
+**Como funciona:** a empresa calcula juros sobre o patrimônio líquido (usando a TJLP como taxa) e distribui esse valor aos acionistas. Para a empresa, o JCP é dedutível do IR — reduz o lucro tributável. Para o acionista, o JCP é tributado na fonte a 15%.
+
+**Por que as empresas usam JCP:** a dedutibilidade fiscal torna o JCP mais eficiente do ponto de vista tributário para a empresa. Muitas empresas distribuem uma combinação de dividendos e JCP para otimizar a carga tributária.
+
+## Bonificação
+
+A bonificação é a distribuição de novas ações aos acionistas, sem custo, proporcional à quantidade já detida. Ocorre quando a empresa capitaliza reservas de lucros — transforma lucros acumulados em capital social.
+
+**Exemplo:** bonificação de 10% significa que para cada 10 ações, o acionista recebe 1 ação adicional. Quem tinha 100 ações passa a ter 110.
+
+**Impacto:** o preço por ação cai proporcionalmente (o valor total da posição não muda imediatamente), mas o acionista tem mais ações. O custo médio de aquisição precisa ser recalculado para fins de IR.
+
+## Split (desdobramento)
+
+O split divide cada ação em múltiplas ações, reduzindo o preço unitário proporcionalmente. O valor total da posição não muda.
+
+**Exemplo:** split de 1 para 3 — cada ação vira 3 ações, e o preço cai para 1/3. Quem tinha 100 ações a R$ 90 passa a ter 300 ações a R$ 30.
+
+**Objetivo:** tornar a ação mais acessível a pequenos investidores, aumentar a liquidez.
+
+## Grupamento (inplit)
+
+O grupamento é o oposto do split — múltiplas ações são consolidadas em uma, com aumento proporcional do preço.
+
+**Exemplo:** grupamento de 10 para 1 — cada 10 ações viram 1 ação, e o preço multiplica por 10. Usado quando o preço da ação está muito baixo (penny stocks), o que pode prejudicar a imagem da empresa.
+
+## Tributação de renda variável
+
+**IR sobre ganho de capital:**
+- **Operações comuns (swing trade):** 15% sobre o lucro líquido mensal
+- **Day trade:** 20% sobre o lucro líquido diário
+- **Recolhimento:** o investidor é responsável por calcular e recolher o IR via DARF até o último dia útil do mês seguinte ao da venda
+
+**Isenção mensal:** vendas de ações (não ETFs, não BDRs) abaixo de R$ 20.000 no mês são isentas de IR. Se o total de vendas no mês for R$ 18.000, não há IR a pagar — mesmo que haja lucro.
+
+**Compensação de prejuízos:** prejuízos em operações de renda variável podem ser compensados com lucros futuros, reduzindo a base de cálculo do IR. Operações comuns e day trade têm compensação separada.
+
+**Responsabilidade do investidor:** diferentemente de fundos e renda fixa (onde o IR é retido na fonte), em renda variável o investidor é responsável pelo cálculo e recolhimento. O banco/corretora fornece o informe de rendimentos com as operações, mas não recolhe o IR automaticamente (exceto o IR de 0,005% retido na fonte sobre o valor das vendas, que serve como "dedo-duro" para a Receita Federal).

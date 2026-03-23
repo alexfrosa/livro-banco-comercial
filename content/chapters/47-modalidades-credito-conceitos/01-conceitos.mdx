@@ -1,0 +1,89 @@
+---
+title: "Conceitos — Modalidades de crédito"
+order: 1
+description: "Panorama das modalidades: pessoal, consignado, cheque especial, imobiliário, veículos e empresarial"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O crédito bancário não é um produto único — é uma família de produtos com características, riscos e públicos distintos. Cada modalidade existe porque atende a uma necessidade específica do tomador e apresenta um perfil de risco diferente para o banco. Entender essas diferenças é fundamental para compreender como os bancos precificam o crédito e gerenciam suas carteiras.
+
+## Crédito pessoal sem garantia
+
+O crédito pessoal é a modalidade mais simples: o banco empresta dinheiro ao cliente sem exigir nenhum bem como garantia. O único respaldo é a capacidade de pagamento e o histórico de crédito do tomador.
+
+Por não ter garantia real, o risco de inadimplência é o mais alto entre todas as modalidades. Se o cliente não pagar, o banco não tem um bem para executar — precisa acionar a cobrança judicial, que é lenta e incerta. Esse risco elevado se traduz diretamente nas taxas: o crédito pessoal sem garantia costuma ter as **taxas mais altas do mercado**, frequentemente acima de 5% a.m.
+
+**Público-alvo:** pessoas físicas com renda comprovada, geralmente clientes correntistas do banco.
+
+**Prazo típico:** 12 a 48 meses.
+
+**Uso:** despesas emergenciais, consolidação de dívidas, consumo em geral.
+
+## Crédito consignado
+
+O crédito consignado resolve o problema de risco do crédito pessoal de uma forma elegante: as parcelas são descontadas diretamente da folha de pagamento ou do benefício previdenciário antes de o dinheiro chegar ao cliente. O banco recebe antes do tomador — o risco de inadimplência cai drasticamente.
+
+Essa estrutura permite que os bancos ofereçam **taxas significativamente menores** que o crédito pessoal convencional. A diferença pode ser de 3 a 4 vezes menor na taxa mensal.
+
+**Público elegível:**
+- Servidores públicos federais, estaduais e municipais
+- Aposentados e pensionistas do INSS
+- Empregados de empresas privadas conveniadas
+
+**Margem consignável:** a legislação limita o desconto a 35% da renda líquida do tomador (sendo 5% reservados exclusivamente para cartão de crédito consignado). Isso protege o mínimo necessário para a subsistência do tomador.
+
+**Prazo típico:** até 96 meses para servidores públicos; até 84 meses para beneficiários do INSS.
+
+O backoffice do consignado envolve a gestão de convênios com empregadores e o INSS, o controle de margens disponíveis por CPF, e a averbação das operações nos sistemas dos convenentes.
+
+## Cheque especial
+
+O cheque especial é um **limite de crédito rotativo** pré-aprovado vinculado à conta corrente. Quando o saldo da conta vai a zero, o cliente continua fazendo transações usando o limite do cheque especial — automaticamente, sem precisar solicitar um empréstimo.
+
+A conveniência tem um custo alto. O cheque especial é uma das modalidades mais caras do mercado. Desde 2019, o BACEN impôs um **teto de 8% a.m.** para a taxa do cheque especial (<Ref id="resolucao-bcb-4765" />), mas mesmo esse teto representa um custo anualizado de quase 150%.
+
+**Por que é tão caro?**
+- O banco mantém o limite disponível a qualquer momento, mesmo que o cliente nunca use
+- O uso é imprevisível — o banco não sabe quando e quanto o cliente vai usar
+- Não há garantia real
+- O prazo de uso é indefinido
+
+**Impacto no endividamento:** o uso prolongado do cheque especial é uma das principais causas de endividamento crônico. Um cliente que usa R$ 1.000 de cheque especial por 12 meses paga cerca de R$ 1.500 em juros — 150% do valor original.
+
+O BACEN também exige que os bancos ofereçam ao cliente que usa o cheque especial por mais de 30 dias consecutivos uma opção de parcelamento da dívida em condições mais favoráveis.
+
+## Financiamento imobiliário
+
+O financiamento imobiliário é a modalidade de maior valor e maior prazo do crédito bancário. Um imóvel pode custar centenas de milhares de reais, e o prazo pode chegar a 35 anos. Para viabilizar essa operação, o banco precisa de uma garantia sólida — e o próprio imóvel cumpre esse papel.
+
+Os detalhes do financiamento imobiliário — diferença entre SFH e SFI, uso do FGTS, alienação fiduciária e sistemas de amortização — são cobertos em profundidade na seção seguinte deste capítulo.
+
+## Financiamento de veículos
+
+O financiamento de veículos segue a mesma lógica do imobiliário: o bem financiado serve como garantia. A diferença está na escala (valores menores, prazos menores) e no instrumento jurídico de garantia.
+
+As modalidades de CDC e Leasing, a alienação fiduciária do veículo e o registro no DETRAN são detalhados na seção 3 deste capítulo.
+
+## Capital de giro empresarial
+
+Empresas têm necessidades de crédito diferentes das pessoas físicas. O principal produto é o **capital de giro**: crédito de curto prazo para financiar as operações correntes — pagar fornecedores, cobrir o intervalo entre produção e recebimento de vendas, honrar a folha de pagamento.
+
+As modalidades de capital de giro (conta garantida, desconto de recebíveis, antecipação de cartão) e as linhas de fomento do BNDES são detalhadas na seção 4 deste capítulo.
+
+## Comparativo de taxas e risco
+
+A tabela abaixo resume o posicionamento relativo das modalidades:
+
+| Modalidade | Garantia | Risco para o banco | Taxa típica |
+|---|---|---|---|
+| Crédito pessoal | Nenhuma | Muito alto | Alta |
+| Cheque especial | Nenhuma | Alto | Muito alta (teto 8% a.m.) |
+| Consignado | Desconto em folha | Muito baixo | Baixa |
+| Financiamento veículos | Alienação fiduciária | Médio | Média |
+| Financiamento imobiliário | Alienação fiduciária | Baixo | Baixa |
+| Capital de giro | Recebíveis/garantias | Médio | Média |
+
+A lógica é consistente: **quanto menor a garantia, maior o risco, maior a taxa**. O banco precisa ser remunerado pelo risco que assume. Quando a garantia é sólida e executável rapidamente, o banco pode oferecer taxas menores porque a perda esperada em caso de inadimplência é menor.
+
+Para os conceitos de juros, sistemas de amortização (SAC e Price) e CET que fundamentam todas essas modalidades, consulte o **cap. 16**. Para o processo de originação de crédito — análise, aprovação e formalização de contratos — consulte o **cap. 17**.

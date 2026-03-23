@@ -1,0 +1,77 @@
+---
+title: "Backoffice — Resgate, liquidação e informes"
+order: 2
+description: "Processamento de resgates (D+0 a D+30), liquidação financeira e emissão de informes de rendimentos"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O backoffice de fundos de investimento opera em ciclos diários precisos. Cada aplicação, resgate e evento de come-cotas precisa ser processado dentro dos prazos definidos no regulamento do fundo e nas normas da CVM.
+
+## Processamento de resgates
+
+O resgate é o processo pelo qual o cotista converte suas cotas de volta em dinheiro. O prazo varia significativamente conforme o tipo de fundo:
+
+**Prazos típicos de resgate:**
+
+| Tipo de fundo | Cotização do resgate | Liquidação financeira |
+|---|---|---|
+| Renda fixa curto prazo | D+0 (mesmo dia) | D+1 |
+| Renda fixa longo prazo | D+1 | D+2 |
+| Multimercado | D+1 a D+5 | D+1 após cotização |
+| Ações | D+1 | D+3 (liquidação B3) |
+| FII | Negociado em bolsa — venda no mercado secundário | D+2 |
+| FIP | Sem liquidez — resgate apenas no encerramento | Variável |
+
+**Cotização do resgate:** é a data em que as cotas são canceladas e o valor do resgate é calculado. O valor é baseado no valor da cota nessa data.
+
+**Liquidação financeira:** é a data em que o dinheiro efetivamente cai na conta do cotista. O intervalo entre cotização e liquidação existe porque o fundo precisa vender ativos para ter caixa disponível — e a venda de ativos tem seus próprios prazos de liquidação (D+2 para ações, por exemplo).
+
+**Fluxo de resgate no backoffice:**
+1. Cotista solicita resgate pelo app ou canal de atendimento
+2. Sistema registra a solicitação e verifica carência (se houver)
+3. Na data de cotização, o administrador calcula o valor do resgate (cotas × valor da cota do dia)
+4. O gestor vende ativos para gerar caixa (se necessário)
+5. Na data de liquidação, o valor é creditado na conta corrente do cotista
+6. O IR retido na fonte é calculado e recolhido pelo administrador
+
+**Resgate em cotas vs. resgate em valor:** o cotista pode solicitar resgate de um número específico de cotas ou de um valor em reais. No segundo caso, o sistema calcula quantas cotas precisam ser resgatadas para atingir o valor solicitado.
+
+## Gestão de liquidez do fundo
+
+O administrador e o gestor precisam garantir que o fundo tem caixa suficiente para honrar os resgates. Isso envolve:
+
+**Reserva de liquidez:** manter uma parcela do patrimônio em ativos de alta liquidez (títulos públicos de curto prazo, por exemplo) para cobrir resgates sem precisar vender ativos ilíquidos com desconto.
+
+**Gestão de concentração:** evitar que um único cotista represente uma parcela muito grande do patrimônio — um resgate grande pode forçar a venda de ativos em condições desfavoráveis, prejudicando os demais cotistas.
+
+**Fechamento para resgates:** em situações extremas de iliquidez de mercado, o regulamento pode permitir que o fundo suspenda temporariamente os resgates. Isso requer aprovação da CVM e notificação imediata aos cotistas.
+
+## Come-cotas — processamento no backoffice
+
+Nos últimos dias úteis de maio e novembro, o backoffice executa o processo de come-cotas para todos os fundos sujeitos à antecipação:
+
+1. Calcular o rendimento acumulado de cada cotista desde a última cobrança
+2. Aplicar a alíquota correspondente (15% ou 20%)
+3. Calcular o número de cotas a resgatar para cada cotista
+4. Cancelar as cotas e recolher o IR à Receita Federal via DARF
+5. Atualizar o extrato de cada cotista
+
+O processo é executado em lote para todos os cotistas simultaneamente — em fundos grandes, isso pode envolver milhões de operações em um único dia.
+
+## Informes de rendimentos
+
+Ao final de cada ano, o administrador emite o **Informe de Rendimentos** para cada cotista. Esse documento é obrigatório para a declaração de IR da pessoa física.
+
+**Conteúdo do informe:**
+- Saldo de cotas em 31/12 do ano anterior e em 31/12 do ano corrente
+- Valor das cotas nas datas de referência
+- Rendimentos auferidos no ano
+- IR retido na fonte (come-cotas + resgates)
+- Valor pago em taxas de administração e performance
+
+**Prazo de emissão:** até o último dia útil de fevereiro do ano seguinte (prazo definido pela Receita Federal).
+
+**Distribuição:** disponibilizado no app, internet banking e enviado por e-mail. O cotista usa esse documento para preencher a ficha "Bens e Direitos" e "Rendimentos Sujeitos à Tributação Exclusiva" da declaração de IR.
+
+Para o processo de custódia de ativos e liquidação financeira de investimentos, consulte o cap. 38.

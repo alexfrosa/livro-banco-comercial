@@ -1,0 +1,109 @@
+---
+title: "Conceitos — Ecossistema de cartão"
+order: 1
+description: "Portador, emissor, adquirente e bandeira: o fluxo financeiro de uma transação"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O cartão de crédito é o produto financeiro mais presente no cotidiano dos brasileiros. Por trás de cada compra existe uma infraestrutura complexa envolvendo quatro participantes distintos — e entender como eles interagem é essencial para compreender o negócio de cartões.
+
+## O ecossistema de quatro partes
+
+Uma transação de cartão de crédito envolve sempre quatro participantes:
+
+**1. Portador (cardholder)**
+O cliente que possui o cartão e realiza a compra. É o devedor perante o banco emissor. Tem direitos garantidos pelo Código de Defesa do Consumidor e pela regulação do BACEN, incluindo o direito de contestar transações não reconhecidas.
+
+**2. Emissor (issuer)**
+O banco ou instituição financeira que emitiu o cartão ao portador. O emissor:
+- Concede o limite de crédito ao portador
+- Garante o pagamento ao adquirente (assume o risco de crédito do portador)
+- Processa a fatura mensal e cobra o portador
+- Recebe a taxa de intercâmbio em cada transação
+
+**3. Adquirente (acquirer)**
+A credenciadora que habilita o estabelecimento comercial a aceitar cartões. O adquirente:
+- Instala e mantém os terminais POS (maquininhas) nos estabelecimentos
+- Processa as transações e as encaminha à bandeira
+- Paga ao estabelecimento o valor da venda (descontada a MDR)
+- Paga a taxa de intercâmbio ao emissor
+
+No Brasil, os principais adquirentes são Cielo, Rede, Stone e GetNet.
+
+**4. Bandeira (card network)**
+A rede de pagamento que conecta emissores e adquirentes. A bandeira:
+- Define as regras do ecossistema (segurança, chargeback, limites)
+- Opera a infraestrutura de autorização e liquidação
+- Cobra uma taxa de serviço (scheme fee) de emissores e adquirentes
+- Não tem relação direta com o portador nem com o estabelecimento
+
+As principais bandeiras no Brasil são Visa e Mastercard. Elo é uma bandeira nacional, criada por Bradesco, Banco do Brasil e Caixa.
+
+## O fluxo financeiro de uma transação
+
+Quando o portador passa o cartão em um estabelecimento, o seguinte fluxo ocorre:
+
+### Fase de autorização (milissegundos)
+
+1. O terminal POS captura os dados do cartão e envia ao adquirente
+2. O adquirente encaminha a solicitação de autorização à bandeira
+3. A bandeira roteia a solicitação ao banco emissor
+4. O emissor verifica: limite disponível, validade do cartão, ausência de bloqueios
+5. O emissor responde com aprovação ou recusa
+6. A resposta percorre o caminho inverso até o terminal em menos de 3 segundos
+
+### Fase de liquidação (D+1 a D+2)
+
+Após a autorização, a liquidação financeira ocorre em lote:
+
+1. O adquirente consolida as transações do dia e envia à bandeira
+2. A bandeira calcula os saldos líquidos entre emissores e adquirentes
+3. A liquidação ocorre via câmara de compensação (no Brasil, via B3/CIP)
+4. O adquirente paga ao estabelecimento o valor da venda menos a MDR
+5. O emissor registra a transação na fatura do portador
+
+### O fluxo do dinheiro
+
+Para uma compra de R$ 100:
+
+| Participante | Recebe | Paga | Saldo |
+|---|---|---|---|
+| Estabelecimento | R$ 100 (venda) | MDR (ex: R$ 2,50) | R$ 97,50 |
+| Adquirente | MDR (R$ 2,50) | Intercâmbio (ex: R$ 1,50) + scheme fee (ex: R$ 0,10) | R$ 0,90 |
+| Bandeira | Scheme fee (R$ 0,10) | — | R$ 0,10 |
+| Emissor | Intercâmbio (R$ 1,50) | — | R$ 1,50 |
+
+**MDR (Merchant Discount Rate):** taxa cobrada pelo adquirente ao estabelecimento. Varia por segmento, bandeira e volume de transações. Débito tem MDR menor que crédito; crédito à vista tem MDR menor que parcelado.
+
+## A taxa de intercâmbio
+
+O intercâmbio (interchange fee) é a taxa paga pelo adquirente ao emissor em cada transação. É o componente mais relevante da MDR e existe por uma razão econômica clara: o emissor assume o risco de crédito do portador.
+
+Quando o portador compra R$ 100, o adquirente paga imediatamente ao estabelecimento (menos a MDR). Mas o portador só vai pagar ao emissor no vencimento da fatura — que pode ser em até 40 dias. Durante esse período, o emissor financiou a transação e assumiu o risco de inadimplência.
+
+**Fatores que determinam o intercâmbio:**
+- Tipo de cartão: cartões premium (com benefícios, milhas) têm intercâmbio maior
+- Modalidade: crédito à vista, parcelado sem juros, débito — cada um tem taxa diferente
+- Segmento do estabelecimento: supermercados e postos de combustível têm intercâmbio menor (margens apertadas)
+- Regulação: o BACEN regulou o intercâmbio de débito em 0,5% e o de crédito à vista em 0,7% para transações no varejo
+
+**Intercâmbio e programas de pontos:** parte do intercâmbio recebido pelo emissor financia os programas de pontos e milhas. Cartões com mais benefícios têm intercâmbio maior — e MDR maior para o estabelecimento.
+
+## Modalidades de cartão
+
+**Crédito à vista:** o portador paga a fatura integralmente no vencimento. O emissor financia a compra por até ~40 dias sem cobrar juros do portador (os juros estão embutidos no intercâmbio e na MDR).
+
+**Crédito parcelado sem juros:** o estabelecimento oferece parcelamento e absorve o custo financeiro (MDR maior). O portador paga em parcelas iguais sem acréscimo. O emissor recebe o valor integral do adquirente e repassa as parcelas ao portador.
+
+**Crédito parcelado com juros (parcelado emissor):** o emissor financia o parcelamento e cobra juros do portador. O estabelecimento recebe à vista (menos MDR). O portador paga parcelas com encargos financeiros.
+
+**Débito:** o valor é debitado imediatamente da conta corrente do portador. Não há crédito envolvido. MDR e intercâmbio são menores.
+
+**Pré-pago:** o portador carrega saldo previamente. Não há limite de crédito. Usado para cartões de benefícios (vale-refeição, vale-alimentação) e cartões de viagem.
+
+## Referências cruzadas
+
+O crédito rotativo do cartão — quando o portador paga apenas o mínimo da fatura — é uma modalidade de crédito com as maiores taxas do mercado. Os conceitos de juros compostos e CET aplicados ao rotativo são detalhados no **capítulo 16** (Conceitos de crédito).
+
+O Pix Garantido, lançado pelo BACEN, é uma alternativa ao cartão de crédito que combina a ubiquidade do Pix com um limite de crédito pré-aprovado. A comparação entre Pix e cartão como instrumentos de pagamento está no **capítulo 13** (Pagamentos — Pix, TED e DOC).

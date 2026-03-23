@@ -1,267 +1,279 @@
 # Reference_Registry — normas e leis referenciadas no livro
-# Campos obrigatorios: id, title, issuer, category, url
+# Campos obrigatórios: id, title, issuer, category, url
 # Campos opcionais: description, publishedAt (ISO 8601: YYYY-MM-DD)
 
+# ── CMN — Conselho Monetário Nacional ─────────────────────────────────────
+
 - id: resolucao-cmn-4966
-  title: "Resolucao CMN n 4.966/2021"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 4.966/2021"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20CMN&numero=4966"
-  description: "Dispoe sobre instrumentos financeiros, reducao ao valor recuperavel de ativos e apresentacao de informacoes de instrumentos financeiros. Implementa o modelo de Perda de Credito Esperada (ECL) do IFRS 9 no Brasil, substituindo gradualmente a Resolucao CMN 2.682."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4966"
+  description: "Dispõe sobre instrumentos financeiros, redução ao valor recuperável de ativos e apresentação de informações de instrumentos financeiros. Implementa o modelo de Perda de Crédito Esperada (ECL) do IFRS 9 no Brasil, substituindo gradualmente a Resolução CMN 2.682."
   publishedAt: "2021-11-25"
 
 - id: resolucao-cmn-4557
-  title: "Resolucao CMN n 4.557/2017"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 4.557/2017"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
   url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao&numero=4557"
-  description: "Dispoe sobre a estrutura de gerenciamento de riscos (credito, mercado, liquidez e operacional) e a estrutura de gerenciamento de capital das instituicoes financeiras."
+  description: "Dispõe sobre a estrutura de gerenciamento de riscos (crédito, mercado, liquidez e operacional) e a estrutura de gerenciamento de capital das instituições financeiras."
   publishedAt: "2017-02-23"
 
 - id: resolucao-cmn-2682
-  title: "Resolucao CMN n 2.682/1999"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 2.682/1999"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
   url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao&numero=2682"
-  description: "Dispoe sobre criterios de classificacao das operacoes de credito e regras para constituicao de provisao para creditos de liquidacao duvidosa. Define as faixas de risco AA a H e os percentuais minimos de provisao correspondentes."
+  description: "Dispõe sobre critérios de classificação das operações de crédito e regras para constituição de provisão para créditos de liquidação duvidosa. Define as faixas de risco AA a H e os percentuais mínimos de provisão correspondentes."
   publishedAt: "1999-12-21"
 
 - id: resolucao-cmn-4677
-  title: "Resolucao CMN n 4.677/2018"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 4.677/2018"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20CMN&numero=4677"
-  description: "Dispoe sobre o limite de exposicao por cliente (concentracao de risco). Estabelece que a exposicao a um unico cliente nao pode exceder 25% do Patrimonio de Referencia da instituicao."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4677"
+  description: "Dispõe sobre o limite de exposição por cliente (concentração de risco). Estabelece que a exposição a um único cliente não pode exceder 25% do Patrimônio de Referência da instituição."
   publishedAt: "2018-07-31"
 
 - id: resolucao-cmn-3568
-  title: "Resolucao CMN n 3.568/2008"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 3.568/2008"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
   url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao&numero=3568"
-  description: "Dispoe sobre o mercado de cambio e da outras providencias. Regulamenta as operacoes de compra e venda de moeda estrangeira realizadas por instituicoes autorizadas."
+  description: "Dispõe sobre o mercado de câmbio e dá outras providências. Regulamenta as operações de compra e venda de moeda estrangeira realizadas por instituições autorizadas."
   publishedAt: "2008-12-29"
 
 - id: resolucao-cmn-4656
-  title: "Resolucao CMN n 4.656/2018"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 4.656/2018"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20CMN&numero=4656"
-  description: "Dispoe sobre a Sociedade de Credito Direto (SCD) e a Sociedade de Emprestimo entre Pessoas (SEP), regulamentando as fintechs de credito no Brasil."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4656"
+  description: "Dispõe sobre a Sociedade de Crédito Direto (SCD) e a Sociedade de Empréstimo entre Pessoas (SEP), regulamentando as fintechs de crédito no Brasil."
   publishedAt: "2018-04-26"
 
 - id: resolucao-cmn-4949
-  title: "Resolucao CMN n 4.949/2021"
-  issuer: "Conselho Monetario Nacional"
+  title: "Resolução CMN nº 4.949/2021"
+  issuer: "Conselho Monetário Nacional"
   category: CMN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20CMN&numero=4949"
-  description: "Dispoe sobre conta de pagamento pre-paga e pos-paga, regulamentando os produtos de conta oferecidos por instituicoes de pagamento."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4949"
+  description: "Dispõe sobre conta de pagamento pré-paga e pós-paga, regulamentando os produtos de conta oferecidos por instituições de pagamento."
   publishedAt: "2021-08-26"
 
+
+# ── BACEN — Banco Central do Brasil ───────────────────────────────────────
+
 - id: circular-bacen-3978
-  title: "Circular BACEN n 3.978/2020"
+  title: "Circular BACEN nº 3.978/2020"
   issuer: "Banco Central do Brasil"
   category: BACEN
   url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Circular&numero=3978"
-  description: "Dispoe sobre a politica de prevencao a lavagem de dinheiro e ao financiamento do terrorismo (PLD/FT) e sobre os procedimentos a serem adotados pelas instituicoes autorizadas a funcionar pelo Banco Central do Brasil."
+  description: "Dispõe sobre a política de prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/FT) e sobre os procedimentos a serem adotados pelas instituições autorizadas a funcionar pelo Banco Central do Brasil."
   publishedAt: "2020-01-23"
 
 - id: resolucao-bcb-277
-  title: "Resolucao BCB n 277/2022"
+  title: "Resolução BCB nº 277/2022"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=277"
-  description: "Dispoe sobre a prestacao de servicos de pagamento no ambito do arranjo de pagamento instantaneo (Pix) e sobre a participacao de instituicoes no Sistema de Pagamentos Instantaneos (SPI)."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=277"
+  description: "Dispõe sobre a prestação de serviços de pagamento no âmbito do arranjo de pagamento instantâneo (Pix) e sobre a participação de instituições no Sistema de Pagamentos Instantâneos (SPI)."
   publishedAt: "2022-12-01"
 
 - id: resolucao-bcb-1
-  title: "Resolucao BCB n 1/2020"
+  title: "Resolução BCB nº 1/2020"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=1"
-  description: "Consolida as normas do Sistema de Pagamentos Brasileiro (SPB), incluindo as regras de funcionamento do STR (Sistema de Transferencia de Reservas) e dos demais sistemas de liquidacao."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=1"
+  description: "Consolida as normas do Sistema de Pagamentos Brasileiro (SPB), incluindo as regras de funcionamento do STR (Sistema de Transferência de Reservas) e dos demais sistemas de liquidação."
   publishedAt: "2020-08-12"
 
 - id: resolucao-bcb-80
-  title: "Resolucao BCB n 80/2021"
+  title: "Resolução BCB nº 80/2021"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=80"
-  description: "Institui o Regulamento do Pix, consolidando as regras de funcionamento do arranjo de pagamento instantaneo, incluindo chaves Pix, DICT, limites, MED e modalidades de pagamento."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=80"
+  description: "Institui o Regulamento do Pix, consolidando as regras de funcionamento do arranjo de pagamento instantâneo, incluindo chaves Pix, DICT, limites, MED e modalidades de pagamento."
   publishedAt: "2021-03-25"
 
 - id: resolucao-bcb-150
-  title: "Resolucao BCB n 150/2021"
+  title: "Resolução BCB nº 150/2021"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=150"
-  description: "Dispoe sobre o Open Finance (Sistema Financeiro Aberto), regulamentando o compartilhamento de dados e servicos entre instituicoes participantes mediante consentimento do cliente."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=150"
+  description: "Dispõe sobre o Open Finance (Sistema Financeiro Aberto), regulamentando o compartilhamento de dados e serviços entre instituições participantes mediante consentimento do cliente."
   publishedAt: "2021-09-30"
 
 - id: resolucao-bcb-403
-  title: "Resolucao BCB n 403/2023"
+  title: "Resolução BCB nº 403/2023"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=403"
-  description: "Institui o Pix Garantido, modalidade de pagamento instantaneo com uso de credito pre-aprovado, permitindo que o pagador utilize limite de credito para realizar transacoes Pix."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=403"
+  description: "Institui o Pix Garantido, modalidade de pagamento instantâneo com uso de crédito pré-aprovado, permitindo que o pagador utilize limite de crédito para realizar transações Pix."
   publishedAt: "2023-09-28"
 
 - id: instrucao-normativa-bcb-184
-  title: "Instrucao Normativa BCB n 184/2021"
+  title: "Instrução Normativa BCB nº 184/2021"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Instrucao%20Normativa%20BCB&numero=184"
-  description: "Dispoe sobre o Diretorio de Identificadores de Contas Transacionais (DICT), o banco de dados centralizado que armazena as chaves Pix e suas vinculacoes a contas bancarias."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Instrucao Normativa BCB&numero=184"
+  description: "Dispõe sobre o Diretório de Identificadores de Contas Transacionais (DICT), o banco de dados centralizado que armazena as chaves Pix e suas vinculações a contas bancárias."
   publishedAt: "2021-09-30"
 
 - id: resolucao-bcb-44
-  title: "Resolucao BCB n 44/2021"
+  title: "Resolução BCB nº 44/2021"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=44"
-  description: "Dispoe sobre a politica de conhecimento do cliente (KYC) das instituicoes autorizadas a funcionar pelo Banco Central do Brasil, estabelecendo os requisitos minimos de identificacao, qualificacao e classificacao de clientes."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=44"
+  description: "Dispõe sobre a política de conhecimento do cliente (KYC) das instituições autorizadas a funcionar pelo Banco Central do Brasil, estabelecendo os requisitos mínimos de identificação, qualificação e classificação de clientes."
   publishedAt: "2021-01-28"
 
 - id: circular-bacen-3461
-  title: "Circular BACEN n 3.461/2009"
+  title: "Circular BACEN nº 3.461/2009"
   issuer: "Banco Central do Brasil"
   category: BACEN
   url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Circular&numero=3461"
-  description: "Consolida as regras sobre os procedimentos a serem adotados na prevencao e combate as atividades relacionadas com os crimes previstos na Lei n 9.613/1998, incluindo a identificacao de beneficiarios finais de pessoas juridicas."
+  description: "Consolida as regras sobre os procedimentos a serem adotados na prevenção e combate às atividades relacionadas com os crimes previstos na Lei nº 9.613/1998, incluindo a identificação de beneficiários finais de pessoas jurídicas."
   publishedAt: "2009-07-24"
 
 - id: resolucao-bcb-229
-  title: "Resolucao BCB n 229/2022"
+  title: "Resolução BCB nº 229/2022"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=229"
-  description: "Dispoe sobre o Indice de Liquidez de Curto Prazo (LCR - Liquidity Coverage Ratio), exigindo que as instituicoes mantenham ativos liquidos de alta qualidade suficientes para cobrir saidas de caixa liquidas por 30 dias em cenario de estresse."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=229"
+  description: "Dispõe sobre o Índice de Liquidez de Curto Prazo (LCR — Liquidity Coverage Ratio), exigindo que as instituições mantenham ativos líquidos de alta qualidade suficientes para cobrir saídas de caixa líquidas por 30 dias em cenário de estresse."
   publishedAt: "2022-06-30"
 
 - id: resolucao-bcb-230
-  title: "Resolucao BCB n 230/2022"
+  title: "Resolução BCB nº 230/2022"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=230"
-  description: "Dispoe sobre o Indice de Liquidez de Longo Prazo (NSFR - Net Stable Funding Ratio), exigindo que as instituicoes mantenham funding estavel suficiente para financiar seus ativos de longo prazo."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=230"
+  description: "Dispõe sobre o Índice de Liquidez de Longo Prazo (NSFR — Net Stable Funding Ratio), exigindo que as instituições mantenham funding estável suficiente para financiar seus ativos de longo prazo."
   publishedAt: "2022-06-30"
 
 - id: resolucao-bcb-197
-  title: "Resolucao BCB n 197/2022"
+  title: "Resolução BCB nº 197/2022"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=197"
-  description: "Consolida as normas relativas ao Plano Contabil das Instituicoes do Sistema Financeiro Nacional (COSIF), estabelecendo a estrutura de contas, criterios de classificacao e regras de elaboracao das demonstracoes financeiras."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=197"
+  description: "Consolida as normas relativas ao Plano Contábil das Instituições do Sistema Financeiro Nacional (COSIF), estabelecendo a estrutura de contas, critérios de classificação e regras de elaboração das demonstrações financeiras."
   publishedAt: "2022-03-31"
 
 - id: resolucao-bcb-96
-  title: "Resolucao BCB n 96/2021"
+  title: "Resolução BCB nº 96/2021"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=96"
-  description: "Dispoe sobre o Sistema de Informacoes de Credito (SCR), estabelecendo as regras de reporte das operacoes de credito pelas instituicoes financeiras ao Banco Central do Brasil."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=96"
+  description: "Dispõe sobre o Sistema de Informações de Crédito (SCR), estabelecendo as regras de reporte das operações de crédito pelas instituições financeiras ao Banco Central do Brasil."
   publishedAt: "2021-04-01"
 
 - id: resolucao-bcb-32
-  title: "Resolucao BCB n 32/2020"
+  title: "Resolução BCB nº 32/2020"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=32"
-  description: "Dispoe sobre a portabilidade de operacoes de credito, regulamentando o processo pelo qual o cliente pode transferir seu contrato de credito para outra instituicao financeira em condicoes mais favoraveis."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=32"
+  description: "Dispõe sobre a portabilidade de operações de crédito, regulamentando o processo pelo qual o cliente pode transferir seu contrato de crédito para outra instituição financeira em condições mais favoráveis."
   publishedAt: "2020-10-29"
 
 - id: resolucao-bcb-6
-  title: "Resolucao BCB n 6/2020"
+  title: "Resolução BCB nº 6/2020"
   issuer: "Banco Central do Brasil"
   category: BACEN
-  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao%20BCB&numero=6"
-  description: "Dispoe sobre tarifas bancarias, estabelecendo os servicos essenciais que devem ser prestados gratuitamente a pessoas fisicas e as regras de transparencia na cobranca de tarifas."
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao BCB&numero=6"
+  description: "Dispõe sobre tarifas bancárias, estabelecendo os serviços essenciais que devem ser prestados gratuitamente a pessoas físicas e as regras de transparência na cobrança de tarifas."
   publishedAt: "2020-08-12"
 
+
+# ── Lei Federal ────────────────────────────────────────────────────────────
+
 - id: lei-4595-1964
-  title: "Lei n 4.595/1964"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 4.595/1964"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/leis/l4595.htm"
-  description: "Dispoe sobre a Politica e as Instituicoes Monetarias, Bancarias e Crediticias. Cria o Conselho Monetario Nacional (CMN) e o Banco Central do Brasil (BACEN). E a lei estruturante do sistema financeiro nacional."
+  description: "Dispõe sobre a Política e as Instituições Monetárias, Bancárias e Creditícias. Cria o Conselho Monetário Nacional (CMN) e o Banco Central do Brasil (BACEN). É a lei estruturante do sistema financeiro nacional."
   publishedAt: "1964-12-31"
 
 - id: lei-12865-2013
-  title: "Lei n 12.865/2013"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 12.865/2013"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2013/lei/l12865.htm"
-  description: "Institui o arranjo de pagamento e a instituicao de pagamento no ambito do Sistema de Pagamentos Brasileiro, criando o marco legal para fintechs de pagamento e carteiras digitais."
+  description: "Institui o arranjo de pagamento e a instituição de pagamento no âmbito do Sistema de Pagamentos Brasileiro, criando o marco legal para fintechs de pagamento e carteiras digitais."
   publishedAt: "2013-10-09"
 
 - id: lei-9613-1998
-  title: "Lei n 9.613/1998"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 9.613/1998"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/leis/l9613.htm"
-  description: "Dispoe sobre os crimes de lavagem ou ocultacao de bens, direitos e valores. Cria o Conselho de Controle de Atividades Financeiras (COAF) e estabelece as obrigacoes das instituicoes financeiras em materia de PLD/FT."
+  description: "Dispõe sobre os crimes de lavagem ou ocultação de bens, direitos e valores. Cria o Conselho de Controle de Atividades Financeiras (COAF) e estabelece as obrigações das instituições financeiras em matéria de PLD/FT."
   publishedAt: "1998-03-03"
 
 - id: lei-13709-2018
-  title: "Lei n 13.709/2018 - LGPD"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 13.709/2018 — LGPD"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
-  description: "Lei Geral de Protecao de Dados Pessoais. Dispoe sobre o tratamento de dados pessoais por pessoas fisicas e juridicas, com impacto direto no KYC, Open Finance e compartilhamento de dados bancarios."
+  description: "Lei Geral de Proteção de Dados Pessoais. Dispõe sobre o tratamento de dados pessoais por pessoas físicas e jurídicas, com impacto direto no KYC, Open Finance e compartilhamento de dados bancários."
   publishedAt: "2018-08-14"
 
 - id: lei-14478-2022
-  title: "Lei n 14.478/2022"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 14.478/2022"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2022/lei/l14478.htm"
-  description: "Dispoe sobre diretrizes a serem observadas na prestacao de servicos de ativos virtuais (criptoativos) e na regulamentacao das prestadoras de servicos de ativos virtuais (PSAVs) no Brasil."
+  description: "Dispõe sobre diretrizes a serem observadas na prestação de serviços de ativos virtuais (criptoativos) e na regulamentação das prestadoras de serviços de ativos virtuais (PSAVs) no Brasil."
   publishedAt: "2022-12-21"
 
 - id: lei-10214-2001
-  title: "Lei n 10.214/2001"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 10.214/2001"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/leis/leis_2001/l10214.htm"
-  description: "Dispoe sobre a atuacao das camaras e dos prestadores de servicos de compensacao e de liquidacao no ambito do Sistema de Pagamentos Brasileiro (SPB), estabelecendo o principio da finalidade da liquidacao."
+  description: "Dispõe sobre a atuação das câmaras e dos prestadores de serviços de compensação e de liquidação no âmbito do Sistema de Pagamentos Brasileiro (SPB), estabelecendo o princípio da finalidade da liquidação."
   publishedAt: "2001-04-27"
 
 - id: lei-7492-1986
-  title: "Lei n 7.492/1986"
-  issuer: "Presidencia da Republica"
+  title: "Lei nº 7.492/1986"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/leis/l7492.htm"
-  description: "Define os crimes contra o Sistema Financeiro Nacional (Lei do Colarinho Branco), estabelecendo penas para gestao fraudulenta, desvio de recursos, evasao de divisas e outros crimes financeiros."
+  description: "Define os crimes contra o Sistema Financeiro Nacional (Lei do Colarinho Branco), estabelecendo penas para gestão fraudulenta, desvio de recursos, evasão de divisas e outros crimes financeiros."
   publishedAt: "1986-06-16"
 
 - id: lei-complementar-105-2001
-  title: "Lei Complementar n 105/2001"
-  issuer: "Presidencia da Republica"
+  title: "Lei Complementar nº 105/2001"
+  issuer: "Presidência da República"
   category: "Lei Federal"
   url: "https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp105.htm"
-  description: "Dispoe sobre o sigilo das operacoes de instituicoes financeiras. Estabelece as condicoes em que o sigilo bancario pode ser quebrado por autoridades fiscais, judiciais e o Banco Central."
+  description: "Dispõe sobre o sigilo das operações de instituições financeiras. Estabelece as condições em que o sigilo bancário pode ser quebrado por autoridades fiscais, judiciais e o Banco Central."
   publishedAt: "2001-01-10"
 
+# ── Medida Provisória ──────────────────────────────────────────────────────
+
 - id: mp-2158-35-2001
-  title: "Medida Provisoria n 2.158-35/2001"
-  issuer: "Presidencia da Republica"
-  category: "Medida Provisoria"
+  title: "Medida Provisória nº 2.158-35/2001"
+  issuer: "Presidência da República"
+  category: "Medida Provisória"
   url: "https://www.planalto.gov.br/ccivil_03/mpv/2158-35.htm"
-  description: "Altera a legislacao tributaria federal, incluindo disposicoes sobre IOF em operacoes financeiras e regras de tributacao de investimentos."
+  description: "Altera a legislação tributária federal, incluindo disposições sobre IOF em operações financeiras e regras de tributação de investimentos."
   publishedAt: "2001-08-24"
 
+# ── Acordo Internacional ───────────────────────────────────────────────────
+
 - id: basileia-iii
-  title: "Basileia III - Basel III Framework (BIS, 2010)"
+  title: "Basileia III — Basel III Framework (BIS, 2010)"
   issuer: "Bank for International Settlements (BIS)"
   category: "Acordo Internacional"
   url: "https://www.bis.org/bcbs/basel3.htm"
-  description: "Framework internacional de regulacao prudencial bancaria. Define requisitos minimos de capital (incluindo buffers de conservacao, contraciclico e sistemico), indices de liquidez (LCR e NSFR) e alavancagem. Implementado no Brasil pelo BACEN via resolucoes do CMN."
+  description: "Framework internacional de regulação prudencial bancária. Define requisitos mínimos de capital (incluindo buffers de conservação, contracíclico e sistêmico), índices de liquidez (LCR e NSFR) e alavancagem. Implementado no Brasil pelo BACEN via resoluções do CMN."
   publishedAt: "2010-12-16"
 
 - id: gafi-40-recomendacoes
-  title: "40 Recomendacoes do GAFI/FATF"
-  issuer: "Grupo de Acao Financeira Internacional (GAFI/FATF)"
+  title: "40 Recomendações do GAFI/FATF"
+  issuer: "Grupo de Ação Financeira Internacional (GAFI/FATF)"
   category: "Acordo Internacional"
   url: "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html"
-  description: "Padroes internacionais de prevencao a lavagem de dinheiro e ao financiamento do terrorismo (PLD/CFT). O Brasil e membro do GAFI e adota as 40 Recomendacoes como base para sua regulacao de PLD/FT, implementadas principalmente pela Lei 9.613/1998 e pela Circular BACEN 3.978/2020."
+  description: "Padrões internacionais de prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/CFT). O Brasil é membro do GAFI e adota as 40 Recomendações como base para sua regulação de PLD/FT, implementadas principalmente pela Lei 9.613/1998 e pela Circular BACEN 3.978/2020."
   publishedAt: "2012-02-16"

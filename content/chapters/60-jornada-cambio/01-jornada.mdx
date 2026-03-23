@@ -1,0 +1,73 @@
+---
+title: "Jornada — Operação de câmbio"
+order: 1
+description: "Do pedido do cliente ao contrato de câmbio: documentação, cotação e confirmação"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Uma operação de câmbio parece simples para o cliente — ele informa quanto quer enviar e para onde. Por trás, o banco executa uma sequência de etapas com requisitos regulatórios precisos, desde a cotação até o registro no SISBACEN.
+
+## Etapa 1: Solicitação e documentação
+
+O cliente (pessoa física ou jurídica) solicita a operação de câmbio informando:
+- Moeda e valor
+- Finalidade da operação (viagem, importação, remessa de lucros, etc.)
+- Dados do beneficiário no exterior (para remessas)
+- Documentos comprobatórios da operação
+
+**Documentação exigida por tipo de operação:**
+
+| Operação | Documentos |
+|---|---|
+| Câmbio turismo (espécie) | Documento de identidade, passagem aérea (recomendado) |
+| Remessa ao exterior (PF) | Documento de identidade, comprovante da finalidade |
+| Importação | Fatura comercial, conhecimento de embarque, DI (Declaração de Importação) |
+| Exportação | Fatura comercial, conhecimento de embarque, RE (Registro de Exportação) |
+| Remessa de lucros | Demonstrações financeiras, registro do investimento estrangeiro no BACEN |
+
+O banco é responsável por verificar a documentação e a legalidade da operação. Operações sem documentação adequada não podem ser realizadas — o banco pode ser responsabilizado por facilitar evasão de divisas ou lavagem de dinheiro.
+
+## Etapa 2: Cotação
+
+O cliente solicita a cotação para a operação. O banco informa a taxa de câmbio aplicável (taxa PTAX ± spread) e o valor em reais correspondente, incluindo IOF.
+
+**Validade da cotação:** as taxas de câmbio variam continuamente. Uma cotação tem validade curta — geralmente minutos. O cliente precisa confirmar rapidamente para garantir a taxa informada.
+
+**Negociação de taxa:** para operações de grande volume (acima de USD 100.000, por exemplo), o cliente pode negociar o spread diretamente com a mesa de câmbio do banco. Operações menores usam a taxa de balcão (fixa para o dia ou para o momento).
+
+## Etapa 3: Contrato de câmbio
+
+Toda operação de câmbio deve ser formalizada em um **contrato de câmbio** — documento obrigatório que registra os termos da operação. O contrato contém:
+- Identificação das partes (banco e cliente)
+- Moeda estrangeira, valor e taxa de câmbio
+- Valor em reais
+- Finalidade da operação (código de natureza cambial)
+- Data de contratação e data de liquidação
+- Dados do beneficiário (para remessas)
+
+O contrato de câmbio é assinado pelo cliente (fisicamente ou digitalmente) e pelo banco. É o instrumento jurídico que formaliza a obrigação de ambas as partes.
+
+## Etapa 4: Registro no SISBACEN
+
+Todas as operações de câmbio devem ser registradas no **SISBACEN** (Sistema de Informações do Banco Central) em tempo real ou dentro de prazos definidos pelo BACEN.
+
+O registro inclui os dados do contrato de câmbio e é usado pelo BACEN para:
+- Monitorar o fluxo de capitais do país
+- Calcular as reservas internacionais
+- Detectar operações suspeitas (lavagem de dinheiro, evasão de divisas)
+- Produzir estatísticas do balanço de pagamentos
+
+**RDE — Registro Declaratório Eletrônico:** para investimentos estrangeiros no Brasil e investimentos brasileiros no exterior, existe um registro específico no SISBACEN chamado RDE. Empresas com capital estrangeiro precisam registrar o investimento inicial e todas as remessas de lucros no RDE-IED (Investimento Estrangeiro Direto).
+
+## Etapa 5: Liquidação
+
+A liquidação é a efetivação financeira da operação — quando o dinheiro efetivamente muda de mãos.
+
+**Liquidação pronto:** ocorre em até 2 dias úteis após a contratação (D+2). É o padrão para a maioria das operações.
+
+**Liquidação futura:** o contrato é fechado hoje, mas a liquidação ocorre em data futura (D+30, D+60, etc.). Usado por empresas que querem travar a taxa de câmbio para uma operação futura (hedge cambial).
+
+**Liquidação no mesmo dia (D+0):** possível para algumas operações, com taxa diferente (geralmente pior para o cliente, pois o banco tem menos tempo para se posicionar no mercado).
+
+Para os conceitos de spread cambial, SWIFT e contas nostro/vostro, consulte o cap. 59.

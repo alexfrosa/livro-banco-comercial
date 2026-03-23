@@ -1,0 +1,119 @@
+---
+title: "Backoffice — Sinistro, cancelamento e comissão"
+order: 2
+description: "Processamento de sinistro, cancelamento de apólice e reconhecimento de receita de comissão pelo banco"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O backoffice de seguros no banco opera como elo entre o cliente e a seguradora. Três processos concentram a maior parte do trabalho operacional: o processamento de sinistros, o cancelamento de apólices e o controle contábil das comissões recebidas.
+
+## Processamento de sinistro
+
+Um **sinistro** é a ocorrência do evento coberto pela apólice — morte do segurado, incêndio no imóvel, roubo do veículo. O processamento segue etapas bem definidas.
+
+### 1. Aviso de sinistro
+
+O segurado (ou seus beneficiários) comunica o sinistro ao banco ou diretamente à seguradora. O aviso pode ser feito pelo app, pelo telefone ou presencialmente na agência. O banco registra o aviso e abre um número de protocolo.
+
+**Prazo para aviso:** o segurado deve comunicar o sinistro dentro do prazo previsto na apólice (geralmente 72 horas para sinistros de auto; até 30 dias para sinistros de vida). O não cumprimento do prazo pode ser usado pela seguradora como argumento para reduzir ou negar a indenização — mas apenas se a demora prejudicou a apuração dos fatos.
+
+**Documentação inicial exigida:**
+- Seguro de vida: certidão de óbito, documentos dos beneficiários, boletim de ocorrência (em caso de acidente)
+- Seguro auto: boletim de ocorrência, fotos do veículo, CNH do condutor
+- Seguro residencial: boletim de ocorrência (furto/roubo), laudo do Corpo de Bombeiros (incêndio), fotos dos danos
+
+### 2. Vistoria e perícia
+
+Para sinistros de maior valor, a seguradora designa um **perito** para vistoriar o bem sinistrado:
+
+- **Auto:** o perito avalia os danos no veículo e estima o custo de reparo ou confirma a perda total
+- **Residencial:** o perito vistoria o imóvel e quantifica os danos
+- **Vida:** não há vistoria física; a análise é documental (certidão de óbito, laudo médico)
+
+O banco acompanha o andamento da perícia e mantém o cliente informado sobre o status do processo.
+
+### 3. Regulação do sinistro
+
+A **regulação** é o processo de análise e quantificação da indenização devida. O regulador (funcionário ou empresa contratada pela seguradora) verifica:
+
+- Se o sinistro está coberto pela apólice (não é uma exclusão)
+- Se a apólice estava vigente na data do sinistro
+- Se o prêmio estava em dia (apólice não cancelada por inadimplência)
+- O valor da indenização, aplicando franquia e limites contratuais
+
+**Resultado da regulação:**
+- **Sinistro aceito:** seguradora aprova a indenização no valor regulado
+- **Sinistro parcialmente aceito:** parte da cobertura é aprovada; outra parte é negada (ex: dano coberto + dano excluído no mesmo evento)
+- **Sinistro negado:** evento não coberto, exclusão contratual, fraude identificada ou documentação insuficiente
+
+O segurado pode contestar a negativa junto à seguradora, à SUSEP ou ao Procon.
+
+### 4. Pagamento da indenização
+
+Após a aprovação da regulação, a seguradora efetua o pagamento:
+
+- **Seguro de vida:** transferência bancária para os beneficiários cadastrados na apólice
+- **Seguro auto (perda parcial):** pagamento à oficina credenciada ou reembolso ao segurado
+- **Seguro auto (perda total):** pagamento do valor de mercado do veículo (tabela FIPE), deduzida a franquia; o veículo passa para a propriedade da seguradora
+- **Seguro residencial:** pagamento ao segurado ou diretamente à empresa de reparo
+
+**Prazo de pagamento:** a seguradora tem até 30 dias após a conclusão da regulação para efetuar o pagamento, conforme a <Ref id="resolucao-cnsp-382" />.
+
+## Cancelamento de apólice
+
+### Cancelamento a pedido do cliente
+
+O cliente pode cancelar a apólice a qualquer momento. O banco processa o pedido e comunica à seguradora. Regras de devolução do prêmio:
+
+- **Cancelamento no período de arrependimento (até 7 dias após a contratação):** devolução integral do prêmio pago, sem multa — direito garantido pelo Código de Defesa do Consumidor
+- **Cancelamento após o período de arrependimento:** devolução proporcional ao período não decorrido da vigência (pro rata temporis), descontadas as despesas administrativas previstas em contrato
+
+**Exemplo:** apólice anual com prêmio de R$ 1.200 (R$ 100/mês). O cliente cancela após 4 meses. A seguradora devolve o equivalente a 8 meses: R$ 800, menos eventuais despesas administrativas.
+
+### Cancelamento por inadimplência
+
+Se o cliente deixar de pagar o prêmio, a apólice é cancelada após o período de carência de inadimplência previsto em contrato (geralmente 30 a 60 dias de atraso). O fluxo é:
+
+1. Prêmio não é debitado na data de vencimento (saldo insuficiente ou cartão expirado)
+2. O banco tenta nova cobrança em datas alternativas (geralmente 3 tentativas)
+3. Após esgotadas as tentativas, o banco notifica o cliente sobre o risco de cancelamento
+4. Decorrido o prazo de carência sem regularização, a apólice é cancelada
+5. A seguradora emite aviso de cancelamento; o banco registra o encerramento no sistema
+
+**Consequência:** sinistros ocorridos após o cancelamento por inadimplência não são cobertos, mesmo que o cliente regularize o pagamento posteriormente. A reativação exige nova contratação, com novo underwriting.
+
+## Reconhecimento de receita de comissão pelo banco
+
+O banco recebe da seguradora uma **comissão de corretagem** pela intermediação da venda. O tratamento contábil dessa receita é um ponto de atenção para o backoffice financeiro.
+
+### Competência vs. caixa
+
+O banco pode reconhecer a receita de comissão por dois critérios:
+
+**Regime de caixa:** a receita é reconhecida quando o dinheiro entra no caixa do banco — ou seja, quando a seguradora efetua o repasse da comissão. É o critério mais simples operacionalmente, mas pode distorcer o resultado mensal se os repasses forem irregulares.
+
+**Regime de competência (IFRS/COSIF):** a receita é reconhecida no período em que o serviço foi prestado — ou seja, no mês em que a apólice foi emitida e a cobertura iniciou. É o critério exigido pelas normas contábeis brasileiras (COSIF) e internacionais (IFRS 15). O banco registra a receita a receber (ativo) no momento da emissão da apólice e baixa esse ativo quando recebe o repasse da seguradora.
+
+**Exemplo contábil (regime de competência):**
+
+| Evento | Débito | Crédito |
+|---|---|---|
+| Emissão da apólice (jan) | Comissões a receber (ativo) | Receita de comissão (resultado) |
+| Recebimento do repasse (fev) | Caixa/conta corrente | Comissões a receber (ativo) |
+
+### Repasse do prêmio à seguradora
+
+O banco também é responsável por repassar à seguradora o prêmio cobrado do cliente, deduzida sua comissão. O fluxo é:
+
+1. Banco debita o prêmio da conta do cliente (ex: R$ 100)
+2. Banco retém sua comissão (ex: 20% = R$ 20)
+3. Banco repassa o líquido à seguradora (R$ 80) dentro do prazo contratual (geralmente até o 5º dia útil do mês seguinte)
+
+**Risco de float:** o banco mantém temporariamente em sua conta os prêmios arrecadados antes do repasse. Esse float deve ser controlado rigorosamente — os recursos pertencem à seguradora e não podem ser utilizados pelo banco para outras finalidades. A SUSEP fiscaliza o cumprimento dos prazos de repasse.
+
+### Comissão diferida em apólices plurianuais
+
+Em apólices com vigência superior a 12 meses (menos comuns, mas existentes em seguros de vida de longo prazo), a comissão deve ser diferida proporcionalmente ao período de vigência. O banco não pode reconhecer toda a comissão no momento da emissão — deve apropriar mensalmente a parcela correspondente ao serviço prestado naquele período.
+
+Para os conceitos de bancassurance e produtos de seguro, consulte o cap. 61. Para a jornada de contratação e emissão da apólice, consulte a seção 01 deste capítulo.

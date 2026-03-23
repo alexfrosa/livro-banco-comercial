@@ -1,0 +1,78 @@
+---
+title: "Licenças BACEN e riscos do modelo BaaS"
+order: 2
+description: "IP, SCD e SEP: tipos de licença para fintechs; riscos de reputação, operacional e regulatório para o banco parceiro"
+---
+
+## Licenças BACEN para fintechs
+
+O BACEN criou categorias de licença específicas para fintechs, com requisitos de capital e governança menores do que os de um banco múltiplo. Conhecer essas licenças é essencial para entender quando uma fintech precisa de um parceiro BaaS e quando pode operar de forma independente.
+
+### Instituição de Pagamento (IP)
+
+A IP não capta depósitos nem concede crédito com recursos próprios. Ela movimenta dinheiro. O BACEN divide as IPs em três subcategorias:
+
+| Subcategoria | O que faz | Exemplo |
+|---|---|---|
+| Emissor de moeda eletrônica | Mantém saldo em conta de pagamento pré-paga | Carteira digital, conta de pagamento |
+| Emissor de instrumento de pagamento pré-pago | Emite cartão pré-pago ou voucher | Cartão presente, vale-refeição |
+| Credenciador | Habilita estabelecimentos a aceitar cartões | Adquirente (Stone, Cielo) |
+
+Uma fintech com licença de IP pode oferecer conta de pagamento e cartão pré-pago, mas não pode emprestar dinheiro. Para crédito, precisa de outra licença ou de um parceiro BaaS.
+
+### Sociedade de Crédito Direto (SCD)
+
+A SCD pode conceder crédito, mas apenas com **capital próprio** e exclusivamente por **plataforma digital**. Ela não capta depósitos do público. O modelo de negócio típico é: a SCD levanta capital de investidores (equity ou dívida), empresta esse capital a clientes via plataforma digital e pode ceder a carteira de crédito para outros investidores.
+
+Restrições importantes:
+- Não pode captar depósitos (sem CDB, sem conta corrente remunerada)
+- Não pode ter agências físicas
+- Deve operar exclusivamente via canais digitais
+
+### Sociedade de Empréstimo entre Pessoas (SEP)
+
+A SEP opera um **marketplace de crédito P2P** (peer-to-peer): conecta quem quer emprestar (investidores) com quem quer tomar emprestado (tomadores). A SEP não empresta capital próprio — ela é intermediária.
+
+O risco de crédito fica com o investidor, não com a SEP. A SEP cobra uma taxa de serviço pela intermediação. Esse modelo é regulado pelo BACEN desde 2018 (Resolução CMN 4.656).
+
+## Operar com licença própria vs. usar BaaS
+
+A escolha entre obter licença própria e usar BaaS de um banco parceiro envolve trade-offs de custo, velocidade e controle:
+
+| Dimensão | Licença própria | BaaS (banco parceiro) |
+|---|---|---|
+| Tempo para operar | 12–24 meses (processo regulatório) | 3–6 meses (integração de API) |
+| Capital mínimo exigido | R$ 1M–R$ 7M (IP) / R$ 1M (SCD/SEP) | Nenhum capital regulatório adicional |
+| Autonomia regulatória | Total — responde diretamente ao BACEN | Parcial — depende das políticas do banco parceiro |
+| Custo operacional | Alto (compliance, auditoria, TI regulatória) | Menor, mas há fee por transação ao parceiro |
+| Escalabilidade | Limitada pelo capital próprio (SCD) | Limitada pela capacidade do banco parceiro |
+
+Fintechs em estágio inicial geralmente começam com BaaS para validar o produto e, ao atingir escala, avaliam se vale a pena obter licença própria.
+
+## Riscos do modelo BaaS para o banco provedor
+
+O banco que oferece BaaS assume riscos que vão além dos riscos tradicionais de crédito e liquidez.
+
+### Risco de reputação
+
+Se a fintech parceira agir de forma inadequada — cobrar tarifas abusivas, descumprir regras de proteção ao consumidor, sofrer vazamento de dados — o banco licenciado é associado ao problema. O cliente final muitas vezes não distingue entre a fintech e o banco por trás dela. Uma crise de reputação da fintech contamina a marca do banco.
+
+### Risco operacional
+
+O banco passa a depender de terceiros para parte de sua operação. Falhas nos sistemas da fintech (indisponibilidade de API, bugs no app, erros de processamento) afetam clientes que operam sob a licença do banco. O banco precisa monitorar a qualidade operacional da fintech como se fosse um fornecedor crítico.
+
+### Risco regulatório
+
+O BACEN responsabiliza o banco licenciado pelo cumprimento das normas, independentemente de quem executa a operação. Se a fintech parceira descumprir regras de KYC, PLD/FT (prevenção à lavagem de dinheiro), proteção de dados (LGPD) ou limites de tarifas, o banco responde perante o regulador.
+
+## Responsabilidade solidária
+
+O princípio central do BaaS do ponto de vista regulatório é a **responsabilidade solidária**: o banco licenciado é corresponsável por todas as operações realizadas sob sua licença, mesmo que executadas por terceiros.
+
+Isso significa que:
+- O banco deve realizar due diligence rigorosa antes de aceitar uma fintech como parceira
+- O banco deve monitorar continuamente a operação da fintech (auditorias, relatórios, acesso a dados)
+- O banco deve ter mecanismos de intervenção — incluindo encerramento do contrato — se a fintech descumprir as regras
+- O banco deve manter capital regulatório proporcional ao volume de operações realizadas sob sua licença, mesmo que o risco de crédito seja da fintech
+
+Na prática, os contratos de BaaS incluem cláusulas detalhadas de SLA, compliance, auditoria e responsabilidade que refletem essa corresponsabilidade regulatória.

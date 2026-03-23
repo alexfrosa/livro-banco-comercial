@@ -1,0 +1,61 @@
+---
+title: "Jornada — Suitability e aplicação em fundos"
+order: 1
+description: "Coleta de perfil do investidor, adequação ao produto e fluxo de aplicação"
+---
+
+import Ref from '@/components/Ref.astro';
+
+Antes de o cliente aplicar em um fundo, o banco precisa garantir que o produto é adequado ao seu perfil. Esse processo — chamado de suitability — é uma exigência regulatória da CVM e do BACEN, e é o ponto de partida da jornada de investimentos em fundos.
+
+## Suitability — Adequação do perfil
+
+O suitability é o processo de verificar se um produto de investimento é adequado ao perfil do investidor. A <Ref id="resolucao-cvm-30" /> exige que distribuidores (bancos, corretoras) coletem informações do cliente e classifiquem os produtos por nível de risco.
+
+**Informações coletadas:**
+- **Objetivo de investimento:** preservação de capital, renda, crescimento, especulação
+- **Horizonte de tempo:** curto prazo (até 1 ano), médio prazo (1–5 anos), longo prazo (acima de 5 anos)
+- **Tolerância a risco:** quanto o cliente aceita perder temporariamente sem resgatar
+- **Conhecimento financeiro:** experiência com diferentes tipos de produto
+- **Situação financeira:** renda, patrimônio, necessidade de liquidez
+
+**Perfis resultantes:**
+- **Conservador:** prioriza segurança e liquidez; aceita retorno menor para evitar perdas
+- **Moderado:** aceita alguma volatilidade em troca de retorno potencial maior
+- **Arrojado (agressivo):** aceita alta volatilidade e possibilidade de perdas significativas em busca de retorno elevado
+
+**Adequação ao produto:** cada fundo é classificado por nível de risco. Um fundo de ações não pode ser oferecido a um investidor conservador sem que o banco registre a inadequação e obtenha a ciência do cliente. Se o cliente insistir em aplicar em produto inadequado, o banco deve registrar a divergência — mas pode realizar a operação.
+
+**Validade do suitability:** o perfil deve ser atualizado periodicamente (geralmente a cada 24 meses) ou quando o cliente solicitar.
+
+## Fluxo de aplicação
+
+Com o suitability validado, o fluxo de aplicação é direto:
+
+**1. Escolha do fundo**
+O cliente seleciona o fundo pelo app ou com auxílio do gerente. O banco deve disponibilizar o regulamento, a lâmina de informações essenciais e o DI (Documento de Informações Chave) do fundo — documentos padronizados pela CVM que descrevem política de investimento, riscos, taxas e histórico de rentabilidade.
+
+**2. Definição do valor**
+O cliente informa o valor a aplicar. O sistema verifica:
+- Valor mínimo de aplicação (definido no regulamento do fundo — pode ser R$ 100 ou R$ 1.000.000)
+- Saldo disponível na conta corrente
+- Adequação ao perfil (suitability)
+
+**3. Confirmação e processamento**
+O cliente confirma a aplicação. O sistema:
+- Debita o valor da conta corrente
+- Calcula o número de cotas com base no valor da cota do dia (D+0 ou D+1, conforme o fundo)
+- Registra as cotas em nome do cliente no sistema de custódia
+- Emite o comprovante de aplicação
+
+**Cota de aplicação:** a maioria dos fundos usa a cota do dia seguinte (D+1) para aplicações — o cliente aplica hoje, mas recebe as cotas calculadas com o valor de fechamento de amanhã. Isso evita que o cliente aplique com informação privilegiada sobre o valor da cota do dia.
+
+## Cotização e liquidação
+
+**Cotização:** é o processo de converter o valor aplicado em cotas. Ocorre na data definida no regulamento (D+0, D+1 ou D+2 após a aplicação).
+
+**Liquidação financeira:** é a transferência efetiva do dinheiro do cliente para o fundo. Geralmente ocorre no mesmo dia da cotização (D+0 em relação à cotização).
+
+**Prazo de carência:** alguns fundos têm prazo mínimo de permanência (carência). O cliente não pode resgatar antes desse prazo — ou paga uma taxa de saída antecipada. Fundos com carência geralmente oferecem rentabilidade maior em troca da menor liquidez.
+
+Para os produtos de renda fixa que compõem as carteiras dos fundos, consulte o cap. 37. Para o processo de custódia e liquidação de investimentos, consulte o cap. 38.

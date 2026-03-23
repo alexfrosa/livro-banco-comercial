@@ -1,0 +1,75 @@
+---
+title: "Backoffice — Portabilidade, resgate e regulação"
+order: 2
+description: "Portabilidade entre planos sem IR, resgate antecipado, SUSEP vs. PREVIC e relação banco-seguradora"
+---
+
+import Ref from '@/components/Ref.astro';
+
+O backoffice de previdência privada opera na interface entre o banco distribuidor e a seguradora. Cada evento — portabilidade, resgate, sinistro — envolve comunicação entre sistemas distintos e prazos regulatórios rígidos.
+
+## Portabilidade entre planos
+
+A portabilidade permite que o participante transfira o saldo acumulado para outro plano sem incidência de IR — desde que respeitadas as regras da <Ref id="resolucao-cnsp-341" />.
+
+**Regras da portabilidade:**
+- Só é permitida entre planos do mesmo tipo: PGBL → PGBL ou VGBL → VGBL
+- A tabela de tributação pode ser mantida (progressiva → progressiva, regressiva → regressiva) ou migrada da progressiva para a regressiva (nunca o contrário)
+- O prazo de acumulação das contribuições é preservado para fins da tabela regressiva — o "relógio" não zera
+- Não é permitida portabilidade para plano com tabela progressiva se o plano de origem usa tabela regressiva
+
+**Fluxo de portabilidade:**
+1. Participante solicita portabilidade para o banco de destino
+2. Banco de destino envia solicitação ao banco de origem via sistema da SUSEP
+3. Banco de origem tem até 5 dias úteis para processar a transferência
+4. O saldo é transferido diretamente entre seguradoras (não passa pela conta corrente do participante — se passasse, seria resgate com IR)
+5. Banco de destino credita as cotas no novo plano
+
+**Portabilidade interna:** transferência entre fundos dentro do mesmo plano (ex: de renda fixa para multimercado) é mais simples — não envolve mudança de seguradora e pode ser feita instantaneamente pelo app.
+
+## Resgate antecipado
+
+O resgate antes da fase de benefício é permitido, mas tem custo tributário:
+
+**Tabela progressiva:** IR retido na fonte à alíquota de 15%, com ajuste na declaração anual. Se a renda total do participante for baixa, pode haver restituição.
+
+**Tabela regressiva:** IR retido na fonte conforme o prazo de cada contribuição. Contribuições com menos de 2 anos pagam 35% — um desincentivo forte ao resgate antecipado.
+
+**Prazo de carência para resgate:** o regulamento pode estabelecer carência mínima (ex: 60 dias após cada contribuição). Resgates antes da carência podem ser negados ou sujeitos a taxa de saída.
+
+**Resgate parcial vs. total:** o participante pode resgatar parte do saldo, mantendo o restante investido. O IR incide proporcionalmente sobre o valor resgatado.
+
+## Sinistro — morte do participante
+
+Quando o participante falece, os beneficiários têm direito ao saldo acumulado:
+
+1. Beneficiários comunicam o óbito ao banco/seguradora com a certidão de óbito
+2. A seguradora verifica os beneficiários cadastrados e os percentuais definidos
+3. O saldo é pago aos beneficiários conforme as instruções do participante
+4. Para o VGBL: o pagamento é feito diretamente, sem inventário, com IR sobre os rendimentos
+5. Para o PGBL: o pagamento também é feito sem inventário, mas com IR sobre o valor total
+
+**Prazo de pagamento:** a seguradora tem até 30 dias após a entrega da documentação completa para efetuar o pagamento.
+
+## Estrutura regulatória: SUSEP vs. PREVIC
+
+**SUSEP (Superintendência de Seguros Privados):** regula a previdência aberta (PGBL e VGBL) e as seguradoras que oferecem esses produtos. Todos os planos vendidos por bancos são regulados pela SUSEP.
+
+**PREVIC (Superintendência Nacional de Previdência Complementar):** regula a previdência fechada — os fundos de pensão de empresas (ex: Previ do Banco do Brasil, Petros da Petrobras). Não é acessível ao público em geral — apenas a funcionários das empresas patrocinadoras.
+
+**Diferença prática:**
+- Previdência aberta (SUSEP): qualquer pessoa pode contratar, via banco ou seguradora
+- Previdência fechada (PREVIC): restrita a funcionários de empresas com fundo de pensão próprio, geralmente com contribuição do empregador
+
+## Relação banco-seguradora
+
+O banco é o distribuidor — não o responsável pelo risco atuarial. A seguradora é quem:
+- Assume o risco de longevidade (pagar renda vitalícia por mais tempo que o esperado)
+- Garante a taxa de juros atuarial prometida na fase de benefício
+- Mantém as reservas técnicas exigidas pela SUSEP
+
+O banco recebe comissão de distribuição (geralmente um percentual da taxa de administração do fundo). Essa comissão é paga pela seguradora ao banco — o participante não paga diretamente, mas ela está embutida na taxa de administração do fundo.
+
+**Risco de separação:** se o banco tiver problemas financeiros, os recursos do plano estão protegidos — pertencem à seguradora, não ao banco. Se a seguradora tiver problemas, o FGCoop (para cooperativas) ou o FGS (Fundo Garantidor de Seguros) pode oferecer proteção limitada.
+
+Para os conceitos de PGBL, VGBL e tributação, consulte o cap. 54.

@@ -1,0 +1,121 @@
+---
+title: "Cota, marcação a mercado e come-cotas"
+order: 2
+description: "Cálculo do valor da cota, marcação a mercado diária e mecanismo de antecipação semestral de IR"
+---
+
+Entender como o valor de uma cota é calculado — e como o Fisco antecipa a cobrança de IR antes mesmo do resgate — é essencial para avaliar o retorno líquido de um fundo de investimento.
+
+## O conceito de cota
+
+A cota é a menor fração do patrimônio de um fundo. Quando um investidor aplica R$ 10.000 em um fundo cujo valor da cota é R$ 1,00, ele recebe 10.000 cotas. Se o fundo valoriza e a cota passa a valer R$ 1,10, o investidor tem R$ 11.000 — sem que o número de cotas tenha mudado.
+
+**Fórmula do valor da cota:**
+
+```
+Valor da Cota = Patrimônio Líquido do Fundo / Número Total de Cotas
+```
+
+O patrimônio líquido (PL) é o valor total dos ativos da carteira, avaliados a preço de mercado, deduzidas as obrigações do fundo (taxas a pagar, impostos provisionados, etc.).
+
+### Aplicação e resgate
+
+- **Aplicação:** o investidor transfere recursos ao fundo e recebe cotas calculadas pelo valor da cota do dia da aplicação (ou do dia seguinte, dependendo do horário de corte — *cutoff*)
+- **Resgate:** o investidor solicita o resgate e entrega cotas ao fundo, recebendo o valor em dinheiro calculado pelo valor da cota na data de conversão (que pode ser D+0, D+1, D+30 ou mais, conforme o regulamento)
+
+O prazo entre a solicitação de resgate e o crédito na conta do investidor é chamado de **prazo de cotização + prazo de liquidação financeira**. Fundos de renda fixa simples costumam ter D+0 ou D+1; fundos multimercado e de ações, D+1 a D+5; FIIs têm liquidação em D+2 (negociados em bolsa).
+
+## Marcação a mercado
+
+A marcação a mercado (MaM) é o processo de atualizar diariamente o valor dos ativos da carteira com base nos preços praticados no mercado naquele dia — e não pelo custo histórico de aquisição.
+
+### Por que a MaM existe
+
+Sem marcação a mercado, um fundo poderia manter títulos de renda fixa pelo valor de face (custo de aquisição + juros acumulados), mesmo que o preço de mercado desses títulos tivesse caído por conta de uma alta nas taxas de juros. Isso criaria uma distorção: investidores que resgatam antes da queda "saem" pelo preço inflado, prejudicando quem fica.
+
+A MaM garante que o valor da cota reflita o preço real dos ativos a cada dia, distribuindo ganhos e perdas de forma equitativa entre todos os cotistas.
+
+### Como funciona na prática
+
+Para um título público federal (ex: NTN-B com vencimento em 2035):
+
+1. O custodiante consulta diariamente as taxas de referência divulgadas pela ANBIMA
+2. Recalcula o preço do título usando essas taxas (fluxo de caixa futuro descontado a valor presente)
+3. Atualiza o valor do ativo na carteira do fundo
+4. Recalcula o PL e, consequentemente, o valor da cota
+
+**Efeito prático:** quando as taxas de juros sobem, o preço dos títulos de renda fixa cai — e o valor da cota do fundo cai junto, mesmo que o fundo não tenha vendido nenhum ativo. Isso é normal e esperado; reflete o custo de oportunidade do mercado.
+
+## Come-cotas
+
+O come-cotas é o mecanismo de antecipação semestral do Imposto de Renda em fundos de investimento abertos. O nome vem do fato de que o IR é cobrado na forma de redução do número de cotas do investidor — o Fisco literalmente "come" cotas.
+
+### Quando ocorre
+
+O come-cotas incide nos últimos dias úteis de **maio** e **novembro** de cada ano, independentemente de o investidor ter feito qualquer resgate.
+
+### Alíquotas
+
+A alíquota aplicada no come-cotas depende da classificação tributária do fundo:
+
+| Tipo de fundo | Alíquota no come-cotas |
+|---|---|
+| Curto prazo (carteira com prazo médio ≤ 365 dias) | 20% |
+| Longo prazo (carteira com prazo médio > 365 dias) | 15% |
+
+**Fundos isentos de come-cotas:**
+- Fundos de ações (FIA): IR de 15% apenas no resgate
+- FIIs: rendimentos distribuídos isentos para PF; ganho de capital na venda das cotas tributado a 20%
+- FIPs: tributação específica conforme o tipo
+
+### Como o cálculo é feito
+
+No dia do come-cotas, o administrador:
+
+1. Calcula o rendimento acumulado desde a última incidência (ou desde a aplicação, se mais recente)
+2. Aplica a alíquota correspondente sobre esse rendimento
+3. Resgata automaticamente a quantidade de cotas necessária para pagar o IR
+4. O valor do IR é recolhido ao Fisco via DARF pelo administrador
+
+**Exemplo numérico:**
+
+| Momento | Cotas | Valor da cota | Patrimônio |
+|---|---|---|---|
+| Aplicação (jan) | 10.000 | R$ 1,0000 | R$ 10.000,00 |
+| Come-cotas (mai) | 10.000 | R$ 1,0500 | R$ 10.500,00 |
+| Rendimento tributável | — | R$ 500,00 | — |
+| IR (15% sobre R$ 500) | — | R$ 75,00 | — |
+| Cotas resgatadas (R$ 75 / R$ 1,05) | −71,43 | R$ 1,0500 | — |
+| **Após come-cotas** | **9.928,57** | **R$ 1,0500** | **R$ 10.425,00** |
+
+O investidor continua com R$ 10.425 investidos, mas com menos cotas. No próximo come-cotas, o rendimento será calculado sobre essa nova base.
+
+### Impacto no retorno líquido
+
+O come-cotas tem um efeito negativo sobre o retorno líquido por dois motivos:
+
+1. **Antecipação do IR:** o investidor paga o imposto antes de precisar do dinheiro, perdendo o benefício dos juros compostos sobre o valor do IR antecipado
+2. **Base de cálculo reduzida:** após cada come-cotas, o capital investido é menor, o que reduz o rendimento absoluto dos períodos seguintes
+
+**Comparação com CDB (sem come-cotas):**
+
+Em um CDB, o IR só é cobrado no resgate, usando a tabela regressiva (22,5% até 180 dias, 20% de 181 a 360 dias, 17,5% de 361 a 720 dias, 15% acima de 720 dias). Para investimentos de longo prazo, a postergação do IR no CDB pode resultar em retorno líquido superior ao de um fundo equivalente sujeito ao come-cotas.
+
+### Tabela regressiva e come-cotas
+
+O come-cotas usa a alíquota mínima da tabela regressiva (15% para longo prazo, 20% para curto prazo). No resgate final, o IR complementar é calculado:
+
+- Se a alíquota definitiva (baseada no prazo total da aplicação) for maior que a já paga via come-cotas, o investidor paga a diferença
+- Se for igual ou menor, não há IR adicional no resgate
+
+Para aplicações mantidas por mais de 2 anos em fundos de longo prazo, a alíquota definitiva é 15% — igual à do come-cotas — portanto não há IR adicional no resgate.
+
+## Patrimônio líquido e concentração
+
+O PL de um fundo é um indicador importante de saúde e liquidez:
+
+- **PL muito pequeno:** o fundo pode ter dificuldade para diversificar a carteira e os custos fixos (taxa de administração mínima, auditoria) pesam mais sobre cada cotista
+- **PL muito grande:** pode dificultar a gestão ativa, pois grandes volumes de compra e venda movem os preços dos ativos
+- **Concentração de cotistas:** se um único cotista detém mais de 20–30% do PL, um resgate grande pode forçar a venda de ativos em condições desfavoráveis, prejudicando os demais cotistas
+
+A CVM exige que o regulamento do fundo informe os riscos de concentração e os limites de aplicação por cotista quando aplicável.

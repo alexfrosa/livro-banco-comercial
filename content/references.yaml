@@ -60,6 +60,14 @@
   description: "Dispõe sobre conta de pagamento pré-paga e pós-paga, regulamentando os produtos de conta oferecidos por instituições de pagamento."
   publishedAt: "2021-08-26"
 
+- id: resolucao-cmn-4765
+  title: "Resolução CMN nº 4.765/2019"
+  issuer: "Conselho Monetário Nacional"
+  category: CMN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4765"
+  description: "Estabelece limite máximo de 8% ao mês para a taxa de juros do cheque especial e obriga as instituições financeiras a oferecer parcelamento da dívida ao cliente que utilizar o limite por mais de 30 dias consecutivos."
+  publishedAt: "2019-11-27"
+
 
 # ── BACEN — Banco Central do Brasil ───────────────────────────────────────
 
@@ -337,3 +345,77 @@
   url: "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html"
   description: "Padrões internacionais de prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/CFT). O Brasil é membro do GAFI e adota as 40 Recomendações como base para sua regulação de PLD/FT, implementadas principalmente pela Lei 9.613/1998 e pela Circular BACEN 3.978/2020."
   publishedAt: "2012-02-16"
+
+# ── Acordo Internacional ───────────────────────────────────────────────────
+
+- id: basileia-iii
+  title: "Basileia III — Basel III Framework (BIS, 2010)"
+  issuer: "Bank for International Settlements (BIS)"
+  category: "Acordo Internacional"
+  url: "https://www.bis.org/publ/bcbs189.htm"
+  description: "Framework internacional de regulação prudencial bancária publicado pelo Comitê de Basileia. Estabelece os requisitos mínimos de capital (CET1, Tier 1, Tier 2), os buffers de conservação e contracíclico, os índices de liquidez (LCR e NSFR) e as regras de alavancagem para bancos sistemicamente importantes."
+  publishedAt: "2010-12-16"
+
+- id: gafi-40-recomendacoes
+  title: "40 Recomendações do GAFI/FATF"
+  issuer: "Grupo de Ação Financeira Internacional (GAFI/FATF)"
+  category: "Acordo Internacional"
+  url: "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html"
+  description: "Padrão internacional de combate à lavagem de dinheiro, ao financiamento do terrorismo e ao financiamento da proliferação de armas. As 40 Recomendações definem as medidas que os países devem adotar, incluindo due diligence de clientes (KYC/CDD), monitoramento de transações e cooperação internacional."
+  publishedAt: "2012-02-16"
+
+# ── Leis adicionais ────────────────────────────────────────────────────────
+
+- id: lei-9514-1997
+  title: "Lei nº 9.514/1997"
+  issuer: "Presidência da República"
+  category: "Lei Federal"
+  url: "https://www.planalto.gov.br/ccivil_03/leis/l9514.htm"
+  description: "Dispõe sobre o Sistema de Financiamento Imobiliário (SFI), institui a alienação fiduciária de coisa imóvel e cria as Letras de Crédito Imobiliário (LCI) e os Certificados de Recebíveis Imobiliários (CRI). É a base legal da alienação fiduciária no financiamento imobiliário."
+  publishedAt: "1997-11-20"
+
+- id: lei-8078-1990
+  title: "Lei nº 8.078/1990 — Código de Defesa do Consumidor"
+  issuer: "Presidência da República"
+  category: "Lei Federal"
+  url: "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm"
+  description: "Dispõe sobre a proteção do consumidor. Aplicável às relações bancárias, estabelece direitos como informação clara sobre produtos e serviços, proteção contra práticas abusivas, e regras sobre cadastro de inadimplentes (art. 43)."
+  publishedAt: "1990-09-11"
+
+# ── Medidas Provisórias adicionais ────────────────────────────────────────
+
+- id: mp-2200-2001
+  title: "Medida Provisória nº 2.200-2/2001"
+  issuer: "Presidência da República"
+  category: "Medida Provisória"
+  url: "https://www.planalto.gov.br/ccivil_03/mpv/antigas_2001/2200-2.htm"
+  description: "Institui a Infraestrutura de Chaves Públicas Brasileira (ICP-Brasil) e estabelece a validade jurídica dos documentos eletrônicos assinados digitalmente. Fundamenta a validade legal de contratos bancários assinados eletronicamente."
+  publishedAt: "2001-08-24"
+
+# ── CNSP — Conselho Nacional de Seguros Privados ──────────────────────────
+
+- id: resolucao-cnsp-341
+  title: "Resolução CNSP nº 341/2016"
+  issuer: "Conselho Nacional de Seguros Privados"
+  category: CNSP
+  url: "https://www.gov.br/susep/pt-br/assuntos/legislacao/resolucoes-cnsp/2016/resolucao-cnsp-no-341-de-2016"
+  description: "Dispõe sobre a portabilidade de planos de previdência complementar aberta (PGBL e VGBL), estabelecendo as regras para transferência de recursos entre planos e seguradoras sem incidência de imposto de renda."
+  publishedAt: "2016-09-29"
+
+- id: resolucao-cnsp-382
+  title: "Resolução CNSP nº 382/2020"
+  issuer: "Conselho Nacional de Seguros Privados"
+  category: CNSP
+  url: "https://www.gov.br/susep/pt-br/assuntos/legislacao/resolucoes-cnsp/2020/resolucao-cnsp-no-382-de-2020"
+  description: "Dispõe sobre as condições gerais dos contratos de seguros de danos e de pessoas, estabelecendo regras sobre carências, prazo de pagamento de sinistros (30 dias após conclusão da regulação), cancelamento de apólices e obrigações de transparência na comercialização."
+  publishedAt: "2020-06-11"
+
+# ── CMN — Conselho Monetário Nacional (adicionais) ────────────────────────
+
+- id: resolucao-cmn-4549
+  title: "Resolução CMN nº 4.549/2017"
+  issuer: "Conselho Monetário Nacional"
+  category: CMN
+  url: "https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?tipo=Resolucao CMN&numero=4549"
+  description: "Dispõe sobre o parcelamento obrigatório do saldo devedor do cartão de crédito rotativo. Determina que o saldo no rotativo só pode permanecer por um ciclo de faturamento; após 30 dias, a instituição deve oferecer parcelamento com prazo máximo de 24 meses."
+  publishedAt: "2017-03-27"

@@ -34,6 +34,18 @@ function isCategoryActive(item: NavItem): boolean {
   id="navigation-menu"
   class="nav-menu"
 >
+  <!-- Botão de colapso do menu no desktop -->
+  <button
+    id="nav-collapse-btn"
+    class="nav-collapse-btn"
+    aria-label="Recolher menu de navegação"
+    aria-expanded="true"
+    aria-controls="nav-panel"
+    title="Recolher menu"
+  >
+    <span aria-hidden="true">◀</span>
+  </button>
+
   <!-- Navigation panel (nav-toggle moved to BaseLayout.astro site-header — Bug 4 fix) -->
   <div id="nav-panel" class="nav-panel" aria-hidden="true">
     <ul class="nav-list" role="list">
@@ -333,6 +345,45 @@ function isCategoryActive(item: NavItem): boolean {
   }
 
   scrollActiveItemIntoView();
+
+  // ── Desktop nav collapse/expand ─────────────────────────────────────────
+
+  const NAV_COLLAPSED_KEY = 'ibbook_nav_collapsed';
+  const collapseBtn = document.getElementById('nav-collapse-btn');
+  const navMenu = document.getElementById('navigation-menu');
+
+  function isDesktop(): boolean {
+    return window.matchMedia('(min-width: 1025px)').matches;
+  }
+
+  function setNavCollapsed(collapsed: boolean): void {
+    if (!navMenu || !collapseBtn) return;
+    navMenu.classList.toggle('nav-menu--collapsed', collapsed);
+    collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+    collapseBtn.setAttribute(
+      'aria-label',
+      collapsed ? 'Expandir menu de navegação' : 'Recolher menu de navegação'
+    );
+    try {
+      localStorage.setItem(NAV_COLLAPSED_KEY, String(collapsed));
+    } catch { /* ignore */ }
+  }
+
+  function initNavCollapse(): void {
+    if (!isDesktop()) return;
+    try {
+      const stored = localStorage.getItem(NAV_COLLAPSED_KEY);
+      if (stored === 'true') setNavCollapsed(true);
+    } catch { /* ignore */ }
+  }
+
+  collapseBtn?.addEventListener('click', () => {
+    if (!isDesktop()) return;
+    const isCollapsed = navMenu?.classList.contains('nav-menu--collapsed') ?? false;
+    setNavCollapsed(!isCollapsed);
+  });
+
+  initNavCollapse();
 </script>
 
 <style>
@@ -444,15 +495,30 @@ function isCategoryActive(item: NavItem): boolean {
       background: var(--color-surface, #f8f7f4);
       border-right: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 10%, transparent);
       border-radius: 8px;
+      flex-shrink: 0;
+      /* position: relative já definido na base — necessário para o nav-collapse-btn absoluto */
+      transition: width 250ms ease, padding 250ms ease, opacity 250ms ease;
+    }
+
+    /* Desktop collapsed: sidebar recolhe para uma faixa estreita */
+    .nav-menu--collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+      opacity: 0;
+      border-right-color: transparent;
     }
 
     .nav-panel {
       display: block !important;
     }
 
-    .nav-panel[aria-hidden="true"] {
-      /* Always visible on desktop */
-      display: block !important;
+    /* Títulos completos no desktop — sem truncamento */
+    .nav-item-title {
+      white-space: normal;
+      word-break: break-word;
+      overflow: visible;
+      max-width: none;
     }
   }
 
@@ -568,7 +634,54 @@ function isCategoryActive(item: NavItem): boolean {
     overflow: hidden;
   }
 
-  /* ── Category groups (Req 3.3, 5.1, 5.2) ── */
+  /* ── Botão de colapso do menu (desktop only) ── */
+  .nav-collapse-btn {
+    display: none;
+  }
+
+  @media (min-width: 1025px) {
+    .nav-collapse-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0.5rem;
+      right: -14px;
+      width: 28px;
+      height: 28px;
+      background: var(--color-surface, #f8f7f4);
+      border: 1px solid color-mix(in srgb, var(--color-text, #1a1a2e) 15%, transparent);
+      border-radius: 50%;
+      cursor: pointer;
+      color: color-mix(in srgb, var(--color-text, #1a1a2e) 60%, transparent);
+      font-size: 0.65rem;
+      z-index: 10;
+      transition: background 150ms ease, color 150ms ease, transform 250ms ease;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-collapse-btn:hover,
+    .nav-collapse-btn:focus-visible {
+      background: color-mix(in srgb, var(--color-primary, #2563eb) 10%, transparent);
+      color: var(--color-primary, #2563eb);
+      outline: 2px solid var(--color-primary, #2563eb);
+      outline-offset: 2px;
+    }
+
+    /* Quando recolhido, a seta aponta para a direita */
+    .nav-menu--collapsed .nav-collapse-btn {
+      transform: rotate(180deg);
+      right: -14px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-collapse-btn {
+      transition: none;
+    }
+  }
+
+
   .nav-category {
     margin-bottom: 0.125rem;
   }

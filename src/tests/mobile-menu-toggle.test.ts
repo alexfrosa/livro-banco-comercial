@@ -120,22 +120,29 @@ describe('Fix 9.6 — nav-toggle está dentro do site-header (Bug 4)', () => {
   });
 });
 
-describe('Fix 9.7 — Títulos completos no mobile (Bug 2)', () => {
-  it('CSS mobile contém white-space: normal para .nav-item-title', () => {
+describe('Fix 9.7 — Títulos completos no mobile e desktop (Bug 2)', () => {
+  it('CSS global contém white-space: normal para .nav-item-title', () => {
     const s = navSrc();
-    // Verifica que a regra existe dentro do bloco @media (max-width: 767px)
-    const mobileBlock = s.match(/@media \(max-width: 767px\)([\s\S]*?)(?=@media|\s*<\/style>)/);
-    expect(mobileBlock).not.toBeNull();
-    expect(mobileBlock![1]).toContain('white-space: normal');
-    expect(mobileBlock![1]).toContain('word-break: break-word');
+    // Regra global cobre todos os breakpoints
+    expect(s).toContain('white-space: normal');
+    expect(s).toContain('word-break: break-word');
   });
 
-  it('CSS mobile NÃO contém max-width fixo em .nav-item-title', () => {
+  it('CSS NÃO contém max-width fixo em .nav-item-title', () => {
     const s = navSrc();
-    const mobileBlock = s.match(/@media \(max-width: 767px\)([\s\S]*?)(?=@media|\s*<\/style>)/);
-    expect(mobileBlock).not.toBeNull();
-    // max-width: none é permitido; max-width: <número> não deve aparecer em .nav-item-title
-    expect(mobileBlock![1]).not.toMatch(/\.nav-item-title[\s\S]*?max-width:\s*\d/);
+    // Extrai apenas o bloco da regra .nav-item-title para verificar
+    const block = s.match(/\.nav-item-title\s*\{([^}]*)\}/);
+    expect(block).not.toBeNull();
+    expect(block![1]).not.toMatch(/max-width:\s*\d/);
+  });
+
+  it('CSS contém flex: 1 e min-width: 0 em .nav-item-title para evitar truncamento em flex containers', () => {
+    const s = navSrc();
+    // Extrai o bloco da regra .nav-item-title
+    const block = s.match(/\.nav-item-title\s*\{([^}]*)\}/);
+    expect(block).not.toBeNull();
+    expect(block![1]).toContain('min-width: 0');
+    expect(block![1]).toContain('flex: 1');
   });
 });
 
@@ -147,12 +154,11 @@ describe('Fix 9.8 — Títulos completos no tablet (Bug 3)', () => {
     expect(tabletBlock![1]).not.toContain('max-width: 140px');
   });
 
-  it('CSS tablet contém white-space: normal para .nav-item-title', () => {
+  it('CSS global garante white-space: normal — sem override de nowrap no tablet', () => {
     const s = navSrc();
     const tabletBlock = s.match(/@media \(min-width: 768px\) and \(max-width: 1024px\)([\s\S]*?)(?=@media|\s*<\/style>)/);
     expect(tabletBlock).not.toBeNull();
-    expect(tabletBlock![1]).toContain('white-space: normal');
-    expect(tabletBlock![1]).toContain('word-break: break-word');
+    expect(tabletBlock![1]).not.toMatch(/\.nav-item-title[\s\S]*?white-space:\s*nowrap/);
   });
 });
 
@@ -281,20 +287,18 @@ describe('Property — CSS de títulos não trunca para qualquer comprimento (pr
   /**
    * Validates: Requirements 2.6, 2.7
    *
-   * Para qualquer string de título, o CSS corrigido não deve conter
-   * max-width fixo nem white-space: nowrap no breakpoint mobile/tablet.
+   * Para qualquer string de título, o CSS global não deve conter
+   * max-width fixo nem white-space: nowrap em .nav-item-title.
    */
-  it('CSS mobile não trunca títulos de qualquer comprimento', () => {
+  it('CSS global não trunca títulos de qualquer comprimento', () => {
     const s = navSrc();
-    const mobileBlock = s.match(/@media \(max-width: 767px\)([\s\S]*?)(?=@media|\s*<\/style>)/)![1];
 
     fc.assert(
       fc.property(
         fc.string({ minLength: 1, maxLength: 200 }),
         (_title) => {
-          // Independente do comprimento do título, o CSS não deve truncar
-          const hasNowrap = /\.nav-item-title[\s\S]*?white-space:\s*nowrap/.test(mobileBlock);
-          const hasFixedMaxWidth = /\.nav-item-title[\s\S]*?max-width:\s*\d+px/.test(mobileBlock);
+          const hasNowrap = /\.nav-item-title\s*\{[^}]*white-space:\s*nowrap/.test(s);
+          const hasFixedMaxWidth = /\.nav-item-title\s*\{[^}]*max-width:\s*\d+px/.test(s);
           return !hasNowrap && !hasFixedMaxWidth;
         }
       ),
@@ -302,7 +306,7 @@ describe('Property — CSS de títulos não trunca para qualquer comprimento (pr
     );
   });
 
-  it('CSS tablet não trunca títulos de qualquer comprimento', () => {
+  it('CSS tablet não introduz truncamento em .nav-item-title', () => {
     const s = navSrc();
     const tabletBlock = s.match(/@media \(min-width: 768px\) and \(max-width: 1024px\)([\s\S]*?)(?=@media|\s*<\/style>)/)![1];
 

@@ -392,8 +392,16 @@ function isCategoryActive(item: NavItem): boolean {
     position: relative;
   }
 
-  /* ── Nav panel ── */
-  .nav-panel {
+  /* ── Nav item title — sem truncamento em nenhum breakpoint ── */
+  .nav-item-title {
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
+    flex: 1;
+  }
+
+
     width: 100%;
   }
 
@@ -500,26 +508,24 @@ function isCategoryActive(item: NavItem): boolean {
       transition: width 250ms ease, padding 250ms ease, opacity 250ms ease;
     }
 
-    /* Desktop collapsed: sidebar recolhe para uma faixa estreita */
+    /* Desktop collapsed: sidebar recolhe para largura zero, mas o botão fica visível */
     .nav-menu--collapsed {
-      width: 0;
-      padding: 0;
-      overflow: hidden;
-      opacity: 0;
+      width: 48px;
+      padding: 0.5rem 0;
+      overflow: visible;
       border-right-color: transparent;
+      background: transparent;
+    }
+
+    .nav-menu--collapsed .nav-panel {
+      display: none !important;
     }
 
     .nav-panel {
       display: block !important;
     }
 
-    /* Títulos completos no desktop — sem truncamento */
-    .nav-item-title {
-      white-space: normal;
-      word-break: break-word;
-      overflow: visible;
-      max-width: none;
-    }
+    /* Títulos completos no desktop — coberto pela regra global .nav-item-title */
   }
 
   /* ── Tablet (768–1024px): compact mode ── */
@@ -550,13 +556,7 @@ function isCategoryActive(item: NavItem): boolean {
       padding: 0.3rem 0.5rem;
     }
 
-    /* Bug 3 fix — títulos completos no tablet (remove max-width fixo e nowrap) */
-    .nav-item-title {
-      white-space: normal;
-      word-break: break-word;
-      overflow: visible;
-      max-width: none;
-    }
+    /* Bug 3 fix — títulos completos no tablet (coberto pela regra global .nav-item-title) */
   }
 
   /* ── Mobile (< 768px): hidden/collapsible ── */
@@ -588,13 +588,7 @@ function isCategoryActive(item: NavItem): boolean {
       display: block;
     }
 
-    /* Bug 2 fix — títulos completos no mobile */
-    .nav-item-title {
-      white-space: normal;
-      word-break: break-word;
-      overflow: visible;
-      max-width: none;
-    }
+    /* Bug 2 fix — títulos completos no mobile (coberto pela regra global .nav-item-title) */
 
     .nav-section-link {
       min-height: 44px;
@@ -644,9 +638,10 @@ function isCategoryActive(item: NavItem): boolean {
       display: flex;
       align-items: center;
       justify-content: center;
-      position: absolute;
+      position: sticky;
       top: 0.5rem;
-      right: -14px;
+      margin-left: auto;
+      margin-right: -14px;
       width: 28px;
       height: 28px;
       background: var(--color-surface, #f8f7f4);
@@ -658,6 +653,7 @@ function isCategoryActive(item: NavItem): boolean {
       z-index: 10;
       transition: background 150ms ease, color 150ms ease, transform 250ms ease;
       box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      flex-shrink: 0;
     }
 
     .nav-collapse-btn:hover,

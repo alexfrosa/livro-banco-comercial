@@ -346,24 +346,6 @@
   description: "Padrões internacionais de prevenção à lavagem de dinheiro e ao financiamento do terrorismo (PLD/CFT). O Brasil é membro do GAFI e adota as 40 Recomendações como base para sua regulação de PLD/FT, implementadas principalmente pela Lei 9.613/1998 e pela Circular BACEN 3.978/2020."
   publishedAt: "2012-02-16"
 
-# ── Acordo Internacional ───────────────────────────────────────────────────
-
-- id: basileia-iii
-  title: "Basileia III — Basel III Framework (BIS, 2010)"
-  issuer: "Bank for International Settlements (BIS)"
-  category: "Acordo Internacional"
-  url: "https://www.bis.org/publ/bcbs189.htm"
-  description: "Framework internacional de regulação prudencial bancária publicado pelo Comitê de Basileia. Estabelece os requisitos mínimos de capital (CET1, Tier 1, Tier 2), os buffers de conservação e contracíclico, os índices de liquidez (LCR e NSFR) e as regras de alavancagem para bancos sistemicamente importantes."
-  publishedAt: "2010-12-16"
-
-- id: gafi-40-recomendacoes
-  title: "40 Recomendações do GAFI/FATF"
-  issuer: "Grupo de Ação Financeira Internacional (GAFI/FATF)"
-  category: "Acordo Internacional"
-  url: "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html"
-  description: "Padrão internacional de combate à lavagem de dinheiro, ao financiamento do terrorismo e ao financiamento da proliferação de armas. As 40 Recomendações definem as medidas que os países devem adotar, incluindo due diligence de clientes (KYC/CDD), monitoramento de transações e cooperação internacional."
-  publishedAt: "2012-02-16"
-
 # ── Leis adicionais ────────────────────────────────────────────────────────
 
 - id: lei-9514-1997
